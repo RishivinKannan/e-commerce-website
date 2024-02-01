@@ -52,7 +52,7 @@ const Header = () => {
         </div>
       </div>
 
-      
+
       <div className="flex">
         <div className="p-1 flex space-x-4 md:max-2xl:p-2 md:max-2xl:space-x-6 items-center">
           <button
@@ -84,8 +84,8 @@ const Header = () => {
             {({ open }) => (
               <>
                 <Popover.Button
-                  className={`ml-6 flex items-center justify-between rounded p-3 hover:outline-gray-200 ${
-                    open ? "outline" : "hover:outline hover:outline-1"
+                  className={`ml-6 flex items-center justify-between rounded md:max-2xl:p-3 hover:outline-gray-200 ${
+                    open ? "md:max-2xl:outline" : "md:max-2xl:hover:outline md:max-2xl:hover:outline-1"
                   }`}
                 >
                   {open?setSearchBox(false):""}
