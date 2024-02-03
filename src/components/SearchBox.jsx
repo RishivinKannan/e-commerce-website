@@ -51,7 +51,7 @@ export default function SearchBox() {
            
             {inputValue === ""
               ? historyValue.toReversed().map((history, index, arr) => {
-                  return index < 5 ?(
+                  return index < 6 ?(
                     <div
                       key={index + history}
                       className="text-xs font-semibold  tracking-wide hover:bg-gray-300 "
@@ -63,7 +63,7 @@ export default function SearchBox() {
                         <History className={"w-4 h-3 text-black"} />
                         <span >{history}</span>
                       </button>
-                      {arr.length - 1 === index ? (
+                      {arr.length - 1 === index || index == 5 ? (
                         ""
                       ) : (
                         <hr className="bg-gray-200 h-[2px] w-full" />
