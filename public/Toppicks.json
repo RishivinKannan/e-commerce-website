@@ -1,0 +1,50 @@
+[
+    {
+        "ProductId": 15746,
+        "Gender": "Men",
+        "Category": "Footwear",
+        "SubCategory": "Shoes",
+        "ProductType": "Sports Shoes",
+        "Colour": "White",
+        "Usage": "Sports",
+        "ProductTitle": "Nike Men Ballista II White Sports Shoes",
+        "Image": "15746.jpg",
+        "ImageURL": "http://assets.myntassets.com/v1/images/style/properties/Nike-Men-Ballista-II-White-Sports-Shoes_ea630bb8469a4100c6c62305bdc06174_images.jpg"
+      },
+      {
+        "ProductId": 6446,
+        "Gender": "Men",
+        "Category": "Footwear",
+        "SubCategory": "Shoes",
+        "ProductType": "Casual Shoes",
+        "Colour": "Grey",
+        "Usage": "Casual",
+        "ProductTitle": "Lotto Men's Calcetto Grey Shoe",
+        "Image": "6446.jpg",
+        "ImageURL": "http://assets.myntassets.com/v1/images/style/properties/e6e6d7fee7b7aa20fb5bf93e9f340890_images.jpg"
+      },
+      {
+        "ProductId": 39311,
+        "Gender": "Men",
+        "Category": "Footwear",
+        "SubCategory": "Flip Flops",
+        "ProductType": "Flip Flops",
+        "Colour": "Multi",
+        "Usage": "Casual",
+        "ProductTitle": "Converse Men Multi Coloured Flip Flop",
+        "Image": "39311.jpg",
+        "ImageURL": "http://assets.myntassets.com/v1/images/style/properties/76d6c7b68001277c4f9298b1fd18be47_images.jpg"
+      },
+      {
+        "ProductId": 44779,
+        "Gender": "Men",
+        "Category": "Footwear",
+        "SubCategory": "Shoes",
+        "ProductType": "Casual Shoes",
+        "Colour": "White",
+        "Usage": "Casual",
+        "ProductTitle": "Lotto Men White Skateboard Shoes",
+        "Image": "44779.jpg",
+        "ImageURL": "http://assets.myntassets.com/v1/images/style/properties/44f436357d4664921418f737f798c559_images.jpg"
+      }
+]

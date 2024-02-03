@@ -30,7 +30,7 @@ const Header = () => {
   }
 
   return (
-    <div className="flex justify-between items-center p-6 bg-black text-white ">
+    <div className="fixed w-screen flex justify-between items-center p-6 bg-black text-white z-50 ">
       <NavLink to="/test">
         <h1 className="text-2xl font-extrabold tracking-widest md:max-2xl:text-3xl">
           SHOP
@@ -100,9 +100,9 @@ const Header = () => {
                   leaveTo="opacity-0 translate-y-1"
                 >
                   <Popover.Panel
-                    className={`absolute z-[100] text-black w-80  right-0 mt-1 top-20`}
+                    className={`absolute z-[100]  text-black w-80  right-0 mt-1 top-20`}
                   >
-                    <div className="overflow-hidden rounded-lg shadow-xl ring-1 ring-black/5">
+                    <div className="overflow-hidden rounded-lg shadow-xl ring-1 ring-black/5 bg-white">
                       <div className="flex justify-start items-center space-x-4 p-6">
                         <UserSolidIcon className="w-11 h-11" />
                         <div>

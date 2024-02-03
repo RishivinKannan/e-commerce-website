@@ -1,0 +1,48 @@
+[{
+  "ProductId": 56928,
+  "Gender": "Women",
+  "Category": "Footwear",
+  "SubCategory": "Shoes",
+  "ProductType": "Heels",
+  "Colour": "Brown",
+  "Usage": "Casual",
+  "ProductTitle": "HM Women Brown Flats",
+  "Image": "56928.jpg",
+  "ImageURL": "http://assets.myntassets.com/v1/images/style/properties/HM-Women-Brown-Sandals_f8713bf19a946c314766cdedace802e6_images.jpg"
+},
+{
+  "ProductId": 6173,
+  "Gender": "Women",
+  "Category": "Footwear",
+  "SubCategory": "Flip Flops",
+  "ProductType": "Flip Flops",
+  "Colour": "White",
+  "Usage": "Casual",
+  "ProductTitle": "ADIDAS Women's Find Me White Flip Flop",
+  "Image": "6173.jpg",
+  "ImageURL": "http://assets.myntassets.com/v1/images/style/properties/6007b86554dbba6e01ea822e9e901676_images.jpg"
+},
+{
+  "ProductId": 49598,
+  "Gender": "Women",
+  "Category": "Footwear",
+  "SubCategory": "Shoes",
+  "ProductType": "Heels",
+  "Colour": "Grey",
+  "Usage": "Casual",
+  "ProductTitle": "Catwalk Women Black & Grey Heels",
+  "Image": "49598.jpg",
+  "ImageURL": "http://assets.myntassets.com/v1/images/style/properties/d1450bf2a552e92388fc3b024d5bc1b3_images.jpg"
+},
+{
+  "ProductId": 4072,
+  "Gender": "Women",
+  "Category": "Footwear",
+  "SubCategory": "Shoes",
+  "ProductType": "Casual Shoes",
+  "Colour": "Grey",
+  "Usage": "Casual",
+  "ProductTitle": "Numero Uno Women Canvas Grey Red Shoe",
+  "Image": "4072.jpg",
+  "ImageURL": "http://assets.myntassets.com/v1/images/style/properties/d04ada74bc56316114f9342af64a22d4_images.jpg"
+}]

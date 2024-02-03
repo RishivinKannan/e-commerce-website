@@ -1,0 +1,48 @@
+[{
+  "ProductId": 33304,
+  "Gender": "Boys",
+  "Category": "Apparel",
+  "SubCategory": "Topwear",
+  "ProductType": "Tshirts",
+  "Colour": "Yellow",
+  "Usage": "Casual",
+  "ProductTitle": "Gini and Jony Boys Pack of 2 T-shirts",
+  "Image": "33304.jpg",
+  "ImageURL": "http://assets.myntassets.com/v1/images/style/properties/8f70720a7471ab797d7e0be3fca31bb8_images.jpg"
+},
+{
+  "ProductId": 37596,
+  "Gender": "Boys",
+  "Category": "Apparel",
+  "SubCategory": "Topwear",
+  "ProductType": "Tshirts",
+  "Colour": "Navy Blue",
+  "Usage": "Casual",
+  "ProductTitle": "Madagascar3 Boys Navy Blue Printed T-Shirt",
+  "Image": "37596.jpg",
+  "ImageURL": "http://assets.myntassets.com/v1/images/style/properties/d8ea01af4102cefd98d5a06874f471ab_images.jpg"
+},
+{
+  "ProductId": 38986,
+  "Gender": "Boys",
+  "Category": "Apparel",
+  "SubCategory": "Topwear",
+  "ProductType": "Tshirts",
+  "Colour": "Blue",
+  "Usage": "Casual",
+  "ProductTitle": "Gini and Jony Boys Comics Blue T-shirt",
+  "Image": "38986.jpg",
+  "ImageURL": "http://assets.myntassets.com/v1/images/style/properties/4edd53d62c2633204d1b673c129309a4_images.jpg"
+},
+{
+  "ProductId": 39854,
+  "Gender": "Boys",
+  "Category": "Apparel",
+  "SubCategory": "Topwear",
+  "ProductType": "Tshirts",
+  "Colour": "White",
+  "Usage": "Casual",
+  "ProductTitle": "Gini and Jony Boys Printed White T-Shirt",
+  "Image": "39854.jpg",
+  "ImageURL": "http://assets.myntassets.com/v1/images/style/properties/166adc34a17751d729ef1c95abfef054_images.jpg"
+}]
