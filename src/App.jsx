@@ -1,5 +1,7 @@
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import { createContext, useState } from "react";
+import { Outlet } from "react-router-dom";
+
 export const UserDetailsContext = createContext({
   username: "username",
   password: "password",
@@ -9,8 +11,9 @@ function App() {
 
   return (
     <>
-      <UserDetailsContext.Provider value={{...user,provider:setUser}}>
+      <UserDetailsContext.Provider value={{ ...user, provider: setUser }}>
         <Header />
+        <Outlet />
       </UserDetailsContext.Provider>
     </>
   );

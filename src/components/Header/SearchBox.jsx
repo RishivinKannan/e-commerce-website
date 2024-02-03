@@ -1,10 +1,10 @@
-import { SearchIcon, History } from "../utils/Icons";
-import { useEffect, useState } from "react";
+import { SearchIcon } from "../../utils/Icons";
+import { useEffect, useRef, useState } from "react";
+
+import RecentHistory from "./RecentHistory";
 export default function SearchBox() {
   const [inputValue, setInputValue] = useState("");
   const [historyValue, setHistoryValue] = useState([]);
-  const [inputFocus, setInputFocus] = useState(false);
-
   useEffect(() => {
     const local = localStorage.getItem("recentHistory")
       ? JSON.parse(localStorage.getItem("recentHistory"))
@@ -13,17 +13,17 @@ export default function SearchBox() {
     console.log(local);
   }, []);
 
-  
+  const inputRef = useRef(null);
 
   return (
     <>
-      <div className="p-2 flex bg-white text-black w-full rounded-lg" 
-      >
+      <div className="p-2 flex bg-white text-black w-full rounded-lg shadow-xl">
         <SearchIcon />
         <input
+        ref={inputRef}
           type="text"
           placeholder="Search..."
-          className="outline-none ml-2 font-semibold tracking-wide "
+          className="outline-none ml-2 font-semibold tracking-wide  "
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={(e) => {
@@ -34,14 +34,30 @@ export default function SearchBox() {
                 JSON.stringify(historyAdder)
               );
               setHistoryValue(historyAdder);
-            }
-            if (e.key === "Escape") {
-                setInputFocus(false);
               }
+            if (e.key === "Escape"){
+                inputRef.current.blur();
+                setInputValue("");
+            }
           }}
-          onFocus={()=>setInputFocus(true)}
+
         />
-        {historyValue.length === 0 || (!inputFocus) ? (
+        {inputValue == "" ? (
+          ""
+        ) : (
+          <RecentHistory
+            input={inputValue}
+            suggestionList={historyValue}
+            onSelect={setInputValue}
+          />
+        )}
+
+
+        {/* {
+            inputValue =="" && !focus ? "" : <SearchSuggestion suggestionList={historyValue} onSelect={setInputValue}/>
+        } */}
+
+        {/* {historyValue.length === 0 || (!inputFocus) ? (
         ""
       ) : (
         <div className="absolute w-[95%] translate-y-8 left-3  bg-white text-black mt-2 rounded-xl shadow-2xl lg:max-2xl:translate-y-7 lg:max-2xl:left-0 lg:max-2xl:w-96 z-[100] pb-3">
@@ -95,9 +111,8 @@ export default function SearchBox() {
                 }  )}
           </div>
         </div>
-      )}
+      )} */}
       </div>
-      
     </>
   );
 }

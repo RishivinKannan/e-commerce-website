@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useState, Fragment, useContext } from "react";
 import { Popover, Transition } from "@headlessui/react";
-import { UserDetailsContext } from "../App";
+import { UserDetailsContext } from "../../App";
 import SearchBox from "./SearchBox";
 import {
   SearchIcon,
@@ -10,7 +10,7 @@ import {
   CartIcon,
   UserIcon,
   UserSolidIcon,
-} from "../utils/Icons";
+} from "../../utils/Icons";
 import Login from "./Login";
 
 const Header = () => {
@@ -38,25 +38,11 @@ const Header = () => {
       </NavLink>
 
       <div
-        className={`bg-black absolute top-20 w-full left-0 p-4 lg:max-2xl:relative lg:max-2xl:top-0 lg:max-2xl:w-96 lg:max-2xl:p-0 lg:max-2xl:block ${
-          searchBox ? "" : "hidden"
+        className={`bg-gray-500/10 absolute top-20 w-full left-0 p-4 lg:max-2xl:relative lg:max-2xl:top-0 lg:max-2xl:w-96 lg:max-2xl:p-0 lg:max-2xl:block transition-all ease-in-out delay-100 lg:max-2xl:translate-y-0 lg:max-2xl:z-auto lg:max-2xl:opacity-100 ${
+          searchBox ? "" : "-translate-y-20 -z-10 opacity-0 "
         }`}
       >
         <SearchBox />
-
-        {/* <div className="p-2 flex bg-white text-black lg:max-2xl:w-full rounded-lg">
-          <SearchIcon />
-          <input
-            type="text"
-            placeholder="Search..."
-            className="outline-none ml-2 font-semibold tracking-wide "
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                alert("You pressed Enter");
-              }
-            }}
-          />
-        </div> */}
       </div>
 
       <div className="flex">
