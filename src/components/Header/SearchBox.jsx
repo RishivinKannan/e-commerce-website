@@ -23,17 +23,19 @@ export default function SearchBox() {
         ref={inputRef}
           type="text"
           placeholder="Search..."
-          className="outline-none ml-2 font-semibold tracking-wide  "
+          className="outline-none ml-2 font-semibold tracking-wide w-11/12 "
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              const historyAdder = historyValue.concat(inputValue);
+              if(inputValue != ""){
+                const historyAdder = historyValue.concat(inputValue);
               localStorage.setItem(
                 "recentHistory",
                 JSON.stringify(historyAdder)
               );
               setHistoryValue(historyAdder);
+              }
               }
             if (e.key === "Escape"){
                 inputRef.current.blur();

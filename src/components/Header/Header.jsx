@@ -30,7 +30,7 @@ const Header = () => {
   }
 
   return (
-    <div className="fixed w-screen flex justify-between items-center p-6 bg-black text-white z-50 ">
+    <div className="fixed w-screen flex justify-between items-center p-6 bg-darker text-white z-50 ">
       <NavLink to="/test">
         <h1 className="text-2xl font-extrabold tracking-widest md:max-2xl:text-3xl">
           SHOP
@@ -38,7 +38,7 @@ const Header = () => {
       </NavLink>
 
       <div
-        className={`bg-gray-500/10 absolute top-20 w-full left-0 p-4 lg:max-2xl:relative lg:max-2xl:top-0 lg:max-2xl:w-96 lg:max-2xl:p-0 lg:max-2xl:block transition-all ease-in-out delay-100 lg:max-2xl:translate-y-0 lg:max-2xl:z-auto lg:max-2xl:opacity-100 ${
+        className={`bg-gray-500/10 absolute top-20 w-full left-0 p-4 lg:relative lg:max-2xl:top-0 lg:max-2xl:w-96 lg:max-2xl:p-0 lg:max-2xl:block transition-all ease-in-out delay-100 lg:max-2xl:translate-y-0 lg:max-2xl:z-auto lg:max-2xl:opacity-100 ${
           searchBox ? "" : "-translate-y-20 -z-10 opacity-0 "
         }`}
       >
@@ -145,7 +145,7 @@ const Header = () => {
           </Popover>
         ) : (
           <button
-            className="ml-6 px-4 font-bold text-lg bg-white text-black rounded hover:bg-gray-200 hover:text-gray-500"
+            className="ml-6 px-4 font-bold text-lg bg-white text-darker rounded hover:bg-gray-200 hover:text-gray-500"
             onClick={() => {
               setLoginBox(true);
               setSearchBox(false);
