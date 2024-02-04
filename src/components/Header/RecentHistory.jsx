@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import { History } from "../../utils/Icons";
+import { HistoryIcon } from "../../utils/Icons";
 
-export default function RecentHistory({ input, suggestionList, onSelect }) {
+export default function RecentHistory({ input, suggestionList, onSelect, getRef }) {
   return (
     <div
       className={
@@ -26,10 +26,11 @@ export default function RecentHistory({ input, suggestionList, onSelect }) {
                     className={ `text-xs font-semibold  tracking-wide hover:bg-gray-300 focus:bg-gray-300 focus:outline-none ${arr.length - 1 === index ? "rounded-b-lg" :"" + index ==0 ?"rounded-t-lg":""}`}
                     onClick={() => {
                       onSelect(history);
+                      getRef.current.focus();
                     }}
                   >
                     <div className="flex items-center justify-start space-x-2 py-3 px-5">
-                      <History className={"w-4 h-3 text-black"} />
+                      <HistoryIcon className={"w-4 h-3 text-black"} />
                       <span>{history}</span>
                     </div>
                     {arr.length - 1 === index ? (

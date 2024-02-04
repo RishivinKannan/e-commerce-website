@@ -21,7 +21,6 @@ export default function Home({ Heading, ProductUrl }) {
     infinite: false,
     slidesToShow: 5,
     slidesToScroll: 5,
-    focusOnSelect: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
