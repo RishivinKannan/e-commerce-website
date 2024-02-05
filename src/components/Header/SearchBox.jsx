@@ -2,7 +2,8 @@ import { SearchIcon } from "../../utils/Icons";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RecentHistory from "./RecentHistory";
-export default function SearchBox() {
+// eslint-disable-next-line react/prop-types
+export default function SearchBox({setShow}) {
   const [inputValue, setInputValue] = useState("");
   const [historyValue, setHistoryValue] = useState([]);
   const [focus, setFocus] = useState(false);
@@ -33,7 +34,7 @@ export default function SearchBox() {
       <div className="p-2 flex bg-white text-black w-full rounded-lg shadow-xl">
         <SearchIcon />
         <input
-        ref={inputRef}
+          ref={inputRef}
           type="text"
           placeholder="Search..."
           className="outline-none ml-2 font-semibold tracking-wide w-11/12 "
@@ -50,18 +51,19 @@ export default function SearchBox() {
               setFocus(false); 
               setHistoryValue(historyAdder);
               inputRef.current.blur();
+              setShow(false);
               toNavigation(`/search?query=${inputValue.replace(/\s+/g ,'-')}`);
                
               }
               }
-            if (e.key === "Escape"){
-                inputRef.current.blur();
-                setInputValue("");
-            }
+              if (e.key === "Escape"){
+                  inputRef.current.blur();
+                  setInputValue("");
+              }
 
+            }
           }
-        }
-        onFocus={()=>setFocus(true)}
+          onFocus={()=>setFocus(true)}
         />
         {inputValue == "" || !focus ? (
           ""

@@ -42,7 +42,7 @@ const Header = () => {
           searchBox ? "" : "-translate-y-20 -z-10 opacity-0 "
         }`}
       >
-        <SearchBox />
+        <SearchBox setShow={setSearchBox}/>
       </div>
 
       <div className="flex">
