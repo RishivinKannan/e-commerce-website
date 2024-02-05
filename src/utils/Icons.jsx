@@ -125,16 +125,13 @@ export const HistoryIcon = ({ className }) => {
 export function NextArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", color: "black" }}
-      onClick={onClick}
-    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="currentColor"
-        className="w-6 h-6"
+        className={`${className} w-6 h-6`}
+        style={{ ...style, display: "block", color: "black" }}
+        onClick={onClick}
       >
         <path
           fillRule="evenodd"
@@ -142,22 +139,18 @@ export function NextArrow(props) {
           clipRule="evenodd"
         />
       </svg>
-    </div>
   );
 }
 export function PrevArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", color: "black" }}
-      onClick={onClick}
-    >
-      <svg
+    <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="currentColor"
-        className="w-6 h-6"
+        className={`${className} w-6 h-6`}
+        style={{ ...style, display: "block", color: "black" }}
+        onClick={onClick}
       >
         <path
           fillRule="evenodd"
@@ -165,7 +158,6 @@ export function PrevArrow(props) {
           clipRule="evenodd"
         />
       </svg>
-    </div>
   );
 }
 

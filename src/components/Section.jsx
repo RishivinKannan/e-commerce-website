@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+
 import ProductCard from "./ProductCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -16,7 +17,6 @@ export default function Home({ Heading, ProductUrl }) {
   }, [ProductUrl]);
 
   var settings = {
-    className: "",
     speed: 500,
     infinite: false,
     slidesToShow: 5,
@@ -73,6 +73,7 @@ export default function Home({ Heading, ProductUrl }) {
         {products == [] ? (
           "LOADING"
         ) : (
+          <div className="slider-container">
           <Slider {...settings}>
             {products.map((product) => (
               <ProductCard
@@ -83,6 +84,7 @@ export default function Home({ Heading, ProductUrl }) {
               />
             ))}
           </Slider>
+          </div>
         )}
       </div>
     </section>
