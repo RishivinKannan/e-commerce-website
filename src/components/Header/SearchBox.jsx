@@ -12,7 +12,18 @@ export default function SearchBox() {
       ? JSON.parse(localStorage.getItem("recentHistory"))
       : [];
     setHistoryValue(local);
-    console.log(local);
+    const handleKeyPress = (e)=>{
+      if (e.ctrlKey && e.code === 'Space')
+      {
+        inputRef.current.focus();
+      }
+    };
+
+    window.addEventListener('keydown',handleKeyPress);
+
+    return ()=>{
+      window.removeEventListener('keydown',handleKeyPress);
+    };
   }, []);
 
   const inputRef = useRef(null);

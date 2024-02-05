@@ -30,7 +30,7 @@ const Header = () => {
   }
 
   return (
-    <div className="fixed w-screen flex justify-between items-center p-6 bg-darker text-white z-50 ">
+    <div className="fixed w-screen flex justify-between items-center py-6 px-8 bg-darker text-white z-50 ">
       <NavLink to="/test">
         <h1 className="text-2xl font-extrabold tracking-widest md:max-2xl:text-3xl">
           SHOP
