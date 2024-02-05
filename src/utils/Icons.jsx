@@ -186,7 +186,7 @@ export function HeartIcon({ isFill= false, className='w-5 h-5' }) {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={className}
+      className={`${className}  hover:text-slate-500 `}
       >
       <path
         strokeLinecap="round"

@@ -53,8 +53,8 @@ const Header = () => {
           >
             <SearchIcon />
           </button>
-          {/* Wislist */}
-          <NavLink className={"hover:text-gray-500"}>
+          {/* Wishlist */}
+          <NavLink to='/wishlist' className={"hover:text-gray-500"}>
             <WishListIcon />
           </NavLink>
           {/* Cart */}

@@ -65,7 +65,7 @@ export default function ProductCard({
           >
             <HeartIcon
               isFill={isFav}
-              className="w-5 h-5 hover:text-slate-500"
+              className="w-5 h-5"
             />
           </div>
         ) : (

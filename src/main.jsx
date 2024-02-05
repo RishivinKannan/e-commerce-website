@@ -6,6 +6,7 @@ import Test from './Test.jsx'
 import './index.css'
 import {createBrowserRouter,RouterProvider} from 'react-router-dom'
 import SearchPage from './components/SearchPage.jsx';
+import FavouritePage from './components/FavouritePage.jsx';
 
 const router = createBrowserRouter(
   [
@@ -20,6 +21,10 @@ const router = createBrowserRouter(
         {
           path:"/search",
           element:<SearchPage/>,
+        },
+        {
+          path:"/wishlist",
+          element:<FavouritePage/>,
         },
       ]
     },
