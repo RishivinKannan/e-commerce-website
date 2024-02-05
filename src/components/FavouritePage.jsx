@@ -15,7 +15,7 @@ const FavouritePage = () => {
   }, []);
 
   return (
-    <div className="pt-28 p-8 bg-gray-100 space-y-10 min-h-screen">
+    <div className="pt-28 px-6  bg-gray-100 space-y-10 min-h-screen">
       <div>
         <span className="text-2xl font-extrabold tracking-wider leading-9">
           WishList
