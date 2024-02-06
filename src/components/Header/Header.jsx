@@ -58,7 +58,7 @@ const Header = () => {
             <WishListIcon />
           </NavLink>
           {/* Cart */}
-          <NavLink className={"hover:text-gray-500"}>
+          <NavLink to='/cart' className={"hover:text-gray-500"}>
             <CartIcon />
           </NavLink>
           {/* PriceTracker */}

@@ -7,7 +7,7 @@ import './index.css'
 import {createBrowserRouter,RouterProvider} from 'react-router-dom'
 import SearchPage from './components/SearchPage.jsx';
 import FavouritePage from './components/FavouritePage.jsx';
-
+import CartPage from './components/CartPage.jsx';
 const router = createBrowserRouter(
   [
     {
@@ -25,6 +25,10 @@ const router = createBrowserRouter(
         {
           path:"/wishlist",
           element:<FavouritePage/>,
+        },
+        {
+          path:"/cart",
+          element:<CartPage/>,
         },
       ]
     },

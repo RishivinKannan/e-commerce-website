@@ -1,12 +1,9 @@
-import {DeleteIcon} from './utils/Icons'
-export default function Test() {
-  
+import {DeleteIcon} from '../utils/Icons.jsx'
 
-  return (
-    <>
-      <div className=" w-screen h-screen p-4 grid grid-cols-3 md:grid-cols-5  bg-gray-200">
-        <div className="col-span-3 flex flex-col items-center p-4  ">
-          <div className="py-4 px-3 flex flex-col gap-4 md:flex-col lg:flex-row rounded-lg bg-white ">
+export default function CartProduct(){
+
+    return(
+          <div className="py-4 px-3 flex flex-col gap-4 md:flex-col lg:flex-row rounded-lg bg-gray-50 ">
             <div className="flex gap-2">
               <img
                 src={
@@ -32,11 +29,5 @@ export default function Test() {
               </div>
             </div>
           </div>
-        </div>
-        <div className="bg-black">
-            hi
-        </div>
-      </div>
-    </>
-  );
+    )
 }
