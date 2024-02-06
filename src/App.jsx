@@ -7,7 +7,8 @@ export const UserDetailsContext = createContext({
   password: "password",
 });
 function App() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({username: "Guest user",
+  password: "password"});
 
   return (
     <>

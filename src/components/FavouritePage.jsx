@@ -17,7 +17,7 @@ const FavouritePage = () => {
   return (
     <div className="pt-28 px-6  bg-gray-100 space-y-10 min-h-screen">
       <div>
-        <span className="text-2xl font-extrabold tracking-wider leading-9">
+        <span className="text-2xl font-extrabold tracking-wider leading-9 [text-shadow:1px_1px_3px_var(--tw-shadow-color)] shadow-gray-600">
           WishList
         </span>
         <button

@@ -13,6 +13,20 @@ export default {
         darker :'#1A1A1A',
         lightest : '#E0E1E0',
         lighter :'#D1D3D4',
+      },
+      keyframes:{
+        textgradient:{
+          '0%,100%':{backgroundPosition:'0% 25%'},
+          '25%,75%':{backgroundPosition:'25% 50%'},
+          '50%':{backgroundPosition:'100% 50%'},
+        }
+      },
+      backgroundSize:{
+        '300%':"300%",
+      },
+      animation:{
+        gradient:'textgradient 5s ease infinite alternate',
+        gradientonce:'textgradient 5s ease',
       }
     },
   },

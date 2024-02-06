@@ -2,6 +2,7 @@ import { SearchIcon } from "../../utils/Icons";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RecentHistory from "./RecentHistory";
+import { removeDuplicates } from "../../utils/constants";
 // eslint-disable-next-line react/prop-types
 export default function SearchBox({setShow}) {
   const [inputValue, setInputValue] = useState("");
@@ -43,7 +44,8 @@ export default function SearchBox({setShow}) {
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               if(inputValue != ""){
-                const historyAdder = historyValue.concat(inputValue);
+                const historyAdder = removeDuplicates(historyValue.concat(inputValue));
+
               localStorage.setItem(
                 "recentHistory",
                 JSON.stringify(historyAdder)
