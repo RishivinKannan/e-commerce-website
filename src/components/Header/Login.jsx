@@ -63,7 +63,7 @@ export default function Login({ open, close, submit }) {
                 <div className="mt-6">
                   <button
                     type="button"
-                    className="inline-flex justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1  text-white hover:bg-gray-800"
+                    className="inline-flex justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1  text-white hover:outline hover:outline-offset-1 outline-gray-600"
                     onClick={() => {
                       submit(userNameValue,passwordValue);
                     }}

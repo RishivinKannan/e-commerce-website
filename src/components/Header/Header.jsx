@@ -145,7 +145,7 @@ const Header = () => {
           </Popover>
         ) : (
           <button
-            className="ml-6 px-4 font-bold text-lg bg-white text-darker rounded hover:bg-gray-200 hover:text-gray-500"
+            className="ml-6 px-4 font-bold text-lg bg-white text-darker rounded hover:outline hover:outline-offset-2 hover:outline-gray-300"
             onClick={() => {
               setLoginBox(true);
               setSearchBox(false);
