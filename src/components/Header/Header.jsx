@@ -42,7 +42,7 @@ const Header = () => {
           searchBox ? "" : "-translate-y-20 -z-10 opacity-0 "
         }`}
       >
-        <SearchBox setShow={setSearchBox}/>
+        <SearchBox setShow={setSearchBox} />
       </div>
 
       <div className="flex">
@@ -54,11 +54,11 @@ const Header = () => {
             <SearchIcon />
           </button>
           {/* Wishlist */}
-          <NavLink to='/wishlist' className={"hover:text-gray-500"}>
+          <NavLink to="/wishlist" className={"hover:text-gray-500"}>
             <WishListIcon />
           </NavLink>
           {/* Cart */}
-          <NavLink to='/cart' className={"hover:text-gray-500"}>
+          <NavLink to="/cart" className={"hover:text-gray-500"}>
             <CartIcon />
           </NavLink>
           {/* PriceTracker */}
@@ -144,15 +144,18 @@ const Header = () => {
             )}
           </Popover>
         ) : (
-          <button
-            className="ml-6 px-4 font-bold text-lg bg-white text-darker rounded hover:outline hover:outline-offset-2 hover:outline-gray-300"
-            onClick={() => {
-              setLoginBox(true);
-              setSearchBox(false);
-            }}
-          >
-            Login
-          </button>
+          <>
+            <button
+              className="ml-6 px-4 font-bold text-lg bg-white text-darker rounded hover:outline hover:outline-offset-2 hover:outline-gray-300"
+              onClick={() => {
+                setLoginBox(true);
+                setSearchBox(false);
+              }}
+            >
+              Login
+            </button>
+            
+          </>
         )}
       </div>
 
