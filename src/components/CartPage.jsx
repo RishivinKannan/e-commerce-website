@@ -11,12 +11,10 @@ export default function CartPage() {
         <div className="col-span-3 flex flex-col gap-4 items-center p-4">
           <CartProduct />
           <CartProduct />
-          <CartProduct />
-          <CartProduct />
-          <CartProduct />
-          <CartProduct />
         </div>
-        <OrderSummary/>
+        <div className="py-8 flex justify-center col-span-3 md:col-span-2 ">
+          <OrderSummary/>
+        </div>
       </div>
     </div>
   );
