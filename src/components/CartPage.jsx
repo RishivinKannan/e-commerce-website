@@ -1,4 +1,5 @@
 import CartProduct from "./CartProduct";
+import OrderSummary from './OrderSummary';
 
 export default function CartPage() {
   return (
@@ -15,6 +16,7 @@ export default function CartPage() {
           <CartProduct />
           <CartProduct />
         </div>
+        <OrderSummary/>
       </div>
     </div>
   );
