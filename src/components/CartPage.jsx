@@ -12,7 +12,7 @@ export default function CartPage() {
           <CartProduct />
           <CartProduct />
         </div>
-        <div className="py-8 flex justify-center col-span-3 md:col-span-2 ">
+        <div className="py-4 flex justify-center col-span-3 md:col-span-2 ">
           <OrderSummary/>
         </div>
       </div>
