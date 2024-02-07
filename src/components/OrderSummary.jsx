@@ -22,7 +22,7 @@ function OrderSummary() {
             <span className=" text-2xl font-bold tracking-wide float-right">₹460</span>
         </div>
         <div className="flex w-full justify-between pb-4">
-            <div className='flex gap-3 items-center rounded-3xl w-9/12 py-3 px-4 bg-lightest'>
+            <div className='flex gap-3 items-center rounded-3xl w-8/12 md:w-9/12 py-3 px-4 bg-lightest'>
                 <CouponIcon/>
                 <input type="text" placeholder="Add Promo Code" className='w-full bg-lightest font-semibold tracking-wider placeholder:text-gray-500  focus:outline-none' />
             </div>
