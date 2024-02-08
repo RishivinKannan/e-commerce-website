@@ -7,7 +7,6 @@ export default function SearchPage() {
   const [products, setProducts] = useState([]);
   const [searchParams] = useSearchParams();
   const query = searchParams.get("query");
-  console.log(query);
 
   useEffect(() => {
     axios.get("./fashionProducts.json").then((res) => setProducts(res.data));
@@ -19,7 +18,7 @@ export default function SearchPage() {
         <div className="lg:w-64 lg:h-screen flex justify-center bg-lightest fixed  p-4 shadow-lg font-extrabold">
           Under Development
         </div>
-        <div className="p-6 lg:pl-72 space-y-4 bg-gray-100">
+        <div className="p-6 lg:pl-72 space-y-4 bg-gray-100 min-h-screen">
           <h1 className="font-semibold text-lg ">
             Search Results for{" "}
             <span className="text-xl font-normal p-2 text-gray-600">
