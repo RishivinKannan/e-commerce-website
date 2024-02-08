@@ -32,13 +32,13 @@ const Header = () => {
   return (
     <div className="fixed w-screen flex justify-between items-center py-6 px-8 bg-darker text-white z-50 ">
       <NavLink to="/test">
-        <h1 className="text-2xl font-extrabold tracking-widest md:max-2xl:text-3xl">
+        <h1 className="text-2xl font-extrabold tracking-widest md:text-3xl">
           SHOP
         </h1>
       </NavLink>
 
       <div
-        className={`bg-gray-500/10 absolute top-20 w-full left-0 p-4 lg:relative lg:max-2xl:top-0 lg:max-2xl:w-96 lg:max-2xl:p-0 lg:max-2xl:block transition-all ease-in-out delay-100 lg:max-2xl:translate-y-0 lg:max-2xl:z-auto lg:max-2xl:opacity-100 ${
+        className={`bg-gray-500/10 absolute top-20 w-full left-0 p-4 lg:relative lg:top-0 lg:w-2/6 lg:p-0 lg:block  transition-all ease-in-out delay-100 lg:translate-y-0 lg:z-auto lg:opacity-100 ${
           searchBox ? "" : "-translate-y-20 -z-10 opacity-0 "
         }`}
       >
@@ -46,9 +46,9 @@ const Header = () => {
       </div>
 
       <div className="flex">
-        <div className="p-1 flex space-x-4 md:max-2xl:p-2 md:max-2xl:space-x-6 items-center">
+        <div className="p-1 flex space-x-4 md:p-2 md:space-x-6 items-center">
           <button
-            className="lg:max-2xl:hidden hover:text-gray-500"
+            className="lg:hidden hover:text-gray-500"
             onClick={() => setSearchBox((prev) => !prev)}
           >
             <SearchIcon />
@@ -74,16 +74,16 @@ const Header = () => {
             {({ open }) => (
               <>
                 <Popover.Button
-                  className={`ml-6 flex items-center justify-between rounded md:max-2xl:p-3 hover:outline-gray-200 ${
+                  className={`ml-6 flex items-center justify-between rounded md:p-3 hover:outline-gray-200 ${
                     open
-                      ? "md:max-2xl:outline"
-                      : "md:max-2xl:hover:outline md:max-2xl:hover:outline-1"
+                      ? "md:outline"
+                      : "md:hover:outline md:hover:outline-1"
                   }`}
                 >
                   {open ? setSearchBox(false) : ""}
                   {open ? <UserSolidIcon className="w-8 h-8" /> : <UserIcon />}
 
-                  <span className="ml-2 font-semibold text-lg hidden md:max-2xl:inline">
+                  <span className="ml-2 font-semibold text-lg hidden md:inline">
                     {userDetails.username == ""
                       ? "Username"
                       : userDetails.username}
