@@ -52,7 +52,7 @@ export default function ProductCard({
     <div>
       <div
         {...otherProps}
-        className=" py-4 px-5 flex flex-col gap-6 max-w-64 min-h-80 rounded-lg space-y-6 group"
+        className=" relative py-4 px-5 flex flex-col gap-6 max-w-64 min-h-80 rounded-lg space-y-6 group"
       >
         <img
           src={imageUrl}
@@ -60,7 +60,7 @@ export default function ProductCard({
         />
         {showFav ? (
           <div
-            className=" absolute -translate-y-8 py-4 px-8 translate-x-28 hidden group-hover:inline-block"
+            className=" absolute -top-4 py-4 px-8 right-0 hidden group-hover:inline-block"
             onClick={() => handleClick()}
           >
             <HeartIcon
