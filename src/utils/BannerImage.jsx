@@ -2,7 +2,7 @@
 const BannerImage =()=>{
     return(
 		<>
- <svg viewBox="13.6967 30.1974 457.6364 412.1537" className="lg:w-[28rem] ">
+ <svg viewBox="13.6967 30.1974 457.6364 412.1537" className="lg:w-[28rem]  ">
   <path
     style={{ fill: "rgb(251, 251, 251)" }}
     d="M1793.649,354.75c-11.77-31.709-23.302-63.506-34.589-95.389
