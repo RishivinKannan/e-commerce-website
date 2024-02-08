@@ -8,6 +8,7 @@ import {createBrowserRouter,RouterProvider} from 'react-router-dom'
 import SearchPage from './components/SearchPage.jsx';
 import FavouritePage from './components/FavouritePage.jsx';
 import CartPage from './components/CartPage.jsx';
+import CategoryPage from './components/CategoryPage.jsx';
 const router = createBrowserRouter(
   [
     {
@@ -21,6 +22,10 @@ const router = createBrowserRouter(
         {
           path:"/search",
           element:<SearchPage/>,
+        },
+        {
+          path:'/category',
+          element:<CategoryPage/>
         },
         {
           path:"/wishlist",
