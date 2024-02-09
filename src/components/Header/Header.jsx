@@ -31,7 +31,7 @@ const Header = () => {
 
   return (
     <header className="fixed w-screen flex justify-between items-center py-6 px-8 bg-darker text-white z-50 ">
-      <NavLink to="/test">
+      <NavLink to="/">
         <h1 className="text-2xl font-extrabold tracking-widest md:text-3xl">
           SHOP
         </h1>
