@@ -13,6 +13,7 @@ export default function SearchPage() {
   }, []);
 
   return (
+
     <>
       <div className="pt-20">
         <div className="lg:w-64 lg:h-screen flex justify-center bg-lightest fixed  p-4 shadow-lg font-extrabold">

@@ -1,6 +1,6 @@
 import Header from "./components/Header/Header";
 import { createContext, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet,ScrollRestoration } from "react-router-dom";
 
 export const UserDetailsContext = createContext({
   username: "username",
@@ -12,6 +12,7 @@ function App() {
 
   return (
     <>
+      <ScrollRestoration/>
       <UserDetailsContext.Provider value={{ ...user, provider: setUser }}>
         <Header />
         <Outlet />

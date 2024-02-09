@@ -3,6 +3,7 @@ import OrderSummary from './OrderSummary';
 
 export default function CartPage() {
   return (
+    <>
     <div className="p-2 pt-28 bg-gray-100 min-h-screen">
       <span className="pl-8 text-3xl font-extrabold tracking-wider leading-9 [text-shadow:1px_1px_3px_var(--tw-shadow-color)] shadow-gray-600">
         Cart
@@ -19,5 +20,6 @@ export default function CartPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
