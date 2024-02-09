@@ -19,14 +19,36 @@ const Header = () => {
   const [LoginBox, setLoginBox] = useState(false);
   const userDetails = useContext(UserDetailsContext);
 
-  function userAuthentication(userNameValue, passwordValue) {
+  function userAuthentication(emailValue, passwordValue) {
+    const users = localStorage.getItem("Users")
+      ? JSON.parse(localStorage.getItem("Users"))
+      : [];
+    const getUser = users.filter((user) => {
+      return user.email.toLowerCase() == emailValue.toLowerCase();
+    });
+    getUser.length == 0
+      ? alert("This Email is not registered ")
+      : getUser[0].password != passwordValue
+      ? alert("Password does not match")
+      : login(getUser[0].username, getUser[0].email);
+  }
+  function login(username, email) {
     userDetails.provider({
       ...userDetails,
-      username: userNameValue,
-      password: passwordValue,
+      username: username,
+      email: email,
     });
     setLoggedIn(true);
     setLoginBox(false);
+  }
+
+  function logout() {
+    userDetails.provider({
+      ...userDetails,
+      username: "Guest User",
+      email: "guestuser@mail.com",
+    });
+    setLoggedIn(false);
   }
 
   return (
@@ -75,9 +97,7 @@ const Header = () => {
               <>
                 <Popover.Button
                   className={`ml-6 flex items-center justify-between rounded md:p-3 hover:outline-gray-200 ${
-                    open
-                      ? "md:outline"
-                      : "md:hover:outline md:hover:outline-1"
+                    open ? "md:outline" : "md:hover:outline md:hover:outline-1"
                   }`}
                 >
                   {open ? setSearchBox(false) : ""}
@@ -107,11 +127,9 @@ const Header = () => {
                         <UserSolidIcon className="w-11 h-11" />
                         <div>
                           <span className="ml-2 font-semibold text-lg  ">
-                            {userDetails.username == ""
-                              ? "username"
-                              : userDetails.username}
+                            {userDetails.username}
                           </span>
-                          <p className="ml-2">usermail@email.com</p>
+                          <p className="ml-2">{userDetails.email}</p>
                         </div>
                       </div>
                       <hr className="bg-gray-200 h-[2px] w-full" />
@@ -131,7 +149,7 @@ const Header = () => {
                           </li>
                           <li
                             className="px-4 py-2 font-semibold hover:bg-gray-300 hover:text-gray-600"
-                            onClick={() => setLoggedIn(false)}
+                            onClick={() => logout()}
                           >
                             Logout
                           </li>
@@ -154,7 +172,6 @@ const Header = () => {
             >
               Login
             </button>
-            
           </>
         )}
       </div>

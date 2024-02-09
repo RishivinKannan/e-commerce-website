@@ -4,12 +4,12 @@ import { Outlet, ScrollRestoration } from "react-router-dom";
 
 export const UserDetailsContext = createContext({
   username: "username",
-  password: "password",
+  email: "user@email.com",
 });
 function App() {
   const [user, setUser] = useState({
     username: "Guest user",
-    password: "password",
+    email: "guestuser@gmail.com",
   });
 
   return (

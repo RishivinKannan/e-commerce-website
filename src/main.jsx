@@ -9,6 +9,7 @@ import SearchPage from './components/SearchPage.jsx';
 import FavouritePage from './components/FavouritePage.jsx';
 import CartPage from './components/CartPage.jsx';
 import CategoryPage from './components/CategoryPage.jsx';
+import RegisterPage from './components/RegisterPage.jsx';
 const router = createBrowserRouter(
   [
     {
@@ -36,6 +37,10 @@ const router = createBrowserRouter(
           element:<CartPage/>,
         },
       ]
+    },
+    {
+      path:'/register',
+      element:<RegisterPage/>
     },
     {
       path: "/test",
