@@ -19,6 +19,10 @@ export default function SearchBox({setShow}) {
       {
         inputRef.current.focus();
       }
+      if (e.key === "Escape"){
+        inputRef.current.blur();
+        setInputValue("");
+      }
     };
 
     window.addEventListener('keydown',handleKeyPress);

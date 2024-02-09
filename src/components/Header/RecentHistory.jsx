@@ -10,7 +10,7 @@ export default function RecentHistory({
   return (
     <div
       className={
-        "absolute w-[95%] translate-y-8 left-3  bg-white text-black mt-2 rounded-xl shadow-2xl lg:max-2xl:translate-y-7 lg:max-2xl:left-0 lg:max-2xl:w-96 z-[100]  "
+        "absolute w-[95%] translate-y-8 left-3  bg-white text-black mt-2 rounded-xl shadow-2xl lg:translate-y-7 lg:left-0 lg:w-full z-[100]  "
       }
     >
       <div className="text-sm font-semibold text-purple-800 tracking-wide flex flex-col">
