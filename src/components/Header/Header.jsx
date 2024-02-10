@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useState, Fragment, useContext } from "react";
+import { useState, Fragment, useContext,useEffect } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { UserDetailsContext } from "../../App";
 import SearchBox from "./SearchBox";
@@ -18,6 +18,11 @@ const Header = () => {
   const [searchBox, setSearchBox] = useState(false);
   const [LoginBox, setLoginBox] = useState(false);
   const userDetails = useContext(UserDetailsContext);
+
+  useEffect(()=>{
+    const logged = localStorage.getItem('loggedUser') ? true : false;
+    setLoggedIn(logged);
+  },[])
 
   function userAuthentication(emailValue, passwordValue) {
     const users = localStorage.getItem("Users")
@@ -38,6 +43,9 @@ const Header = () => {
       username: username,
       email: email,
     });
+    // localStorage.setItem('logged','true');
+    localStorage.setItem('loggedUser',JSON.stringify({ username: username,
+      email: email,}))
     setLoggedIn(true);
     setLoginBox(false);
   }
@@ -48,6 +56,7 @@ const Header = () => {
       username: "Guest User",
       email: "guestuser@mail.com",
     });
+    localStorage.removeItem('loggedUser')
     setLoggedIn(false);
   }
 
@@ -133,7 +142,7 @@ const Header = () => {
                         </div>
                       </div>
                       <hr className="bg-gray-200 h-[2px] w-full" />
-                      <div className="py-2">
+                      <div >
                         <ul>
                           <li className="px-4 py-2 font-semibold hover:bg-gray-300 hover:text-gray-600">
                             Account

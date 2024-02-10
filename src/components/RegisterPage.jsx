@@ -35,6 +35,8 @@ function RegisterPage() {
         e.target.email.value,
         e.target.password.value
       );
+      localStorage.setItem('loggedUser',JSON.stringify({ username: e.target.fullname.value,
+        email: e.target.email.value,}))
       toNavigate("/");
     }
   }
