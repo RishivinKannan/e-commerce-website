@@ -2,8 +2,8 @@
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { HeartIcon } from "../utils/Icons";
-import { useEffect, useState } from "react";
-
+import { useEffect, useState,useContext } from "react";
+import { UserDetailsContext } from "../App";
 export default function ProductCard({
   id,
   imageUrl,
@@ -16,14 +16,15 @@ export default function ProductCard({
 }) {
   const [isFav, setIsFav] = useState(false);
   const [favList, setFavList] = useState([]);
+  const {username} = useContext(UserDetailsContext);
 
   useEffect(() => {
-    const local = localStorage.getItem("FavList")
-      ? JSON.parse(localStorage.getItem("FavList"))
+    const local = localStorage.getItem(`${username}-Favlist`)
+      ? JSON.parse(localStorage.getItem(`${username}-Favlist`))
       : [];
     setFavList(local);
-    
-  }, [] );
+  }, [username] );
+
   useEffect(
     ()=>{
         const t = favList.find((fav)=>fav==id)== id ;
@@ -34,15 +35,15 @@ export default function ProductCard({
   function handleClick() {
 
     if (isFav){
-        const list = JSON.parse(localStorage.getItem("FavList"));
+        const list = JSON.parse(localStorage.getItem(`${username}-Favlist`));
         const removed = list.splice(list.indexOf(id),1) ;
         console.log(removed);
-        localStorage.setItem("FavList", JSON.stringify(list));
+        localStorage.setItem(`${username}-Favlist`, JSON.stringify(list));
         setIsFav(false);
     }
     else{
-        const favAdder = localStorage.getItem("FavList") ? JSON.parse(localStorage.getItem("FavList")).concat(id): [id] ;
-        localStorage.setItem("FavList", JSON.stringify(favAdder));
+        const favAdder = localStorage.getItem(`${username}-Favlist`) ? JSON.parse(localStorage.getItem(`${username}-Favlist`)).concat(id): [id] ;
+        localStorage.setItem(`${username}-Favlist`, JSON.stringify(favAdder));
         setIsFav(true);
     }
     

@@ -1,18 +1,20 @@
 import ProductCard from "./ProductCard";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
+import { UserDetailsContext } from "../App";
 import axios from "axios";
 
 const FavouritePage = () => {
   const [products, setProducts] = useState([]);
   const [favList, setFavList] = useState([]);
-
+  const {username} = useContext(UserDetailsContext);
+  
   useEffect(() => {
     axios.get("./fashionProducts.json").then((res) => setProducts(res.data));
-    const local = localStorage.getItem("FavList")
-      ? JSON.parse(localStorage.getItem("FavList"))
+    const local = localStorage.getItem(`${username}-Favlist`)
+      ? JSON.parse(localStorage.getItem(`${username}-Favlist`))
       : [];
     setFavList(local);
-  }, []);
+  }, [username]);
 
   return (
     <>
@@ -24,7 +26,7 @@ const FavouritePage = () => {
           <button
             className="p-2 text-lg bg-red-600 text-white rounded-md float-right"
             onClick={() => {
-              localStorage.setItem("FavList", JSON.stringify([]));
+              localStorage.setItem(`${username}-Favlist`, JSON.stringify([]));
               setFavList([]);
             }}
           >
