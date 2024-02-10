@@ -67,8 +67,8 @@ export default function Home({ Heading, ProductUrl }) {
 
 
   return (
-    <section className="w-full py-12 px-6  flex flex-col">
-      <h1 className="text-3xl font-extrabold tracking-wider px-7 [text-shadow:2px_2px_3px_var(--tw-shadow-color)] shadow-gray-500">{Heading}</h1>
+    <section className="w-full py-12 px-6 flex flex-col">
+      <h1 className="text-3xl font-extrabold text-center tracking-wider px-7 [text-shadow:2px_2px_3px_var(--tw-shadow-color)] shadow-gray-500">{Heading}</h1>
       <div className="px-4 pb-4 pt-8 w-full">
         {products == [] ? (
           "LOADING"
