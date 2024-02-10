@@ -12,7 +12,10 @@ function App() {
     email: "guestuser@gmail.com",
   });
   useEffect(()=>{
-    const logged = localStorage.getItem('loggedUser') ? JSON.parse(localStorage.getItem('loggedUser')) : false;
+    const logged = localStorage.getItem('loggedUser') ? JSON.parse(localStorage.getItem('loggedUser')) :{
+      username: "Guest user",
+      email: "guestuser@gmail.com",
+    };
     if(logged){
       setUser(logged);
     }
