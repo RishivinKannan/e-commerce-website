@@ -132,7 +132,7 @@ const Header = () => {
                     className={`absolute z-[100]  text-black w-80  right-0 mt-1 top-20`}
                   >
                     <div className="overflow-hidden rounded-lg shadow-xl ring-1 ring-black/5 bg-white">
-                      <div className="flex justify-start items-center space-x-4 p-6">
+                      <div className="flex justify-start items-center space-x-4 p-6 min-w-96">
                         <UserSolidIcon className="w-11 h-11" />
                         <div>
                           <span className="ml-2 font-semibold text-lg  ">

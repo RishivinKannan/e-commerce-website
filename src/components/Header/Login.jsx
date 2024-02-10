@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 export default function Login({ open, close, submit }) {
-  const [userNameValue, setUserNameValue] = useState("");
+  const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   return (
     <Transition appear show={open} as={Fragment}>
@@ -42,10 +42,10 @@ export default function Login({ open, close, submit }) {
 
                 <input
                   type="text"
-                  placeholder="USERNAME"
+                  placeholder="EMAIL"
                   className="border-[3px] bg-gray-200  w-10/12 h-10 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
-                  onChange={(e) => setUserNameValue(e.target.value)}
-                  value={userNameValue}
+                  onChange={(e) => setEmailValue(e.target.value)}
+                  value={emailValue}
                 />
                 <div className="w-10/12">
                   <input
@@ -65,7 +65,7 @@ export default function Login({ open, close, submit }) {
                     type="button"
                     className="inline-flex justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1  text-white hover:outline  outline-gray-500"
                     onClick={() => {
-                      submit(userNameValue,passwordValue);
+                      submit(emailValue,passwordValue);
                       setPasswordValue('')
                     }}
                   >
