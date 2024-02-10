@@ -16,10 +16,10 @@ export default function SearchPage() {
   return (
     <>
       <div className="pt-20">
-        <div className="lg:w-64 lg:h-screen flex justify-center bg-lightest fixed  p-4 shadow-lg font-extrabold">
+        <div className="lg:w-64 lg:h-screen flex justify-center bg-lightest fixed  px-4 py-8 shadow-lg font-extrabold">
           Under Development
         </div>
-        <div className="p-6 lg:pl-72 space-y-4 bg-gray-100 min-h-screen">
+        <div className="px-6 py-8 lg:pl-72 space-y-4 bg-gray-100 min-h-screen">
           <h1 className="font-semibold text-lg ">
             Category of{" "}
             <span className="text-xl font-normal p-2 text-gray-600">
