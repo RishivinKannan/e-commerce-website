@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useState, Fragment, useContext,useEffect } from "react";
+import { useState, Fragment, useContext, useEffect } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { UserDetailsContext } from "../../App";
 import SearchBox from "./SearchBox";
@@ -19,10 +19,10 @@ const Header = () => {
   const [LoginBox, setLoginBox] = useState(false);
   const userDetails = useContext(UserDetailsContext);
 
-  useEffect(()=>{
-    const logged = localStorage.getItem('loggedUser') ? true : false;
+  useEffect(() => {
+    const logged = localStorage.getItem("loggedUser") ? true : false;
     setLoggedIn(logged);
-  },[])
+  }, []);
 
   function userAuthentication(emailValue, passwordValue) {
     const users = localStorage.getItem("Users")
@@ -44,8 +44,10 @@ const Header = () => {
       email: email,
     });
     // localStorage.setItem('logged','true');
-    localStorage.setItem('loggedUser',JSON.stringify({ username: username,
-      email: email,}))
+    localStorage.setItem(
+      "loggedUser",
+      JSON.stringify({ username: username, email: email })
+    );
     setLoggedIn(true);
     setLoginBox(false);
   }
@@ -56,7 +58,7 @@ const Header = () => {
       username: "Guest User",
       email: "guestuser@mail.com",
     });
-    localStorage.removeItem('loggedUser')
+    localStorage.removeItem("loggedUser");
     setLoggedIn(false);
   }
 
@@ -89,8 +91,8 @@ const Header = () => {
             <WishListIcon />
           </NavLink>
           {/* Cart */}
-          <NavLink to="/cart" className={"hover:text-gray-500"}>
-            <CartIcon />
+          <NavLink to="/cart" className={"hover:text-gray-500 flex gap-1"}>
+            <CartIcon /> <span className="font-bold">4</span>
           </NavLink>
           {/* PriceTracker */}
           <NavLink className={"hover:text-gray-500"}>
@@ -129,10 +131,10 @@ const Header = () => {
                   leaveTo="opacity-0 translate-y-1"
                 >
                   <Popover.Panel
-                    className={`absolute z-[100]  text-black w-80  right-0 mt-1 top-20`}
+                    className={`absolute z-[100]  text-black min-w-80  right-0 mt-1 top-20`}
                   >
                     <div className="overflow-hidden rounded-lg shadow-xl ring-1 ring-black/5 bg-white">
-                      <div className="flex justify-start items-center space-x-4 p-6 min-w-96">
+                      <div className="flex justify-start items-center space-x-4 p-6 ">
                         <UserSolidIcon className="w-11 h-11" />
                         <div>
                           <span className="ml-2 font-semibold text-lg  ">
@@ -142,7 +144,7 @@ const Header = () => {
                         </div>
                       </div>
                       <hr className="bg-gray-200 h-[2px] w-full" />
-                      <div >
+                      <div>
                         <ul>
                           <li className="px-4 py-2 font-semibold hover:bg-gray-300 hover:text-gray-600">
                             Account

@@ -3,13 +3,13 @@ import {DeleteIcon} from '../utils/Icons.jsx'
 export default function CartProduct(){
 
     return(
-          <div className="py-4 px-3 flex flex-col gap-4 md:flex-col lg:flex-row rounded-lg bg-gray-50 ">
+          <div className="py-4 px-3 flex flex-col gap-4 md:flex-col lg:flex-row rounded-lg shadow-xl bg-gray-50 ">
             <div className="flex gap-2">
               <img
                 src={
                   "http://assets.myntassets.com/v1/images/style/properties/76d6c7b68001277c4f9298b1fd18be47_images.jpg"
                 }
-                className="min-w-20 min-h-20 max-20 max-h-20 rounded-lg shadow-2xl lg:max-w-28 lg:max-h-28 lg:min-w-28 lg:min-h-28"
+                className="min-w-20 min-h-20 max-20 max-h-20 rounded-lg shadow-lg lg:max-w-28 lg:max-h-28 lg:min-w-28 lg:min-h-28"
               />
               <div className=" flex flex-col flex-wrap justify-around  ">
                 <h2 className="text-lg lg:text-xl leading-5 font-semibold sm:tracking-wider lg:tracking-widest pl-2 md:min-w-80">
