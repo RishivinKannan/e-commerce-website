@@ -1,15 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import {createBrowserRouter,RouterProvider} from 'react-router-dom'
+import './index.css'
 import App from './App.jsx'
 import Home from "./components/Home.jsx";
 import Test from './Test.jsx'
-import './index.css'
-import {createBrowserRouter,RouterProvider} from 'react-router-dom'
 import SearchPage from './components/SearchPage.jsx';
 import FavouritePage from './components/FavouritePage.jsx';
 import CartPage from './components/CartPage.jsx';
 import CategoryPage from './components/CategoryPage.jsx';
 import RegisterPage from './components/RegisterPage.jsx';
+import ProductPage from './components/ProductPage.jsx';
 const router = createBrowserRouter(
   [
     {
@@ -35,6 +36,10 @@ const router = createBrowserRouter(
         {
           path:"/cart",
           element:<CartPage/>,
+        },
+        {
+          path:"/product/:id",
+          element:<ProductPage/>,
         },
       ]
     },
