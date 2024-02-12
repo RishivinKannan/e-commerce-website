@@ -32,6 +32,7 @@ export default function ProductCard({
   }, [favList, id]);
 
   function handleClick() {
+
     if (isFav) {
       const list = JSON.parse(localStorage.getItem(`${username}-Favlist`));
       const removed = list.splice(list.indexOf(id), 1);
@@ -52,22 +53,26 @@ export default function ProductCard({
       <Link to={`/product/${id}`}>
         <div
           {...otherProps}
-          className=" relative py-4 px-5 flex flex-col gap-6 max-w-64 min-h-80 rounded-lg space-y-6 group"
+          className="  py-4 px-5 flex flex-col gap-6 max-w-64 min-h-80 rounded-lg space-y-6 group"
         >
-          <img
-            src={imageUrl}
-            className="w-44 h-44 rounded-lg shadow-xl transition-all group-hover:scale-105 group-hover:shadow-2xl"
-          />
-          {showFav ? (
-            <div
-              className=" absolute -top-4 py-4 px-8 right-0 hidden group-hover:inline-block"
-              onClick={() => handleClick()}
-            >
-              <HeartIcon isFill={isFav} className="w-5 h-5" />
-            </div>
-          ) : (
-            " "
-          )}
+          <div className='relative z-0 w-44 h-44'>
+            <img
+              src={imageUrl}
+              className="w-44 h-44 rounded-lg shadow-xl transition-all group-hover:scale-105 group-hover:shadow-2xl"
+            />
+            {showFav ? (
+              <div
+                className=" absolute top-2 right-2 hidden group-hover:inline-block"
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleClick()}}
+              >
+                <HeartIcon isFill={isFav} className="w-5 h-5" />
+              </div>
+            ) : (
+              " "
+            )}
+          </div>
 
           <div className="space-y-2">
             <h2 className=" leading-6 font-bold tracking-widest pl-1 text-wrap ">
