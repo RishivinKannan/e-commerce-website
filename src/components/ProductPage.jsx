@@ -14,9 +14,6 @@ const ProductPage = () => {
     });
   }, [id]);
 
-  // useEffect(() => {
-  //   console.log(products)
-  // }, [products,id]);
 
   return product.length == 0 ? (
     "Loading"
@@ -45,7 +42,7 @@ const ProductPage = () => {
           <span className="text-3xl font-extrabold tracking-wide line-through text-gray-600 inline-block">
             ₹ 300
           </span>
-          <p className="tracking-wide leading-6 text-justify pr-6 pt-2 font-semibold text-sm text-gray-500">
+          <p className="tracking-wide leading-6 text-justify md:pr-6 pt-2 font-semibold text-sm text-gray-500">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui,
             impedit tempora nemo totam quia architecto nulla magnam, itaque sint
             possimus odit sequi rem, quidem deserunt laboriosam veniam corrupti
