@@ -20,7 +20,7 @@ const Banner = ({scroll}) => {
         
       <BannerImage/>
       </div>
-      <button className='absolute bottom-4 left-[48%] p-2 bg-white rounded-full text-black animate-bounce' onClick={()=>scroll()}>
+      <button className='absolute bottom-4 left-[46%] md:left-[48%] p-2 bg-white rounded-full text-black animate-bounce' onClick={()=>scroll()}>
         <DownArrowIcon/>
       </button>
     </div>
