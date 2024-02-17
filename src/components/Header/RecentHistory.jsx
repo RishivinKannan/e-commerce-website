@@ -33,6 +33,7 @@ export default function RecentHistory({
               return index < 10 ? (
                 <button
                   key={index + history}
+                  name='history'
                   className={`text-xs font-semibold  tracking-wide hover:bg-gray-300 focus:bg-gray-300 focus:outline-none ${
                     arr.length - 1 === index
                       ? "rounded-b-lg"

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import RecentHistory from "./RecentHistory";
 import { removeDuplicates } from "../../utils/constants";
 // eslint-disable-next-line react/prop-types
-export default function SearchBox({setShow}) {
+export default function SearchBox({ setShow }) {
   const [inputValue, setInputValue] = useState("");
   const [historyValue, setHistoryValue] = useState([]);
   const [focus, setFocus] = useState(false);
@@ -14,21 +14,20 @@ export default function SearchBox({setShow}) {
       ? JSON.parse(localStorage.getItem("recentHistory"))
       : [];
     setHistoryValue(local);
-    const handleKeyPress = (e)=>{
-      if (e.ctrlKey && e.code === 'Space')
-      {
+    const handleKeyPress = (e) => {
+      if (e.ctrlKey && e.code === "Space") {
         inputRef.current.focus();
       }
-      if (e.key === "Escape"){
+      if (e.key === "Escape") {
         inputRef.current.blur();
         setInputValue("");
       }
     };
 
-    window.addEventListener('keydown',handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
 
-    return ()=>{
-      window.removeEventListener('keydown',handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
 
@@ -47,29 +46,33 @@ export default function SearchBox({setShow}) {
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              if(inputValue != ""){
-                const historyAdder = removeDuplicates(historyValue.concat(inputValue));
+              if (inputValue != "") {
+                const historyAdder = removeDuplicates(
+                  historyValue.concat(inputValue)
+                );
 
-              localStorage.setItem(
-                "recentHistory",
-                JSON.stringify(historyAdder)
-              );
-              setFocus(false); 
-              setHistoryValue(historyAdder);
-              inputRef.current.blur();
-              setShow(false);
-              toNavigation(`/search?query=${inputValue.replace(/\s+/g ,'-')}`);
-               
+                localStorage.setItem(
+                  "recentHistory",
+                  JSON.stringify(historyAdder)
+                );
+                setFocus(false);
+                setHistoryValue(historyAdder);
+                inputRef.current.blur();
+                setShow(false);
+                toNavigation(
+                  `/search?query=${inputValue.replace(/\s+/g, "-")}`
+                );
               }
-              }
-              if (e.key === "Escape"){
-                  inputRef.current.blur();
-                  setInputValue("");
-              }
-
             }
-          }
-          onFocus={()=>setFocus(true)}
+            if (e.key === "Escape") {
+              inputRef.current.blur();
+              setInputValue("");
+            }
+          }}
+          onFocus={() => setFocus(true)}
+          onBlur={(e) => {
+            e.relatedTarget === null ? setFocus(false): e.relatedTarget.name === 'history'? null:setFocus(false);
+          }}
         />
         {inputValue == "" || !focus ? (
           ""

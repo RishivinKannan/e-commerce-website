@@ -37,7 +37,7 @@ export default function Login({ open, close, submit }) {
                   as="h3"
                   className="text-2xl font-bold leading-6 tracking-wide text-gray-900 text-center mb-4"
                 >
-                  Login
+                  Welcome Back!
                 </Dialog.Title>
 
                 <input
