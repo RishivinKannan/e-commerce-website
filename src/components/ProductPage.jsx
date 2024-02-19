@@ -1,19 +1,46 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useParams, NavLink } from "react-router-dom";
 import axios from "axios";
 import { Rating } from "@smastrom/react-rating";
+import { LongRightArrowIcon } from "../utils/Icons";
 import ProductImage from "./ProductImage";
+import { UserDetailsContext } from "../App";
 
 const ProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState([]);
+  const [isCartItem, setIsCartItem] = useState(false);
+  const [qty, setQty] = useState(1);
+  const { username } = useContext(UserDetailsContext);
 
   useEffect(() => {
     axios.get("../fashionProducts.json").then((res) => {
       setProduct(res.data.filter((data) => data.ProductId.toString() == id));
     });
-  }, [id]);
+    const cartList = localStorage.getItem(`${username}-Cart`)
+      ? JSON.parse(localStorage.getItem(`${username}-Cart`))
+      : [];
+    if (cartList.length != 0) {
+      const t = cartList.find((item) => item.id == id)?.id == id;
+      console.log(t)
+      setIsCartItem(t);
+    }
+  }, [id, username]);
 
+  const addToCart = () => {
+    const cartList = localStorage.getItem(`${username}-Cart`)
+      ? JSON.parse(localStorage.getItem(`${username}-Cart`)).concat({
+          id: id,
+          qty: qty,
+        })
+      : [{
+        id: id,
+        qty: qty,
+      }];
+
+    localStorage.setItem(`${username}-Cart`, JSON.stringify(cartList));
+    setIsCartItem(true);
+  };
 
   return product.length == 0 ? (
     "Loading"
@@ -49,6 +76,43 @@ const ProductPage = () => {
             eius sapiente! Veritatis consectetur neque architecto libero facere
             autem iure ratione consequuntur voluptate quis quam molestiae.
           </p>
+          {!isCartItem ? (
+            <div className="flex gap-8 pt-10 ">
+              <div className="flex rounded-3xl outline outline-1 outline-gray-300 ">
+                <button
+                  className=" bg-slate-300 w-14 h-12 rounded-l-3xl text-lg font-semibold hover:text-xl"
+                  onClick={() => (qty <= 1 ? null : setQty((prev) => prev - 1))}
+                >
+                  -
+                </button>
+                <span className="w-14 text-center leading-[3rem] text-lg font-semibold">
+                  {qty}
+                </span>
+                <button
+                  className="bg-slate-300 w-14 h-12 rounded-r-3xl text-lg font-semibold hover:text-xl"
+                  onClick={() => setQty((prev) => prev + 1)}
+                >
+                  +
+                </button>
+              </div>
+              <button
+                className="w-96 flex justify-center items-center gap-2 rounded-3xl py-2 px-6 text-white bg-darker text-lg font-bold tracking-wider hover:outline outline-gray-500"
+                onClick={() => addToCart()}
+              >
+                Add To Cart
+              </button>
+            </div>
+          ) : (
+            <div className="pt-10">
+              <NavLink
+                to={"/cart"}
+                className="w-full lg:w-[36rem] flex justify-center items-center gap-2 rounded-3xl py-3 px-6 text-white bg-darker text-lg font-bold tracking-wider hover:outline  outline-gray-500 "
+              >
+                Go To Cart
+                <LongRightArrowIcon />
+              </NavLink>
+            </div>
+          )}
         </div>
       </div>
     </div>

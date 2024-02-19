@@ -26,11 +26,11 @@ function OrderSummary() {
                 <CouponIcon/>
                 <input type="text" placeholder="Add Promo Code" className='w-full bg-lightest font-semibold tracking-wider placeholder:text-gray-500  focus:outline-none' />
             </div>
-            <button className="rounded-3xl py-3 px-7 md:py-2 lg:py-3 md:px-4 lg:px-7 text-white bg-darker text-lg font-bold tracking-wider">
+            <button className="rounded-3xl py-3 px-7 md:py-2 lg:py-3 md:px-4 lg:px-7 text-white bg-darker text-lg font-bold tracking-wider hover:outline outline-gray-500">
                 Apply
             </button>
         </div>
-        <button className="w-full flex justify-center items-center gap-2 rounded-3xl py-3 px-6 text-white bg-darker text-lg font-bold tracking-wider">
+        <button className="w-full flex justify-center items-center gap-2 rounded-3xl py-3 px-6 text-white bg-darker text-lg font-bold tracking-wider hover:outline outline-gray-500">
                 Go to Checkout
                 <LongRightArrowIcon/>
         </button>

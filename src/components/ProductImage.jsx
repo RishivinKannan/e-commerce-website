@@ -6,6 +6,7 @@ const ProductImage = ({ images }) => {
   const mainsettings = {
     pagination:{
       dynamicBullets: true,
+      clickable: true
     },
   };
   return (
