@@ -23,8 +23,10 @@ export default function CartPage() {
         <div className="col-span-3 flex flex-col gap-4 items-center p-4">
           {
             product.length == 0 ?
-            "No items added":
-            product.map((item)=><CartProduct key={item?.id}{...item}/>)
+            <div className="w-full h-full flex justify-center items-center text-2xl font-bold tracking-wider text-zinc-600">
+              No Cart Items
+            </div>:
+            product.map((item)=><CartProduct key={item?.id}{...item} deleteProduct={setProduct}/>)
           }
         </div>
         <div className="py-3 flex justify-center col-span-3 md:col-span-2 ">
