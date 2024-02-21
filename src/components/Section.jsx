@@ -1,21 +1,13 @@
 /* eslint-disable react/prop-types */
-
 import ProductCard from "./ProductCard";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import ProductCardShimmer from "./ProductCardShimmer";
 import { NextArrow, PrevArrow } from "../utils/Icons";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export default function Home({ Heading, ProductUrl }) {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    axios.get(ProductUrl).then((res) => setProducts(res.data));
-  }, [ProductUrl]);
-
+export default function Home({ Heading, products, loading }) {
   var settings = {
     speed: 500,
     infinite: false,
@@ -30,8 +22,8 @@ export default function Home({ Heading, ProductUrl }) {
           slidesToShow: 4,
           slidesToScroll: 4,
           infinite: true,
-          dots: true
-        }
+          dots: true,
+        },
       },
       {
         breakpoint: 1024,
@@ -39,9 +31,8 @@ export default function Home({ Heading, ProductUrl }) {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true
-
-        }
+          dots: true,
+        },
       },
       {
         breakpoint: 600,
@@ -49,8 +40,8 @@ export default function Home({ Heading, ProductUrl }) {
           slidesToShow: 2,
           slidesToScroll: 2,
           infinite: true,
-          dots: true
-        }
+          dots: true,
+        },
       },
       {
         breakpoint: 472,
@@ -59,23 +50,42 @@ export default function Home({ Heading, ProductUrl }) {
           slidesToScroll: 1,
           centerMode: true,
           infinite: true,
-          dots: true
-        }
-      }
-    ]
+          dots: true,
+        },
+      },
+    ],
   };
 
+  if (loading) {
+    return (
+      <section className="w-full py-12 px-6 flex flex-col">
+        <h1 className="text-3xl font-extrabold text-center tracking-wider px-7">
+          <span className="inline-block w-96 h-10 p-2 bg-slate-300/60 animate-pulse"></span>
+        </h1>
+        <div className="px-4 pb-4 pt-8 w-full">
+          <div className="slider-container w-full">
+            <Slider {...settings}>
+              {Array(4)
+                .fill()
+                .map((x, i) => (
+                  <ProductCardShimmer key={i} />
+                ))}
+            </Slider>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="w-full py-12 px-6 flex flex-col">
-      <h1 className="text-3xl font-extrabold text-center tracking-wider px-7  shadow-gray-500">{Heading}</h1>
+      <h1 className="text-3xl font-extrabold text-center tracking-wider px-7  ">
+        {Heading}
+      </h1>
       <div className="px-4 pb-4 pt-8 w-full">
-        {products == [] ? (
-          "LOADING"
-        ) : (
-          <div className="slider-container w-full">
+        <div className="slider-container w-full">
           <Slider {...settings}>
-            {products.map((product) => (
+            {products?.map((product) => (
               <ProductCard
                 key={product.ProductId}
                 id={product.ProductId}
@@ -86,8 +96,7 @@ export default function Home({ Heading, ProductUrl }) {
               />
             ))}
           </Slider>
-          </div>
-        )}
+        </div>
       </div>
     </section>
   );

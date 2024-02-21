@@ -1,19 +1,13 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
 import ProductCard from "./ProductCard";
+import ProductCardShimmer from "./ProductCardShimmer";
 import { useSearchParams } from "react-router-dom";
-
+import { useGetAllProductsQuery } from "../Redux/api/products";
 export default function SearchPage() {
-  const [products, setProducts] = useState([]);
   const [searchParams] = useSearchParams();
   const query = searchParams.get("query");
-
-  useEffect(() => {
-    axios.get("./fashionProducts.json").then((res) => setProducts(res.data));
-  }, []);
+  const { data: products, isLoading } = useGetAllProductsQuery();
 
   return (
-
     <>
       <div className="pt-20">
         <div className="lg:w-64 lg:h-screen flex justify-center bg-lightest fixed  px-4 py-8 shadow-lg font-extrabold">
@@ -27,25 +21,29 @@ export default function SearchPage() {
             </span>
           </h1>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-y-10 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-            {products
-              .filter((product) =>
-                product.ProductTitle.toLowerCase().includes(
-                  query.replace(/-/g, " ").toLowerCase()
+            {isLoading ? (
+              Array(10).fill().map((x,i)=><ProductCardShimmer key={i} />))
+             : (
+              products
+                ?.filter((product) =>
+                  product.ProductTitle.toLowerCase().includes(
+                    query.replace(/-/g, " ").toLowerCase()
+                  )
                 )
-              )
-              .slice(0, 30)
-              .map((product) => {
-                return (
-                  <ProductCard
-                    key={product.ProductId}
-                    id={product.ProductId}
-                    imageUrl={product.ImageURL}
-                    title={product.ProductTitle}
-                    rating={4}
-                    showFav
-                  />
-                );
-              })}
+                .slice(0, 30)
+                .map((product) => {
+                  return (
+                    <ProductCard
+                      key={product.ProductId}
+                      id={product.ProductId}
+                      imageUrl={product.ImageURL}
+                      title={product.ProductTitle}
+                      rating={4}
+                      showFav
+                    />
+                  );
+                })
+            )}
           </div>
         </div>
       </div>
