@@ -63,7 +63,7 @@ const Header = () => {
   }
 
   return (
-    <header className="fixed w-screen flex justify-between items-center py-6 px-8 bg-darker text-white z-50 ">
+    <header className={` fixed w-screen flex justify-between items-center ${loggedIn?"py-4":"py-6"} px-8 bg-darker text-white z-50 `}>
       <NavLink to="/">
         <h1 className="text-2xl font-extrabold tracking-widest md:text-3xl">
           SHOP
@@ -92,7 +92,8 @@ const Header = () => {
           </NavLink>
           {/* Cart */}
           <NavLink to="/cart" className={"hover:text-gray-500 flex gap-1"}>
-            <CartIcon /> <span className="font-bold">4</span>
+            <CartIcon /> 
+            {/* <span className="font-bold">4</span> */}
           </NavLink>
           {/* PriceTracker */}
           <NavLink className={"hover:text-gray-500"}>
