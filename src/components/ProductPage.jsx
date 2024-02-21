@@ -85,7 +85,7 @@ const ProductPage = () => {
                 >
                   -
                 </button>
-                <span className="w-14 text-center leading-[3rem] text-lg font-semibold">
+                <span className="w-14 bg-slate-200/30 text-center leading-[3rem] text-lg font-semibold">
                   {qty}
                 </span>
                 <button

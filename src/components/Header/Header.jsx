@@ -63,7 +63,7 @@ const Header = () => {
   }
 
   return (
-    <header className={` fixed w-screen flex justify-between items-center ${loggedIn?"py-4":"py-6"} px-8 bg-darker text-white z-50 `}>
+    <header className={` fixed w-screen flex justify-between items-center py-6 ${loggedIn?"lg:py-3":"lg:py-6"} px-8 bg-darker text-white z-50 `}>
       <NavLink to="/">
         <h1 className="text-2xl font-extrabold tracking-widest md:text-3xl">
           SHOP
