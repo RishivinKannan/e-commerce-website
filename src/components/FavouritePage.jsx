@@ -1,12 +1,12 @@
 import ProductCard from "./ProductCard";
-import { useState, useEffect,useContext } from "react";
-import { UserDetailsContext } from "../App";
+import { useState, useEffect} from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 const FavouritePage = () => {
   const [products, setProducts] = useState([]);
   const [favList, setFavList] = useState([]);
-  const {username} = useContext(UserDetailsContext);
+  const { username } = useSelector((state) => state.user);
   
   useEffect(() => {
     axios.get("./fashionProducts.json").then((res) => setProducts(res.data));

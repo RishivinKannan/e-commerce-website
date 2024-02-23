@@ -1,11 +1,11 @@
-import { useContext } from "react";
-import { UserDetailsContext } from "../App.jsx";
+
+import { useSelector } from "react-redux";
 import {DownArrowIcon} from '../utils/Icons'
 import BannerImage from '../utils/BannerImage.jsx'
 
 // eslint-disable-next-line react/prop-types
 const Banner = ({scroll}) => {
-    const {username}=useContext(UserDetailsContext);
+  const { username } = useSelector((state) => state.user);
   return (
     <div className="w-full relative h-[70vh] px-10 bg-darker flex justify-center lg:justify-between text-white  ">
       <div className="space-y-10 p-2  flex flex-col justify-center items-center lg:items-start">

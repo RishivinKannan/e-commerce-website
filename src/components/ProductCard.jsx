@@ -3,8 +3,8 @@ import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { Link } from "react-router-dom";
 import { HeartIcon } from "../utils/Icons";
-import { useEffect, useState, useContext } from "react";
-import { UserDetailsContext } from "../App";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 export default function ProductCard({
   id,
   imageUrl,
@@ -17,7 +17,7 @@ export default function ProductCard({
 }) {
   const [isFav, setIsFav] = useState(false);
   const [favList, setFavList] = useState([]);
-  const { username } = useContext(UserDetailsContext);
+  const { username } = useSelector((state) => state.user);
 
   useEffect(() => {
     const local = localStorage.getItem(`${username}-Favlist`)

@@ -1,17 +1,17 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import axios from "axios";
 import { Rating } from "@smastrom/react-rating";
 import { LongRightArrowIcon } from "../utils/Icons";
 import ProductImage from "./ProductImage";
-import { UserDetailsContext } from "../App";
+import { useSelector } from "react-redux";
 
 const ProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState([]);
   const [isCartItem, setIsCartItem] = useState(false);
   const [qty, setQty] = useState(1);
-  const { username } = useContext(UserDetailsContext);
+  const { username } = useSelector((state) => state.user);
 
   useEffect(() => {
     axios.get("../fashionProducts.json").then((res) => {

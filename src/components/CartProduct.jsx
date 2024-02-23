@@ -1,14 +1,14 @@
 import { DeleteIcon } from "../utils/Icons.jsx";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
-import { UserDetailsContext } from "../App";
 import { Link } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 export default function CartProduct({ id, qty, deleteProduct }) {
   const [product, setProduct] = useState([]);
   const [qtyState, setQtyState] = useState(qty);
-  const { username } = useContext(UserDetailsContext);
+  const { username } = useSelector((state) => state.user);
 
   useEffect(() => {
     axios.get("../fashionProducts.json").then((res) => {

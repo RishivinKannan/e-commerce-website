@@ -1,7 +1,9 @@
 import { NavLink } from "react-router-dom";
-import { useState, Fragment, useContext, useEffect } from "react";
+import { useState, Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { userlogin, userlogout } from "../../Redux/services/userSlice";
 import { Popover, Transition } from "@headlessui/react";
-import { UserDetailsContext } from "../../App";
+
 import SearchBox from "./SearchBox";
 import {
   SearchIcon,
@@ -14,15 +16,14 @@ import {
 import Login from "./Login";
 
 const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
   const [searchBox, setSearchBox] = useState(false);
   const [LoginBox, setLoginBox] = useState(false);
-  const userDetails = useContext(UserDetailsContext);
-
-  useEffect(() => {
-    const logged = localStorage.getItem("loggedUser") ? true : false;
-    setLoggedIn(logged);
-  }, []);
+  const {
+    username,
+    email,
+    isLogged: loggedIn,
+  } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   function userAuthentication(emailValue, passwordValue) {
     const users = localStorage.getItem("Users")
@@ -38,32 +39,20 @@ const Header = () => {
       : login(getUser[0].username, getUser[0].email);
   }
   function login(username, email) {
-    userDetails.provider({
-      ...userDetails,
-      username: username,
-      email: email,
-    });
-    // localStorage.setItem('logged','true');
-    localStorage.setItem(
-      "loggedUser",
-      JSON.stringify({ username: username, email: email })
-    );
-    setLoggedIn(true);
+    dispatch(userlogin({ username, email }));
     setLoginBox(false);
   }
 
   function logout() {
-    userDetails.provider({
-      ...userDetails,
-      username: "Guest User",
-      email: "guestuser@mail.com",
-    });
-    localStorage.removeItem("loggedUser");
-    setLoggedIn(false);
+    dispatch(userlogout());
   }
 
   return (
-    <header className={` fixed w-screen flex justify-between items-center py-6 ${loggedIn?"lg:py-3":"lg:py-6"} px-8 bg-darker text-white z-50 `}>
+    <header
+      className={` fixed w-screen flex justify-between items-center py-6 ${
+        loggedIn ? "lg:py-3" : "lg:py-6"
+      } px-8 bg-darker text-white z-50 `}
+    >
       <NavLink to="/">
         <h1 className="text-2xl font-extrabold tracking-widest md:text-3xl">
           SHOP
@@ -92,7 +81,7 @@ const Header = () => {
           </NavLink>
           {/* Cart */}
           <NavLink to="/cart" className={"hover:text-gray-500 flex gap-1"}>
-            <CartIcon /> 
+            <CartIcon />
             {/* <span className="font-bold">4</span> */}
           </NavLink>
           {/* PriceTracker */}
@@ -116,9 +105,7 @@ const Header = () => {
                   {open ? <UserSolidIcon className="w-8 h-8" /> : <UserIcon />}
 
                   <span className="ml-2 font-semibold text-lg hidden md:inline">
-                    {userDetails.username == ""
-                      ? "Username"
-                      : userDetails.username}
+                    {username}
                   </span>
                 </Popover.Button>
 
@@ -139,9 +126,9 @@ const Header = () => {
                         <UserSolidIcon className="w-11 h-11" />
                         <div>
                           <span className="ml-2 font-semibold text-lg  ">
-                            {userDetails.username}
+                            {username}
                           </span>
-                          <p className="ml-2">{userDetails.email}</p>
+                          <p className="ml-2">{email}</p>
                         </div>
                       </div>
                       <hr className="bg-gray-200 h-[2px] w-full" />
