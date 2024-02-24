@@ -33,8 +33,20 @@ const userSlice = createSlice({
       state.email = "guestuser@mail.com";
       state.isLogged = false;
     },
+    getuser(state) {
+      const logged = localStorage.getItem("loggedUser")
+        ? JSON.parse(localStorage.getItem("loggedUser"))
+        : {
+            username: "Guest user",
+            email: "guestuser@mail.com",
+            isLogged: false,
+          };
+      state.username = logged.username;
+      state.email = logged.email;
+      state.isLogged = logged.isLogged ? logged.isLogged : true;
+    },
   },
 });
 
-export const { userlogin, userlogout } = userSlice.actions;
+export const { userlogin, userlogout,getuser } = userSlice.actions;
 export default userSlice.reducer;

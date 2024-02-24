@@ -7,11 +7,15 @@ import {
 } from "../utils/registerUtils";
 import {BackArrowIcon} from '../utils/Icons'
 import { useNavigate,Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getuser } from "../Redux/services/userSlice";
 
 function RegisterPage() {
   const [emailCode, setEmailCode] = useState("");
   const [passErrorCode, setPassErrorCode] = useState("");
   const toNavigate = useNavigate();
+  const dispatch = useDispatch();
+
   function handleSubmit(e) {
     e.preventDefault();
     const regesiteredUser = checkUserRegister(e.target.email.value);
@@ -37,7 +41,9 @@ function RegisterPage() {
       );
       localStorage.setItem('loggedUser',JSON.stringify({ username: e.target.fullname.value,
         email: e.target.email.value,}))
+      dispatch(getuser())
       toNavigate("/");
+
     }
   }
 
