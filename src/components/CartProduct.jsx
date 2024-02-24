@@ -1,15 +1,20 @@
 import { DeleteIcon } from "../utils/Icons.jsx";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import {
+  decrementqty,
+  deleteitem,
+  incrementqty,
+} from "../Redux/services/cartSlice.js";
 
 // eslint-disable-next-line react/prop-types
-export default function CartProduct({ id, qty, deleteProduct }) {
+export default function CartProduct({ id, qty }) {
   const [product, setProduct] = useState([]);
   const [qtyState, setQtyState] = useState(qty);
   const { username } = useSelector((state) => state.user);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     axios.get("../fashionProducts.json").then((res) => {
       setProduct(res.data.filter((data) => data.ProductId.toString() == id));
@@ -19,46 +24,18 @@ export default function CartProduct({ id, qty, deleteProduct }) {
   function increment(e) {
     e.preventDefault();
     setQtyState((prev) => prev + 1);
-    const cartList = localStorage.getItem(`${username}-Cart`)
-      ? JSON.parse(localStorage.getItem(`${username}-Cart`))
-      : [];
-    const temp = cartList.filter((item) => {
-      return item.id == id;
-    });
-    const index = cartList.indexOf(temp[0]);
-
-    cartList[index].qty = qtyState + 1;
-    localStorage.setItem(`${username}-Cart`, JSON.stringify(cartList));
+    dispatch(incrementqty({ id, username }));
   }
   function decrement(e) {
     e.preventDefault();
-    if (qtyState > 1) {
+    if (qty > 1) {
       setQtyState((prev) => prev - 1);
-      const cartList = localStorage.getItem(`${username}-Cart`)
-        ? JSON.parse(localStorage.getItem(`${username}-Cart`))
-        : [];
-      const temp = cartList.filter((item) => {
-        return item.id == id;
-      });
-      const index = cartList.indexOf(temp[0]);
-
-      cartList[index].qty = qtyState - 1;
-      localStorage.setItem(`${username}-Cart`, JSON.stringify(cartList));
+      dispatch(decrementqty({ id, username }));
     }
   }
   function Cartdelete(e) {
     e.preventDefault();
-    const cartList = localStorage.getItem(`${username}-Cart`)
-      ? JSON.parse(localStorage.getItem(`${username}-Cart`))
-      : [];
-    const temp = cartList.filter((item) => {
-      return item.id == id;
-    });
-    const index = cartList.indexOf(temp[0]);
-
-    cartList.splice(index, 1);
-    localStorage.setItem(`${username}-Cart`, JSON.stringify(cartList));
-    deleteProduct(cartList);
+    dispatch(deleteitem({ id, username }));
   }
 
   return product == [] ? null : (

@@ -1,18 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import CartProduct from "./CartProduct";
 import OrderSummary from "./OrderSummary";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getcart } from "../Redux/services/cartSlice";
 
 export default function CartPage() {
   const { username } = useSelector((state) => state.user);
-  const [product, setProduct] = useState([]);
-
+  const { cartList } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
   useEffect(() => {
-    const cartList = localStorage.getItem(`${username}-Cart`)
-      ? JSON.parse(localStorage.getItem(`${username}-Cart`))
-      : [];
-    setProduct(cartList);
-  }, [username]);
+    dispatch(getcart({ username }));
+  }, [username,dispatch]);
   return (
     <>
       <div className="p-2 pt-28 bg-gray-100 min-h-screen">
@@ -21,16 +19,15 @@ export default function CartPage() {
         </span>
         <div className="p-4 grid grid-cols-3 gap-y-10 md:grid-cols-5">
           <div className="col-span-3 flex flex-col gap-4 items-center p-4">
-            {product.length == 0 ? (
+            {cartList.length == 0 ? (
               <div className="w-full h-full flex justify-center items-center text-2xl font-bold tracking-wider text-zinc-600">
                 No Cart Items
               </div>
             ) : (
-              product.map((item) => (
+              cartList.map((item) => (
                 <CartProduct
                   key={item?.id}
                   {...item}
-                  deleteProduct={setProduct}
                 />
               ))
             )}

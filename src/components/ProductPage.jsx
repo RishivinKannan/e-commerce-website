@@ -4,7 +4,8 @@ import axios from "axios";
 import { Rating } from "@smastrom/react-rating";
 import { LongRightArrowIcon } from "../utils/Icons";
 import ProductImage from "./ProductImage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addtocart, getcart } from "../Redux/services/cartSlice";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -12,33 +13,24 @@ const ProductPage = () => {
   const [isCartItem, setIsCartItem] = useState(false);
   const [qty, setQty] = useState(1);
   const { username } = useSelector((state) => state.user);
-
+  const { cartList } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
   useEffect(() => {
     axios.get("../fashionProducts.json").then((res) => {
       setProduct(res.data.filter((data) => data.ProductId.toString() == id));
     });
-    const cartList = localStorage.getItem(`${username}-Cart`)
-      ? JSON.parse(localStorage.getItem(`${username}-Cart`))
-      : [];
     if (cartList.length != 0) {
       const t = cartList.find((item) => item.id == id)?.id == id;
-      console.log(t)
       setIsCartItem(t);
     }
-  }, [id, username]);
+  }, [id, username,cartList]);
+
+  useEffect(() => {
+    dispatch(getcart({ username }));
+  }, [dispatch, username]);
 
   const addToCart = () => {
-    const cartList = localStorage.getItem(`${username}-Cart`)
-      ? JSON.parse(localStorage.getItem(`${username}-Cart`)).concat({
-          id: id,
-          qty: qty,
-        })
-      : [{
-        id: id,
-        qty: qty,
-      }];
-
-    localStorage.setItem(`${username}-Cart`, JSON.stringify(cartList));
+    dispatch(addtocart({ id, qty, username }));
     setIsCartItem(true);
   };
 
