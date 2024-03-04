@@ -6,6 +6,7 @@ import { LongRightArrowIcon } from "../utils/Icons";
 import ProductImage from "./ProductImage";
 import { useDispatch, useSelector } from "react-redux";
 import { addtocart, getcart } from "../Redux/services/cartSlice";
+import ProductTab from "./ProductTab";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -23,7 +24,7 @@ const ProductPage = () => {
       const t = cartList.find((item) => item.id == id)?.id == id;
       setIsCartItem(t);
     }
-  }, [id, username,cartList]);
+  }, [id,username,cartList]);
 
   useEffect(() => {
     dispatch(getcart({ username }));
@@ -106,6 +107,10 @@ const ProductPage = () => {
             </div>
           )}
         </div>
+      </div>
+      <div className="px-2 lg:px-16">
+
+      <ProductTab/>
       </div>
     </div>
   );
