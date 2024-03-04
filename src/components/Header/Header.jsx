@@ -13,6 +13,7 @@ import {
   UserIcon,
   UserSolidIcon,
 } from "../../utils/Icons";
+import Logo from "../../utils/Logo";
 import Login from "./Login";
 
 const Header = () => {
@@ -54,9 +55,7 @@ const Header = () => {
       } px-8 bg-darker text-white z-50 `}
     >
       <NavLink to="/">
-        <h1 className="text-2xl font-extrabold tracking-widest md:text-3xl">
-          SHOP
-        </h1>
+        <Logo className={'w-32 '}/>
       </NavLink>
 
       <div
