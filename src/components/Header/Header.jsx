@@ -3,7 +3,6 @@ import { useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userlogin, userlogout } from "../../Redux/services/userSlice";
 import { Popover, Transition } from "@headlessui/react";
-
 import SearchBox from "./SearchBox";
 import {
   SearchIcon,
@@ -55,7 +54,7 @@ const Header = () => {
       } px-8 bg-darker text-white z-50 `}
     >
       <NavLink to="/">
-        <Logo className={'w-32 '}/>
+        <Logo className={"w-32 "} />
       </NavLink>
 
       <div
