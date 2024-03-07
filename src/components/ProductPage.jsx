@@ -6,7 +6,7 @@ import { LongRightArrowIcon } from "../utils/Icons";
 import ProductImage from "./ProductImage";
 import { useDispatch, useSelector } from "react-redux";
 import { addtocart, getcart } from "../Redux/services/cartSlice";
-import ProductTab from "./ProductTab";
+import ProductTabs from "./ProductTabs";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -108,9 +108,9 @@ const ProductPage = () => {
           )}
         </div>
       </div>
-      <div className="px-2 lg:px-16">
+      <div className="px-4 lg:px-16">
 
-      <ProductTab/>
+      <ProductTabs />
       </div>
     </div>
   );
