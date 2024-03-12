@@ -4,7 +4,8 @@ import "@smastrom/react-rating/style.css";
 import { Link } from "react-router-dom";
 import { HeartIcon } from "../utils/Icons";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addtofav, getFavList, removefav } from "../Redux/services/FavSlice";
 export default function ProductCard({
   id,
   imageUrl,
@@ -16,15 +17,12 @@ export default function ProductCard({
   ...otherProps
 }) {
   const [isFav, setIsFav] = useState(false);
-  const [favList, setFavList] = useState([]);
   const { username } = useSelector((state) => state.user);
-
+  const { favList } = useSelector((state) => state.fav);
+  const dispatch = useDispatch();
   useEffect(() => {
-    const local = localStorage.getItem(`${username}-Favlist`)
-      ? JSON.parse(localStorage.getItem(`${username}-Favlist`))
-      : [];
-    setFavList(local);
-  }, [username]);
+    dispatch(getFavList({ username }));
+  }, [username,dispatch]);
 
   useEffect(() => {
     const t = favList.find((fav) => fav == id) == id;
@@ -32,18 +30,11 @@ export default function ProductCard({
   }, [favList, id]);
 
   function handleClick() {
-
     if (isFav) {
-      const list = JSON.parse(localStorage.getItem(`${username}-Favlist`));
-      const removed = list.splice(list.indexOf(id), 1);
-      console.log(removed);
-      localStorage.setItem(`${username}-Favlist`, JSON.stringify(list));
+      dispatch(removefav({id, username }));
       setIsFav(false);
     } else {
-      const favAdder = localStorage.getItem(`${username}-Favlist`)
-        ? JSON.parse(localStorage.getItem(`${username}-Favlist`)).concat(id)
-        : [id];
-      localStorage.setItem(`${username}-Favlist`, JSON.stringify(favAdder));
+      dispatch(addtofav({id, username }));
       setIsFav(true);
     }
   }
@@ -55,7 +46,7 @@ export default function ProductCard({
           {...otherProps}
           className="  py-4 px-5 flex flex-col gap-6 max-w-64 min-h-80 rounded-lg space-y-6 group"
         >
-          <div className='relative z-0 w-44 h-44'>
+          <div className="relative z-0 w-44 h-44">
             <img
               src={imageUrl}
               className="w-44 h-44 rounded-lg shadow-xl transition-all group-hover:scale-105 group-hover:shadow-2xl"
@@ -64,8 +55,9 @@ export default function ProductCard({
               <div
                 className=" absolute top-2 right-2 hidden group-hover:inline-block"
                 onClick={(e) => {
-                  e.preventDefault()
-                  handleClick()}}
+                  e.preventDefault();
+                  handleClick();
+                }}
               >
                 <HeartIcon isFill={isFav} className="w-5 h-5" />
               </div>

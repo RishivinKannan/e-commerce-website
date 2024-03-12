@@ -1,15 +1,12 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Rating } from "@smastrom/react-rating";
 import { useSelector } from "react-redux";
 // eslint-disable-next-line react/prop-types
 export default function WriteReviewDialog({ open, close, submit }) {
-
-  const [rating, setRating] = useState(0);
   const { username, isLogged } = useSelector((state) => state.user);
   const sendReview = (e) => {
     e.preventDefault();
-    submit(e.target.review.value, rating);
+    submit(e.target.question.value);
   };
   if (!isLogged) {
     return <></>;
@@ -46,24 +43,19 @@ export default function WriteReviewDialog({ open, close, submit }) {
                   as="h3"
                   className="w-10/12 text-2xl font-bold  tracking-wide text-gray-900"
                 >
-                  Write a review
+                  Write a Question
                 </Dialog.Title>
                 <h1 className="w-10/12 font-semibold tracking-wide px-1 text-gray-500">
                   {username}
                 </h1>
                 <form onSubmit={(e) => sendReview(e)} className="space-y-6">
-                  <Rating
-                    className="max-w-28 z-0"
-                    value={rating}
-                    onChange={setRating}
-                  />
                   <textarea
                     autoFocus
-                    placeholder="Share your thoughts about this product"
-                    rows={6}
+                    placeholder="Ask your Question about this product"
+                    rows={4}
                     cols={30}
                     className="border-[3px] bg-gray-100 w-full rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
-                    name="review"
+                    name="question"
                     required
                   />
 
