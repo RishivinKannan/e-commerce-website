@@ -12,6 +12,8 @@ import CartPage from "./components/CartPage.jsx";
 import CategoryPage from "./components/CategoryPage.jsx";
 import RegisterPage from "./components/RegisterPage.jsx";
 import ProductPage from "./components/ProductPage.jsx";
+import VendorApp from "./VendorApp.jsx";
+import VendorLoginPage from "./components/vendor/VendorLoginPage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -57,6 +59,16 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/vendor',
+    element: <VendorApp/>,
+    children:[
+      {
+        path:'/vendor',
+        element: <VendorLoginPage/>
+      }
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
