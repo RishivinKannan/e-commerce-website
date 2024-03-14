@@ -3,7 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { productsApi } from "./api/products";
 import userReducer from "./services/userSlice";
 import cartReducer from "./services/cartSlice";
-import favReducer from "./services/favSlice";
+import favReducer from "./services/FavSlice";
 
 const store = configureStore({
   reducer: {
