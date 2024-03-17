@@ -74,11 +74,23 @@ const Header = () => {
             <SearchIcon />
           </button>
           {/* Wishlist */}
-          <NavLink to="/wishlist" className={"hover:text-gray-500"}>
+          <NavLink
+            to="/wishlist"
+            className={({ isActive }) =>
+              `hover:text-gray-500 ${isActive ? "text-red-300" : ""}`
+            }
+          >
             <WishListIcon />
           </NavLink>
           {/* Cart */}
-          <NavLink to="/cart" className={"hover:text-gray-500 flex gap-1"}>
+          <NavLink
+            to="/cart"
+            className={({ isActive }) =>
+              `hover:text-gray-500 ${
+                isActive ? "text-blue-300" : ""
+              } flex gap-1`
+            }
+          >
             <CartIcon />
             {/* <span className="font-bold">4</span> */}
           </NavLink>
