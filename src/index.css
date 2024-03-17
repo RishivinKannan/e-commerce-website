@@ -2,3 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.gradient-violet {
+  @apply bg-gradient-to-r from-violet-400 to-purple-300;
+}
+.gradient-blue {
+  @apply bg-gradient-to-r from-indigo-500 to-blue-500;
+}
+.gradient-orange {
+  @apply bg-gradient-to-r from-orange-300 to-rose-300;
+}

@@ -14,6 +14,8 @@ import RegisterPage from "./components/RegisterPage.jsx";
 import ProductPage from "./components/ProductPage.jsx";
 import VendorApp from "./VendorApp.jsx";
 import VendorLoginPage from "./components/vendor/VendorLoginPage.jsx";
+import VendorHomePage from "./components/vendor/VendorHomePage.jsx";
+import Dashboard from "./components/vendor/Dashboard.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -60,15 +62,30 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/vendor',
-    element: <VendorApp/>,
-    children:[
+    path: "/vendor",
+    element: <VendorApp />,
+    children: [
       {
-        path:'/vendor',
-        element: <VendorLoginPage/>
-      }
-    ]
-  }
+        path: "/vendor/login",
+        element: <VendorLoginPage />,
+      },
+      {
+        path: "/vendor",
+        element: <VendorHomePage />,
+        children: [
+          {
+            path: "/vendor/home",
+            element: <Dashboard />,
+          },
+
+          {
+            path: "/vendor/products",
+            element: <Dashboard />,
+          },
+        ],
+      },
+    ],
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
