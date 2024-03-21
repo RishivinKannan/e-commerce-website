@@ -73,7 +73,7 @@ export const PriceTrackerIcon = () => {
   );
 };
 
-export const UserIcon = () => {
+export const UserIcon = ({ className = "w-8 h-8" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +81,7 @@ export const UserIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-8 h-8"
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -294,6 +294,129 @@ export function BackArrowIcon() {
         strokeLinejoin="round"
         d="M15.75 19.5 8.25 12l7.5-7.5"
       />
+    </svg>
+  );
+}
+
+export function DashboardIcon(props) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      stroke="#000"
+      {...props}
+    >
+      <path
+        stroke="#fff"
+        strokeWidth={2}
+        d="M4 5a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zm10-3a1 1 0 011-1h4a1 1 0 011 1v6a1 1 0 01-1 1h-4a1 1 0 01-1-1v-6z"
+      />
+    </svg>
+  );
+}
+export function ProductsIcon(props) {
+  return (
+    <svg
+      viewBox="0 0 64 64"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      stroke="#fff"
+      strokeWidth={1.7280000000000002}
+      {...props}
+    >
+      <path d="M8 8H20V20H8z" />
+      <path d="M26 8H38V20H26z" />
+      <path d="M26 44H38V56H26z" />
+      <path d="M44 8H56V20H44z" />
+      <path d="M8 26H20V38H8z" />
+      <path d="M26 26H38V38H26z" />
+      <path d="M44 26H56V38H44z" />
+      <path d="M8 44H20V56H8z" />
+      <path d="M44 44H56V56H44z" />
+    </svg>
+  );
+}
+
+export function OrdersIcon(props) {
+  return (
+    <svg
+      id="Icons"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 32 32"
+      xmlSpace="preserve"
+      fill="#000"
+      {...props}
+    >
+      <g id="SVGRepo_iconCarrier">
+        <style>
+          {
+            ".st0{fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10}"
+          }
+        </style>
+        <path className="st0" d="M9 29L23 29" />
+        <path
+          className="st0"
+          d="M13 23c0 2.1-.7 4.6-1.8 6M20.8 29c-1.1-1.4-1.8-3.9-1.8-6M13 18h5V7H3V6c0-1.1.9-2 2-2h22c1.1 0 2 .9 2 2v15c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-8"
+        />
+        <circle className="st0" cx={22} cy={18} r={2} />
+        <circle className="st0" cx={11} cy={18} r={2} />
+        <path className="st0" d="M18 18L18 10 23 10 26 14 26 18 24 18" />
+        <path className="st0" d="M4 10L13 10" />
+        <path className="st0" d="M2 13L11 13" />
+        <path fill="none" d="M-288 -576H248V104H-288z" />
+      </g>
+    </svg>
+  );
+}
+
+export function QuestionsIcon(props) {
+  return (
+    <svg
+      viewBox="0 0 600 600"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="#fff"
+      stroke="#fff"
+      {...props}
+    >
+      <g
+        color="#fff"
+        fill="#fff"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        paintOrder="stroke fill markers"
+      >
+        <path
+          style={{
+            InkscapeStroke: "none",
+          }}
+          d="M300.61-12.793c-173.607 0-315.215 141.725-315.215 315.404 0 173.68 141.608 315.405 315.214 315.405S615.824 476.29 615.824 302.61c0-173.68-141.609-315.404-315.215-315.404zm0 84.082c128.132 0 231.13 103.053 231.13 231.322 0 128.27-102.998 231.323-231.13 231.323-128.133 0-231.133-103.053-231.133-231.323s103-231.322 231.132-231.322z"
+          transform="matrix(.95173 0 0 .95116 13.901 12.169)"
+          strokeWidth={1.05103}
+        />
+        <path
+          style={{
+            InkscapeStroke: "none",
+          }}
+          d="M300 384c-27.14 0-50 22.86-50 50s22.86 50 50 50 50-22.86 50-50-22.86-50-50-50zM278.087 111.386c-38.365 8.457-69.16 39.177-76.799 78.697a40 40 0 0031.684 46.866 40 40 0 0046.864-31.684c1.794-9.284 9.286-15.756 18.731-16.184 9.446-.428 17.49 5.34 20.117 14.423 2.627 9.084-1.098 18.257-9.315 22.936a40 40 0 00-9.357 7.71 40 40 0 00-.004.004c-33.024 21.009-50.824 59.641-45.336 98.395a40 40 0 0045.212 33.996 40 40 0 0033.998-45.215c-1.115-7.87 2.36-15.412 9.066-19.678a40 40 0 008.312-7.072c38.402-23.265 56.806-69.968 44.277-113.297-12.778-44.191-54.636-74.203-100.59-72.12a99.125 99.125 0 00-16.86 2.223z"
+        />
+      </g>
+    </svg>
+  );
+}
+
+export function LogoutIcon(props) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g fill="#fff">
+        <path d="M13 2a5 5 0 00-5 5 1 1 0 102 0 3 3 0 013-3h4a3 3 0 013 3v10a3 3 0 01-3 3h-4a3 3 0 01-3-3 1 1 0 10-2 0 5 5 0 005 5h4a5 5 0 005-5V7a5 5 0 00-5-5h-4z" />
+        <path d="M14 11a1 1 0 110 2v-2zM5.718 11a38.459 38.459 0 001.027-1.325l.047-.063.012-.017.004-.007L6 9l.808.588a1 1 0 00-1.617-1.176l-.003.004-.01.014-.042.057-.16.216c-.14.184-.337.442-.57.736-.472.595-1.068 1.31-1.613 1.854L2.086 12l.707.707c.545.545 1.141 1.26 1.613 1.854a37.88 37.88 0 01.73.952l.042.057.01.014.002.003a1 1 0 001.619-1.175l-.81.588.81-.588-.005-.007-.012-.017-.047-.063-.172-.23A39.987 39.987 0 005.718 13H14v-2H5.718z" />
+      </g>
     </svg>
   );
 }

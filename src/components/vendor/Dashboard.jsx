@@ -63,7 +63,10 @@ const Dashboard = () => {
           {({ open }) => (
             <>
               <Disclosure.Button
-              className={`${open ? "" : "border-b-2"} w-full pb-4 border-gray-200/50`}>
+                className={`${
+                  open ? "" : "border-b-2"
+                } w-full pb-4 border-gray-200/50`}
+              >
                 <span className="text-lg font-semibold flex items-center gap-2 ">
                   <span className={`${!open ? "" : "rotate-180 transform"}`}>
                     <DownChevIcon />
@@ -79,8 +82,20 @@ const Dashboard = () => {
                 leaveFrom="transform translate-y-0 opacity-100"
                 leaveTo="transform -translate-y-6 opacity-0"
               >
-                <Disclosure.Panel className="pl-8 w-full">
+                <Disclosure.Panel className="lg:pl-8 w-full">
                   <ul>
+                    <li className="p-4 border-b-2 grid grid-cols-12">
+                      <span className="text-gray-600">S.No.</span>
+                      <span className="col-span-2 text-gray-700 font-semibold ">
+                        ProductId
+                      </span>
+                      <span className="col-span-7 text-gray-600 font-semibold text-balance italic">
+                        Question
+                      </span>
+                      <span className="col-span-2 text-gray-700 font-semibold">
+                        CustomerId
+                      </span>
+                    </li>
                     {questions.map(
                       ({ Qid, ProductId, question, customerId }, index) => (
                         <li
