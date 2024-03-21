@@ -10,6 +10,7 @@ import ProductTabs from "./ProductTabs";
 import Section from "./Section";
 import { useGetTopPicksQuery } from "../Redux/api/products";
 import { addtofav, getFavList, removefav } from "../Redux/services/FavSlice";
+import { addtohistory } from "../Redux/services/historySlice";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -38,6 +39,11 @@ const ProductPage = () => {
     dispatch(getcart({ username }));
     dispatch(getFavList({ username }));
   }, [dispatch, username]);
+
+  useEffect(()=>{
+    dispatch(addtohistory({id,username}))
+  },[dispatch,id,username])
+  
 
   const addToCart = () => {
     dispatch(addtocart({ id, qty, username }));

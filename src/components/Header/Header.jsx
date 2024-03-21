@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userlogin, userlogout } from "../../Redux/services/userSlice";
@@ -145,19 +145,22 @@ const Header = () => {
                       <div>
                         <ul>
                           <li className="px-4 py-2 font-semibold hover:bg-gray-300 hover:text-gray-600">
-                            Account
+                            <Link to={"/account"}>Account</Link>
                           </li>
                           <li className="px-4 py-2 font-semibold hover:bg-gray-300 hover:text-gray-600">
-                            Orders
+                            <Link to={"/orders"}>Orders</Link>
                           </li>
                           <li className="px-4 py-2 font-semibold hover:bg-gray-300 hover:text-gray-600">
-                            History
+                            <Link to={"/history"}>History</Link>
                           </li>
                           <li className="px-4 py-2 font-semibold hover:bg-gray-300 hover:text-gray-600">
-                            Saved Address
+                            <Link to={"/address"}>Saved Address</Link>
+                          </li>
+                          <li className="px-4 py-2 font-semibold hover:bg-gray-300 hover:text-gray-600">
+                            <Link to={"/vendor/home"}>Want to be vendor?</Link>
                           </li>
                           <li
-                            className="px-4 py-2 font-semibold hover:bg-gray-300 hover:text-gray-600"
+                            className="px-4 py-2 font-semibold hover:bg-gray-300 hover:text-gray-600 cursor-pointer"
                             onClick={() => logout()}
                           >
                             Logout

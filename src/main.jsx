@@ -16,6 +16,14 @@ import VendorApp from "./VendorApp.jsx";
 import VendorLoginPage from "./components/vendor/VendorLoginPage.jsx";
 import VendorHomePage from "./components/vendor/VendorHomePage.jsx";
 import Dashboard from "./components/vendor/Dashboard.jsx";
+import VendorProductsPage from "./components/vendor/VendorProductsPage.jsx";
+import VendorProductPage from "./components/vendor/VendorProductPage.jsx";
+import NewProductPage from "./components/vendor/NewProductPage.jsx";
+import VendorQuestionPage from "./components/vendor/VendorQuestionPage.jsx";
+import VendorOrderPage from "./components/vendor/VendorOrderPage.jsx";
+import VendorAccountPage from "./components/vendor/VendorAccountPage.jsx";
+import AccountPage from "./components/AccountPage.jsx";
+import HistoryPage from "./components/HistoryPage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -53,6 +61,14 @@ const router = createBrowserRouter([
             path: "/test",
             element: <Test />,
           },
+          {
+            path: "/account",
+            element: <AccountPage />,
+          },
+          {
+            path: "/history",
+            element: <HistoryPage />,
+          },
         ],
       },
       {
@@ -77,10 +93,29 @@ const router = createBrowserRouter([
             path: "/vendor/home",
             element: <Dashboard />,
           },
-
           {
             path: "/vendor/products",
-            element: <Dashboard />,
+            element: <VendorProductsPage />,
+          },
+          {
+            path: "/vendor/products/:id",
+            element: <VendorProductPage />,
+          },
+          {
+            path: "/vendor/products/new",
+            element: <NewProductPage />,
+          },
+          {
+            path: "/vendor/questions",
+            element: <VendorQuestionPage />,
+          },
+          {
+            path: "/vendor/orders",
+            element: <VendorOrderPage />,
+          },
+          {
+            path: "/vendor/account",
+            element: <VendorAccountPage />,
           },
         ],
       },
