@@ -41,6 +41,9 @@ const VendorQuestionPage = () => {
   ];
   return (
     <div className="p-4">
+      <h1 className="text-xl md:text-2xl font-bold leading-9 pb-2">
+        Questions
+      </h1>
       <Disclosure defaultOpen>
         {({ open }) => (
           <>

@@ -7,7 +7,7 @@ const AccountPage = () => {
   const [edit, setEdit] = useState();
   const { username, email } = useSelector((state) => state.user);
   return (
-    <div className="p-4 space-y-4 pt-24">
+    <div className="p-4 space-y-4 pt-24 min-h-screen">
       <div className="flex justify-between items-center">
         <h1 className="text-xl md:text-2xl font-bold leading-9">
           Account Details

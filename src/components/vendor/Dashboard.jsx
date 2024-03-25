@@ -40,6 +40,9 @@ const Dashboard = () => {
   ];
   return (
     <div className="p-4 space-y-4">
+      <h1 className="text-xl md:text-2xl font-bold leading-9 pb-6">
+        Dashboard
+      </h1>
       <div className="grid grid-cols-3 pb-4 text-white font-semibold">
         <div className="flex justify-center">
           <div className="w-64 h-56 rounded-lg bg-red-300 flex flex-col justify-center items-center gradient-violet">
