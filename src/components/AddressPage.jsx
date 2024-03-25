@@ -27,7 +27,7 @@ const AddressPage = () => {
   ];
 
   return (
-    <div className="w-full  pt-24 space-y-6 px-3 md:px-10 bg-gray-100">
+    <div className="w-full  pt-24 space-y-6 px-3 md:px-10 bg-gray-100 min-h-screen">
       <div className="flex justify-between items-center mb-4 ">
         <span className="text-xl md:text-2xl font-bold leading-9 shadow-gray-600">
           Saved Address
@@ -39,7 +39,7 @@ const AddressPage = () => {
             setDialog(true);
           }}
         >
-          Write Review
+          New Address
         </button>
       </div>
       <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-x-4 gap-y-3">
