@@ -14,7 +14,7 @@ import { addtohistory } from "../Redux/services/historySlice";
 
 const ProductPage = () => {
   const { id } = useParams();
-  const { data: Toppicks, isLoading: ToppicksLoading } = useGetTopPicksQuery();
+  const topPicks = useGetTopPicksQuery();
   const [product, setProduct] = useState([]);
   const [isCartItem, setIsCartItem] = useState(false);
   const [isFav, setIsFav] = useState(false);
@@ -40,10 +40,9 @@ const ProductPage = () => {
     dispatch(getFavList({ username }));
   }, [dispatch, username]);
 
-  useEffect(()=>{
-    dispatch(addtohistory({id,username}))
-  },[dispatch,id,username])
-  
+  useEffect(() => {
+    dispatch(addtohistory({ id, username }));
+  }, [dispatch, id, username]);
 
   const addToCart = () => {
     dispatch(addtocart({ id, qty, username }));
@@ -146,8 +145,8 @@ const ProductPage = () => {
       </div>
       <Section
         Heading={"Related Products"}
-        products={Toppicks}
-        loading={ToppicksLoading}
+        products={topPicks?.data}
+        loading={topPicks?.isLoading}
       />
     </div>
   );
