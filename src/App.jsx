@@ -1,6 +1,7 @@
 import Header from "./components/Header/Header";
 import { Outlet, ScrollRestoration } from "react-router-dom";
 import welcome from "./assets/welcome2.mp3";
+import Footer from "./components/Footer";
 function App() {
   return (
     <>
@@ -12,6 +13,7 @@ function App() {
       <audio src={welcome} autoPlay />
       <Header />
       <Outlet />
+      <Footer/>
     </>
   );
 }

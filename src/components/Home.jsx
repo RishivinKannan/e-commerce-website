@@ -48,9 +48,7 @@ export default function Home() {
         config.map((section)=>
         <Section key={section?.id} Heading={section?.title} products={section?.data} loading={section?.loading}/> )
       }
-      {/* <Section Heading={"TOP PICKS FOR YOU"} products={Toppicks}/>
-      <Section Heading={"NEW ARRIVALS"} products={NewArrivals}/>
-      <Section Heading={"TOP IN SALES"} products={Topsales}/> */}
+      
     </div>
   );
 }
