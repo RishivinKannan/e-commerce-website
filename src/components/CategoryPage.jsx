@@ -23,7 +23,7 @@ export default function SearchPage() {
           <h1 className="font-semibold text-lg ">
             Category of{" "}
             <span className="text-xl font-normal p-2 text-gray-600">
-              {categoryName.replace(/-/g, " ")}
+              {categoryName?.replace(/-/g, " ")}
             </span>
           </h1>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-y-10 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
@@ -31,10 +31,12 @@ export default function SearchPage() {
               .filter((product) =>
                 categoryName == "Foot-Wear"
                   ? product.Category.toLowerCase().includes(
-                      categoryName.replace(/-/g, "").toLowerCase()
+                      categoryName?.replace(/-/g, "").toLowerCase()
                     )
                   : product.SubCategory.toLowerCase().includes(
-                      categoryName.replace(/-/g, "").toLowerCase()
+                      categoryName
+                        ? categoryName.replace(/-/g, "").toLowerCase()
+                        : " "
                     )
               )
               .slice(0, 30)

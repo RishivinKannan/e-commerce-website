@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-const VendorOrderPage = () => {
+
+const OrdersPage = () => {
   const orders = [
     {
       ProductId: 42419,
@@ -22,11 +23,11 @@ const VendorOrderPage = () => {
   ];
 
   return (
-    <div className="w-full space-y-6 p-4 bg-gray-100">
+    <div className="w-full pt-24 space-y-6 px-3 md:px-10 bg-gray-100">
       <span className="text-xl md:text-2xl font-bold leading-9 shadow-gray-600">
         Orders
       </span>
-      <div className="grid xl:grid-cols-2 gap-x-4 gap-y-3">
+      <div className="grid md:grid-cols-2 gap-x-4 gap-y-3">
         {orders.map(({ ProductId, ProductTitle, ImageURL }) => (
           <div
             key={ProductId}
@@ -48,10 +49,14 @@ const VendorOrderPage = () => {
                 </div>
               </div>
             </Link>
-            <div className="flex flex-col items-end justify-center">
-              <button className="w-28 flex justify-center items-center gap-2 rounded py-2 px-2 md:px-6 text-white bg-darker text-sm font-bold tracking-wider hover:outline outline-gray-500">
-                Dispatched
-              </button>
+            <div className="flex flex-col items-end justify-between">
+              <ul className="text-xs font-semibold text-blue-400">
+                <li>OPTION 1</li>
+                <li>OPTION 2</li>
+              </ul>
+              <span className="text-gray-700 text-sm lg:text-base font-semibold">
+                Tracking Status
+              </span>
             </div>
           </div>
         ))}
@@ -59,4 +64,5 @@ const VendorOrderPage = () => {
     </div>
   );
 };
-export default VendorOrderPage;
+
+export default OrdersPage;

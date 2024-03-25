@@ -24,6 +24,8 @@ import VendorOrderPage from "./components/vendor/VendorOrderPage.jsx";
 import VendorAccountPage from "./components/vendor/VendorAccountPage.jsx";
 import AccountPage from "./components/AccountPage.jsx";
 import HistoryPage from "./components/HistoryPage.jsx";
+import OrdersPage from "./components/OrdersPage.jsx";
+import AddressPage from "./components/AddressPage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -68,6 +70,14 @@ const router = createBrowserRouter([
           {
             path: "/history",
             element: <HistoryPage />,
+          },
+          {
+            path: "/orders",
+            element: <OrdersPage />,
+          },
+          {
+            path: "/address",
+            element: <AddressPage />,
           },
         ],
       },
