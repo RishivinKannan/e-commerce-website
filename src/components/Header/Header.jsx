@@ -95,7 +95,7 @@ const Header = () => {
             {/* <span className="font-bold">4</span> */}
           </NavLink>
           {/* PriceTracker */}
-          <NavLink className={"hover:text-gray-500"}>
+          <NavLink to='/pricetracker' className={"hover:text-gray-500"}>
             <PriceTrackerIcon />
           </NavLink>
         </div>
