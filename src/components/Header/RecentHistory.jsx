@@ -16,8 +16,7 @@ export default function RecentHistory({
       <div className="text-sm font-semibold text-purple-800 tracking-wide flex flex-col">
         {suggestionList.toReversed().filter((history) => {
           return (
-            history.toLowerCase().includes(input.toLowerCase()) &&
-            history.toLowerCase() !== input.toLowerCase()
+            history.toLowerCase().includes(input.toLowerCase())
           );
         }).length == 0 ? (
           <div className="  font-bold tracking-wider p-5 text-left text-gray-500">

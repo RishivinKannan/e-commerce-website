@@ -3,7 +3,7 @@ import Logo from "../utils/Logo";
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-darker px-10 md:px-20 pt-14 pb-4 gap-y-6 grid grid-cols-2 md:grid-cols-3 text-white">
+    <footer className="relative z-10 w-full bg-darker px-10 md:px-20 pt-14 pb-4 gap-y-6 grid grid-cols-2 md:grid-cols-3 text-white">
       <div className="flex flex-col p-2 justify-center md:items-start items-center col-span-2 md:col-span-1">
         <Logo className={"w-40 "} />
 
