@@ -67,7 +67,7 @@ export default function ProductCard({
           </div>
 
           <div className="space-y-2">
-            <h2 className=" leading-6 font-bold tracking-widest pl-1 text-wrap ">
+            <h2 className="max-h-24 leading-6 font-bold tracking-widest pl-1 text-wrap truncate">
               {title}
             </h2>
             <Rating value={rating} readOnly className="max-w-28 z-0" />

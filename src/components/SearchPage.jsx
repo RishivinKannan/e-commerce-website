@@ -21,29 +21,31 @@ export default function SearchPage() {
             </span>
           </h1>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-y-10 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-            {isLoading ? (
-              Array(10).fill().map((x,i)=><ProductCardShimmer key={i} />))
-             : (
-              products
-                ?.filter((product) =>
-                  product.ProductTitle.toLowerCase().includes(
-                    query.replace(/-/g, " ").toLowerCase()
+            {isLoading
+              ? Array(10)
+                  .fill()
+                  .map((x, i) => <ProductCardShimmer key={i} />)
+              : products
+                  ?.filter((product) =>
+                    product.ProductTitle.toLowerCase().includes(
+                      query.replace(/-/g, " ").toLowerCase()
+                    )
                   )
-                )
-                .slice(0, 30)
-                .map((product) => {
-                  return (
-                    <ProductCard
-                      key={product.ProductId}
-                      id={product.ProductId}
-                      imageUrl={product.ImageURL}
-                      title={product.ProductTitle}
-                      rating={4}
-                      showFav
-                    />
-                  );
-                })
-            )}
+                  .slice(0, 30)
+                  .map((product) => {
+                    return (
+                      <ProductCard
+                        key={product.ProductId}
+                        id={product.ProductId}
+                        imageUrl={product.ImageURL}
+                        title={product.ProductTitle}
+                        rating={4}
+                        mrp={product?.actual_price}
+                        price={product?.discounted_price}
+                        showFav
+                      />
+                    );
+                  })}
           </div>
         </div>
       </div>

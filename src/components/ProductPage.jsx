@@ -59,7 +59,7 @@ const ProductPage = () => {
   }
 
   return product.length == 0 ? (
-    "Loading"
+    <div className="pt-28 py-4 bg-gray-100 min-h-screen">Loading...</div>
   ) : (
     <div className="pt-28 py-4 bg-gray-100 min-h-screen">
       <div className="grid md:max-lg:grid-cols-4 grid-cols-5  p-6 rounded-lg">
@@ -67,7 +67,6 @@ const ProductPage = () => {
           <ProductImage
             images={[
               product[0].ImageURL,
-              "http://assets.myntassets.com/v1/images/style/properties/Lotto-Women-Black-Flip-Flops_957be72b36ce05aaf445772277fa1f0c_images.jpg",
             ]}
           />
           <div
@@ -89,17 +88,26 @@ const ProductPage = () => {
           </h1>
           <Rating value={4} readOnly className="max-w-28 pb-4 z-0" />
           <span className="text-3xl font-extrabold tracking-wide pr-4 inline-block">
-            ₹ 200
+            {product[0].discounted_price
+              ? product[0].discounted_price
+              : "₹ 200"}
           </span>
           <span className="text-3xl font-extrabold tracking-wide line-through text-gray-600 inline-block">
-            ₹ 300
+            {product[0].actual_price ? product[0].actual_price : "₹ 200"}
           </span>
           <p className="tracking-wide leading-6 text-justify md:pr-6 pt-2 font-semibold text-sm text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui,
-            impedit tempora nemo totam quia architecto nulla magnam, itaque sint
-            possimus odit sequi rem, quidem deserunt laboriosam veniam corrupti
-            eius sapiente! Veritatis consectetur neque architecto libero facere
-            autem iure ratione consequuntur voluptate quis quam molestiae.
+            {product[0].about_product ? (
+              product[0].about_product
+            ) : (
+              <span>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui,
+                impedit tempora nemo totam quia architecto nulla magnam, itaque
+                sint possimus odit sequi rem, quidem deserunt laboriosam veniam
+                corrupti eius sapiente! Veritatis consectetur neque architecto
+                libero facere autem iure ratione consequuntur voluptate quis
+                quam molestiae.
+              </span>
+            )}
           </p>
           {!isCartItem ? (
             <div className="flex gap-8 pt-10 ">
