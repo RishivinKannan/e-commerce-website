@@ -44,8 +44,8 @@ const ProductPage = () => {
     dispatch(addtohistory({ id, username }));
   }, [dispatch, id, username]);
 
-  const addToCart = () => {
-    dispatch(addtocart({ id, qty, username }));
+  const addToCart = (price) => {
+    dispatch(addtocart({ id, qty, username, price }));
     setIsCartItem(true);
   };
   function favClick(id) {
@@ -64,11 +64,7 @@ const ProductPage = () => {
     <div className="pt-28 py-4 bg-gray-100 min-h-screen">
       <div className="grid md:max-lg:grid-cols-4 grid-cols-5  p-6 rounded-lg">
         <div className="col-span-5 md:col-span-2 relative z-0 ">
-          <ProductImage
-            images={[
-              product[0].ImageURL,
-            ]}
-          />
+          <ProductImage images={[product[0].ImageURL]} />
           <div
             className="absolute top-0 right-6 inline-block rounded-full p-2 z-40"
             onClick={(e) => {
@@ -86,7 +82,11 @@ const ProductPage = () => {
           <h1 className="text-lg font-semibold tracking-wide text-gray-600">
             {product[0].SubCategory}
           </h1>
-          <Rating value={product[0].rating?product[0].rating:4} readOnly className="max-w-28 pb-4 z-0" />
+          <Rating
+            value={product[0].rating ? product[0].rating : 4}
+            readOnly
+            className="max-w-28 pb-4 z-0"
+          />
           <span className="text-3xl font-extrabold tracking-wide pr-4 inline-block">
             {product[0].discounted_price
               ? product[0].discounted_price
@@ -130,7 +130,12 @@ const ProductPage = () => {
               </div>
               <button
                 className="w-96 flex justify-center items-center gap-2 rounded-3xl py-2 px-6 text-white bg-darker text-lg font-bold tracking-wider hover:outline outline-gray-500"
-                onClick={() => addToCart()}
+                onClick={() =>
+                  addToCart(
+                      product[0].discounted_price ? product[0].discounted_price : 200
+
+                  )
+                }
               >
                 Add To Cart
               </button>

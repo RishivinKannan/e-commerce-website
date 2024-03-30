@@ -10,7 +10,7 @@ import {
 } from "../Redux/services/cartSlice.js";
 
 // eslint-disable-next-line react/prop-types
-export default function CartProduct({ id, qty }) {
+export default function CartProduct({ id, qty,price }) {
   const [product, setProduct] = useState([]);
   const [qtyState, setQtyState] = useState(qty);
   const { username } = useSelector((state) => state.user);
@@ -51,7 +51,7 @@ export default function CartProduct({ id, qty }) {
               {product[0]?.ProductTitle}
             </h2>
             <span className="text-xl pl-2 font-extrabold tracking-widest text-gray-900">
-              ₹200
+              ₹{price}
             </span>
           </div>
         </div>
