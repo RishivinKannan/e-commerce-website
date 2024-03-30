@@ -86,7 +86,7 @@ const ProductPage = () => {
           <h1 className="text-lg font-semibold tracking-wide text-gray-600">
             {product[0].SubCategory}
           </h1>
-          <Rating value={4} readOnly className="max-w-28 pb-4 z-0" />
+          <Rating value={product[0].rating?product[0].rating:4} readOnly className="max-w-28 pb-4 z-0" />
           <span className="text-3xl font-extrabold tracking-wide pr-4 inline-block">
             {product[0].discounted_price
               ? product[0].discounted_price

@@ -3,6 +3,13 @@ import {
   TopwearIcon,
   BottomwearIcon,
   FootwearIcon,
+  MobileIcon,
+  ComputerIcon,
+  HeadphonesIcon,
+  TvIcon,
+  WatchIcon,
+  SpeakerIcon,
+  MicrowaveIcon,
 } from "../utils/CategoriesIcon";
 import {Link} from 'react-router-dom'
 import { Tooltip } from "@mui/material";
@@ -20,7 +27,35 @@ function CategorySection() {
     {
       name:"Foot Wear",
       icon: <FootwearIcon className="w-8 lg:w-10 " />
-    }
+    },
+    {
+      name:"MobileAccessories",
+      icon: <MobileIcon className="w-8 lg:w-10 h-auto" />
+    },
+    {
+      name:"ComputersAccessories",
+      icon: <ComputerIcon className="w-8 lg:w-10 h-auto" />
+    },
+    {
+      name:"Headphones",
+      icon: <HeadphonesIcon className="w-8 lg:w-10 h-auto" />
+    },
+    {
+      name:"TVAccessories",
+      icon: <TvIcon className="w-8 lg:w-10 h-auto" />
+    },
+    {
+      name:"SmartWatches",
+      icon: <WatchIcon className="w-8 lg:w-10 h-auto" />
+    },
+    {
+      name:"HomeAudio",
+      icon: <SpeakerIcon className="w-8 lg:w-10 h-auto" />
+    },
+    {
+      name:"HomeAppliances",
+      icon: <MicrowaveIcon className="w-8 lg:w-10 h-auto" />
+    },
   ];
   return (
     <div className=" shadow-lg py-3 px-4 flex justify-start gap-4 w-full overflow-x-auto scrollbar-thin scrollbar-track-transparent">

@@ -30,7 +30,7 @@ export default function SearchPage() {
             {products
               .filter((product) =>
                 categoryName == "Foot-Wear"
-                  ? product.Category.toLowerCase().includes(
+                  ? product.Category?.toLowerCase()?.includes(
                       categoryName?.replace(/-/g, "").toLowerCase()
                     )
                   : product.SubCategory.toLowerCase().includes(
@@ -47,7 +47,9 @@ export default function SearchPage() {
                     id={product.ProductId}
                     imageUrl={product.ImageURL}
                     title={product.ProductTitle}
-                    rating={4}
+                    mrp={product?.actual_price}
+                    price={product?.discounted_price}
+                    rating={product?.rating}
                     showFav
                   />
                 );
