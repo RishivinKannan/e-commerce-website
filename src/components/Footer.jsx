@@ -4,7 +4,7 @@ import { categories } from "../utils/constants";
 
 const Footer = () => {
   return (
-    <footer className="relative z-10 w-full bg-darker px-10 md:px-20 pt-14 pb-4 gap-y-6 grid grid-cols-2 md:grid-cols-3 text-white">
+    <footer className="relative z-10  bg-darker px-10 md:px-20 pt-14 pb-4 gap-y-6 grid grid-cols-2 md:grid-cols-3 text-white">
       <div className="flex flex-col p-2 justify-center md:items-start items-center col-span-2 md:col-span-1">
         <Logo className={"w-40 "} />
       </div>
@@ -32,7 +32,7 @@ const Footer = () => {
         <h1 className="text-lg font-semibold tracking-wider text-gray-400 ">
           Popular Categories
         </h1>
-        <ul className="tracking-wide cursor-pointer gap-2 grid grid-cols-2 ">
+        <ul className="tracking-wide cursor-pointer gap-2 grid md:grid-cols-2 ">
           <li className="hover:text-gray-600">
             <Link to={"/"}>Vendor Store</Link>
           </li>
