@@ -6,6 +6,7 @@ import { Transition } from "@headlessui/react";
 import { CloseIcon, MenuIcon } from "../utils/Icons";
 import { Tooltip } from "@mui/material";
 import FilterSideBar from "./FilterSideBar";
+import { optionsList } from "../utils/constants";
 
 export default function SearchPage() {
   const [products, setProducts] = useState([]);
@@ -16,6 +17,7 @@ export default function SearchPage() {
   useEffect(() => {
     axios.get("./fashionProducts.json").then((res) => setProducts(res.data));
   }, []);
+  const options = optionsList[categoryName];
 
   return (
     <>
@@ -32,11 +34,14 @@ export default function SearchPage() {
           >
             <div className="z-30 translate-y-10 md:translate-y-0 rounded-t-3xl md:rounded-none w-full h-full md:w-52 lg:w-64 md:h-screen  bg-lightest fixed  px-4 py-8 shadow-lg">
               <div className="flex justify-between">
-                <span onClick={() => setFilterBtn(false)} className="absolute top-4 right-2">
+                <span
+                  onClick={() => setFilterBtn(false)}
+                  className="absolute top-4 right-2"
+                >
                   <CloseIcon className="w-7 cursor-pointer" />
                 </span>
               </div>
-              <FilterSideBar />
+              <FilterSideBar optionsList={options} />
             </div>
           </Transition.Child>
         </Transition>
