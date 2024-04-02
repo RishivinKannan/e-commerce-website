@@ -30,46 +30,46 @@ function CategorySection() {
     },
     {
       name:"MobileAccessories",
-      icon: <MobileIcon className="w-8 lg:w-10 h-auto" />
+      icon: <MobileIcon className="w-8 h-auto lg:w-10" />
     },
     {
       name:"ComputersAccessories",
-      icon: <ComputerIcon className="w-8 lg:w-10 h-auto" />
+      icon: <ComputerIcon className="w-8 h-auto lg:w-10" />
     },
     {
       name:"Headphones",
-      icon: <HeadphonesIcon className="w-8 lg:w-10 h-auto" />
+      icon: <HeadphonesIcon className="w-8 h-auto lg:w-10" />
     },
     {
       name:"TVAccessories",
-      icon: <TvIcon className="w-8 lg:w-10 h-auto" />
+      icon: <TvIcon className="w-8 h-auto lg:w-10" />
     },
     {
       name:"SmartWatches",
-      icon: <WatchIcon className="w-8 lg:w-10 h-auto" />
+      icon: <WatchIcon className="w-8 h-auto lg:w-10" />
     },
     {
       name:"HomeAudio",
-      icon: <SpeakerIcon className="w-8 lg:w-10 h-auto" />
+      icon: <SpeakerIcon className="w-8 h-auto lg:w-10" />
     },
     {
       name:"HomeAppliances",
-      icon: <MicrowaveIcon className="w-8 lg:w-10 h-auto" />
+      icon: <MicrowaveIcon className="w-8 h-auto lg:w-10" />
     },
   ];
   return (
-    <div className=" shadow-lg py-3 px-4 flex justify-start gap-4 w-full overflow-x-auto scrollbar-thin scrollbar-track-transparent">
+    <div className="flex justify-start w-full gap-4 px-4 py-3 overflow-x-auto shadow-lg  scrollbar-thin scrollbar-track-transparent">
       <div className="pr-4 border-r-2 border-gray-300">
         <Tooltip arrow={true} title={"Vendor Store"}>
-          <div className="rounded-full bg-lightest px-4 py-4 lg:p-5">
+          <div className="px-4 py-4 rounded-full bg-lightest lg:p-5">
             <VendorIcon className="w-8 lg:w-10 " />
           </div>
         </Tooltip>
       </div>
       {categories.map((category) => (
         <Tooltip key={category.name} arrow={true} title={category.name}>
-          <Link to={`/category?name=${category.name.replace(/\s+/g ,'-')}`}>
-          <div className="rounded-full bg-lightest px-4 py-4 lg:p-5">
+          <Link to={`/category/${category.name.replace(/\s+/g ,'-')}`}>
+          <div className="px-4 py-4 rounded-full bg-lightest lg:p-5">
             {category.icon}
           </div>
           </Link>

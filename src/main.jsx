@@ -42,11 +42,11 @@ const router = createBrowserRouter([
             element: <Home />,
           },
           {
-            path: "/search",
+            path: "/search/:query",
             element: <SearchPage />,
           },
           {
-            path: "/category",
+            path: "/category/:categoryName",
             element: <CategoryPage />,
           },
           {

@@ -35,13 +35,13 @@ export default function SearchBox({ setShow }) {
 
   return (
     <>
-      <div className="p-2 flex bg-white text-black w-full rounded-lg shadow-xl">
+      <div className="flex w-full p-2 text-black bg-white rounded-lg shadow-xl">
         <SearchIcon />
         <input
           ref={inputRef}
           type="text"
           placeholder="Search..."
-          className="outline-none ml-2 font-semibold tracking-wide w-11/12 "
+          className="w-11/12 ml-2 font-semibold tracking-wide outline-none "
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={(e) => {
@@ -60,7 +60,7 @@ export default function SearchBox({ setShow }) {
                 inputRef.current.blur();
                 setShow(false);
                 toNavigation(
-                  `/search?query=${inputValue.replace(/\s+/g, "-")}`
+                  `/search/${inputValue.replace(/\s+/g, "-")}`
                 );
               }
             }

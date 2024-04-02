@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-export default function Login({ open, close, submit }) {
+export default function Login({ open, close, submit, isFetching }) {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   return (
@@ -53,7 +53,7 @@ export default function Login({ open, close, submit }) {
                     placeholder="PASSWORD"
                     className="border-[3px] bg-gray-200 w-full h-10 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
                     onChange={(e) => setPasswordValue(e.target.value)}
-                  value={passwordValue}
+                    value={passwordValue}
                   />
                   <p className="text-right w-full mt-1 font-semibold text-gray-700">
                     Forgot password ?
@@ -63,18 +63,21 @@ export default function Login({ open, close, submit }) {
                 <div className="mt-6">
                   <button
                     type="button"
-                    className="inline-flex justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1  text-white hover:outline  outline-gray-500"
+                    className="disabled:bg-gray-500 inline-flex justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1  text-white hover:outline  outline-gray-500"
                     onClick={() => {
-                      submit(emailValue,passwordValue);
-                      setPasswordValue('')
+                      submit(emailValue, passwordValue);
+                      setPasswordValue("");
                     }}
+                    disabled={isFetching}
                   >
-                    Login
+                    {isFetching ? "Login..." : "Login"}
                   </button>
                 </div>
 
                 <NavLink to="/register">
-                  <span className="font-semibold text-gray-700">Create an account</span>
+                  <span className="font-semibold text-gray-700">
+                    Create an account
+                  </span>
                 </NavLink>
               </Dialog.Panel>
             </Transition.Child>

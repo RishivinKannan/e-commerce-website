@@ -1,14 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { productsApi } from "./api/products";
+import { productsDjangoApi } from "./api/productsDjango";
 import userReducer from "./services/userSlice";
 import cartReducer from "./services/cartSlice";
 import favReducer from "./services/FavSlice";
 import historyReducer from "./services/historySlice";
+import { userApi } from "./api/user";
 
 const store = configureStore({
   reducer: {
     [productsApi.reducerPath]: productsApi.reducer,
+    [productsDjangoApi.reducerPath]: productsDjangoApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
     user: userReducer,
     cart: cartReducer,
     fav: favReducer,
@@ -16,7 +20,11 @@ const store = configureStore({
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(productsApi.middleware),
+    getDefaultMiddleware().concat([
+      productsApi.middleware,
+      productsDjangoApi.middleware,
+      userApi.middleware,
+    ]),
 });
 setupListeners(store.dispatch);
 

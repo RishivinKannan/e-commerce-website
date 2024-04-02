@@ -1,24 +1,21 @@
 import { useState } from "react";
-import {
-  checkUserRegister,
-  validateEmail,
-  validatePassword,
-  storeUserData
-} from "../utils/registerUtils";
-import {BackArrowIcon} from '../utils/Icons'
-import { useNavigate,Link } from "react-router-dom";
+import { validateEmail, validatePassword } from "../utils/registerUtils";
+import { BackArrowIcon } from "../utils/Icons";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getuser } from "../Redux/services/userSlice";
+import axios from "axios";
 
 function RegisterPage() {
   const [emailCode, setEmailCode] = useState("");
   const [passErrorCode, setPassErrorCode] = useState("");
+  const [loading, setLoading] = useState(false);
   const toNavigate = useNavigate();
   const dispatch = useDispatch();
 
   function handleSubmit(e) {
     e.preventDefault();
-    const regesiteredUser = checkUserRegister(e.target.email.value);
+    // const regesiteredUser = checkUserRegister(e.target.email.value);
     const emailbool = validateEmail(e.target.email.value);
     const { bool, statement } = validatePassword(
       e.target.password.value,
@@ -26,33 +23,48 @@ function RegisterPage() {
     );
     if (!emailbool) {
       setEmailCode("Invalid Email");
-    } else if (regesiteredUser) {
-      setEmailCode("Already Registered");
+      // } else if (regesiteredUser) {
+      //   setEmailCode("Already Registered");
     } else if (!bool) {
       setEmailCode("");
       setPassErrorCode(statement);
     } else {
       setEmailCode("");
       setPassErrorCode("");
-      storeUserData(
-        e.target.fullname.value,
-        e.target.email.value,
-        e.target.password.value
-      );
-      localStorage.setItem('loggedUser',JSON.stringify({ username: e.target.fullname.value,
-        email: e.target.email.value,}))
-      dispatch(getuser())
-      toNavigate("/");
-
+      // storeUserData(
+      //   e.target.fullname.value,
+      //   e.target.email.value,
+      //   e.target.password.value
+      // );
+      // localStorage.setItem('loggedUser',JSON.stringify({ username: e.target.fullname.value,
+      //   email: e.target.email.value,}))
+      setLoading(true);
+      axios
+        .post("http://localhost:8000/api/user/register", {
+          email: e.target.email.value,
+          password: e.target.password.value,
+          username: e.target.fullname.value,
+        })
+        .then((res) => {
+          console.log(res);
+          localStorage.setItem("loggedUser", JSON.stringify(res.data));
+          dispatch(getuser());
+          setLoading(false);
+          toNavigate("/");
+        })
+        .catch((error) => {
+          alert(error.response.data.detail);
+          setLoading(false);
+        });
     }
   }
-
 
   return (
     <div className="relative bg-black/15 min-h-screen flex justify-center items-center">
       <div className="absolute top-8 left-8 text-xl font-bold tracking-wide flex items-center gap-2">
-        <BackArrowIcon/>
-        <Link to={'/'}>Back to Home </Link></div>
+        <BackArrowIcon />
+        <Link to={"/"}>Back to Home </Link>
+      </div>
       <div className="bg-white w-5/12 shadow-xl p-6 flex flex-col items-center space-y-8 min-w-96">
         <h1 className="block text-2xl font-bold tracking-wide  text-center">
           Register Here
@@ -113,10 +125,11 @@ function RegisterPage() {
             )}
           </div>
           <button
+            disabled={loading}
             type="submit"
-            className="inline-flex justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1  text-white hover:outline  outline-gray-500"
+            className="disabled:bg-gray-500 inline-flex justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1  text-white hover:outline  outline-gray-500"
           >
-            Register
+            Register{loading && "..."}
           </button>
         </form>
       </div>

@@ -14,32 +14,51 @@ import {
 } from "../../utils/Icons";
 import Logo from "../../utils/Logo";
 import Login from "./Login";
+// import { useGetUserTokenMutation } from "../../Redux/api/user";
+import axios from "axios";
 
 const Header = () => {
   const [searchBox, setSearchBox] = useState(false);
   const [LoginBox, setLoginBox] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const {
     username,
     email,
     isLogged: loggedIn,
   } = useSelector((state) => state.user);
+  // const [getToken, { data, isError }] = useGetUserTokenMutation();
   const dispatch = useDispatch();
 
-  function userAuthentication(emailValue, passwordValue) {
-    const users = localStorage.getItem("Users")
-      ? JSON.parse(localStorage.getItem("Users"))
-      : [];
-    const getUser = users.filter((user) => {
-      return user.email.toLowerCase() == emailValue.toLowerCase();
-    });
-    getUser.length == 0
-      ? alert("This Email is not registered ")
-      : getUser[0].password != passwordValue
-      ? alert("Password does not match")
-      : login(getUser[0].username, getUser[0].email);
+  async function userAuthentication(emailValue, passwordValue) {
+    // const users = localStorage.getItem("Users")
+    //   ? JSON.parse(localStorage.getItem("Users"))
+    //   : [];
+    // const getUser = users.filter((user) => {
+    //   return user.email.toLowerCase() == emailValue.toLowerCase();
+    // });
+    // getUser.length == 0
+    //   ? alert("This Email is not registered ")
+    //   : getUser[0].password != passwordValue
+    //   ? alert("Password does not match")
+    //   : login(getUser[0].username, getUser[0].email);
+    setIsFetching((prev) => !prev);
+    axios
+      .post("http://localhost:8000/api/user/login", {
+        email: emailValue,
+        password: passwordValue,
+      })
+      .then((res) => {
+        console.log(res);
+        login(res.data);
+        setIsFetching((prev) => !prev);
+      })
+      .catch((error) => {
+        alert(error.response.data.detail);
+        setIsFetching((prev) => !prev);
+      });
   }
-  function login(username, email) {
-    dispatch(userlogin({ username, email }));
+  function login(userdata) {
+    dispatch(userlogin(userdata));
     setLoginBox(false);
   }
 
@@ -66,7 +85,7 @@ const Header = () => {
       </div>
 
       <div className="flex">
-        <div className="p-1 flex space-x-4 md:p-2 md:space-x-6 items-center">
+        <div className="flex items-center p-1 space-x-4 md:p-2 md:space-x-6">
           <button
             className="lg:hidden hover:text-gray-500"
             onClick={() => setSearchBox((prev) => !prev)}
@@ -95,7 +114,7 @@ const Header = () => {
             {/* <span className="font-bold">4</span> */}
           </NavLink>
           {/* PriceTracker */}
-          <NavLink to='/pricetracker' className={"hover:text-gray-500"}>
+          <NavLink to="/pricetracker" className={"hover:text-gray-500"}>
             <PriceTrackerIcon />
           </NavLink>
         </div>
@@ -114,7 +133,7 @@ const Header = () => {
                   {open ? setSearchBox(false) : ""}
                   {open ? <UserSolidIcon className="w-8 h-8" /> : <UserIcon />}
 
-                  <span className="ml-2 font-semibold text-lg hidden md:inline">
+                  <span className="hidden ml-2 text-lg font-semibold md:inline">
                     {username}
                   </span>
                 </Popover.Button>
@@ -131,11 +150,11 @@ const Header = () => {
                   <Popover.Panel
                     className={`absolute z-[100]  text-black min-w-80  right-0 mt-1 top-20`}
                   >
-                    <div className="overflow-hidden rounded-lg shadow-xl ring-1 ring-black/5 bg-white">
-                      <div className="flex justify-start items-center space-x-4 p-6 ">
+                    <div className="overflow-hidden bg-white rounded-lg shadow-xl ring-1 ring-black/5">
+                      <div className="flex items-center justify-start p-6 space-x-4 ">
                         <UserSolidIcon className="w-11 h-11" />
                         <div>
-                          <span className="ml-2 font-semibold text-lg  ">
+                          <span className="ml-2 text-lg font-semibold ">
                             {username}
                           </span>
                           <p className="ml-2">{email}</p>
@@ -160,7 +179,7 @@ const Header = () => {
                             <Link to={"/vendor/home"}>Want to be vendor?</Link>
                           </li>
                           <li
-                            className="px-4 py-2 font-semibold hover:bg-gray-300 hover:text-gray-600 cursor-pointer"
+                            className="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-300 hover:text-gray-600"
                             onClick={() => logout()}
                           >
                             Logout
@@ -176,7 +195,7 @@ const Header = () => {
         ) : (
           <>
             <button
-              className="ml-6 px-4 font-bold text-lg bg-white text-darker rounded hover:outline hover:outline-offset-2 hover:outline-gray-300"
+              className="px-4 ml-6 text-lg font-bold bg-white rounded text-darker hover:outline hover:outline-offset-2 hover:outline-gray-300"
               onClick={() => {
                 setLoginBox(true);
                 setSearchBox(false);
@@ -188,7 +207,12 @@ const Header = () => {
         )}
       </div>
 
-      <Login open={LoginBox} close={setLoginBox} submit={userAuthentication} />
+      <Login
+        open={LoginBox}
+        isFetching={isFetching}
+        close={setLoginBox}
+        submit={userAuthentication}
+      />
     </header>
   );
 };
