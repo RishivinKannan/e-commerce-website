@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from .views import productsview,userview
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
 )
@@ -7,13 +7,20 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('api/user/login', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/user/profile', views.getCustomerProfile, name='Customer_Profile'),
-    path('api/user/register', views.registerUser, name='user_Register'),
-    path('api/', views.getRoutes, name="routes"),
-    path('api/products/', views.getProducts, name="products"),
-    path('api/addproduct/', views.postProduct, name="addproduct"),
-    path('api/newarrivals/', views.getNewArrivalsProducts, name="newarrivals"),
-    path('api/products/<str:pk>', views.getProduct, name="product"),
-    path('api/category/<str:pk>', views.getCategoryProducts, name="category"),
-    path('api/search/', views.getSearchProduct, name="search"),
+    path('api/user/profile', userview.getCustomerProfile, name='Customer_Profile'),
+    path('api/user/register', userview.registerUser, name='user_Register'),
+    path('api/vendor/register', userview.registerVendor, name='Vendor_Register'),
+    path('api/vendor/login', userview.VendorTokenObtainPairView.as_view(), name='vendor_token_obtain_pair'),
+    path('api/vendor/products/', productsview.getVendorProducts, name='vendor_products'),
+    path('api/vendor/products/<int:pk>', productsview.getVendorProduct, name='vendor_product'),
+    path('api/vendor/addproduct/', productsview.postProduct, name="addproduct"),
+
+
+
+    path('api/', productsview.getRoutes, name="routes"),
+    path('api/products/', productsview.getProducts, name="products"),
+    path('api/products/<str:pk>', productsview.getProduct, name="product"),
+    path('api/newarrivals/', productsview.getNewArrivalsProducts, name="newarrivals"),
+    path('api/category/<str:pk>', productsview.getCategoryProducts, name="category"),
+    path('api/search/', productsview.getSearchProduct, name="search"),
 ]

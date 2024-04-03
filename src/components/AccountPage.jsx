@@ -2,10 +2,11 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useState } from "react";
 import { UserSolidIcon } from "../utils/Icons";
 import { useSelector } from "react-redux";
+import { useGetUserProfileQuery } from "../Redux/api/user";
 
 const AccountPage = () => {
   const [edit, setEdit] = useState();
-  const { username, email } = useSelector((state) => state.user);
+  const { data } = useGetUserProfileQuery();
   return (
     <div className="p-4 space-y-4 pt-24 min-h-screen">
       <div className="flex justify-between items-center">
@@ -26,7 +27,11 @@ const AccountPage = () => {
         <div className="py-4 w-9/12 ">
           <Formik
             enableReinitialize
-            initialValues={{ username, email, dob: "2003-10-17" }}
+            initialValues={{
+              username: data?.username,
+              email: data?.email,
+              dob: data?.dob,
+            }}
             // validationSchema={LoginSchema}
             onSubmit={(values) => {
               console.log(values);

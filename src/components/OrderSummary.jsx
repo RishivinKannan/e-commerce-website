@@ -9,7 +9,7 @@ function OrderSummary({ subTotal = 0, discountValue = 0 }) {
   const dispatch = useDispatch();
   const total = subTotal + 60 - discountValue;
   const coupon = () => {
-    if (code == "ABCD") {
+    if (code == "COUPON50") {
       dispatch(discount());
     } else {
       alert("Invaild Coupon code");

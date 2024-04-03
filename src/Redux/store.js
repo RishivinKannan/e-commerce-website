@@ -2,11 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { productsApi } from "./api/products";
 import { productsDjangoApi } from "./api/productsDjango";
+import { userApi } from "./api/user";
 import userReducer from "./services/userSlice";
 import cartReducer from "./services/cartSlice";
 import favReducer from "./services/FavSlice";
 import historyReducer from "./services/historySlice";
-import { userApi } from "./api/user";
 
 const store = configureStore({
   reducer: {

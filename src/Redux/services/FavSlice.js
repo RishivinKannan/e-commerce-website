@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const initialState = {
   favList: [],
 };
@@ -29,8 +28,13 @@ const favSlice = createSlice({
       localStorage.setItem(`${username}-Favlist`, JSON.stringify(list));
       state.favList = list;
     },
+    deleteAll(state, action) {
+      const { username } = action.payload;
+      localStorage.setItem(`${username}-Favlist`, JSON.stringify([]));
+      state.favList = [];
+    },
   },
 });
 
-export const { getFavList, removefav, addtofav } = favSlice.actions;
+export const { getFavList, removefav, addtofav, deleteAll } = favSlice.actions;
 export default favSlice.reducer;

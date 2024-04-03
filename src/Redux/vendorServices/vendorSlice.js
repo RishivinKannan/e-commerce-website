@@ -16,18 +16,20 @@ const vendorSlice = createSlice({
   initialState,
   reducers: {
     vendorlogin(state, action) {
-      const { vendorName, email } = action.payload;
+      const data = action.payload;
       localStorage.setItem(
         "loggedvendor",
-        JSON.stringify({ vendorName: vendorName, email: email })
+        JSON.stringify(data)
       );
-      state.vendorName = vendorName;
-      state.email = email;
+      state.username = data.username;
+      state.email = data.email;
+      state.token = data.token;
+      state.is_vendor = data.is_vendor;
       state.isLogged = true;
     },
     vendorlogout(state) {
       localStorage.removeItem("loggedvendor");
-      state.vendorName = "nouser";
+      state.username = "nouser";
       state.email = "nouser@mail.com";
       state.isLogged = false;
     },
@@ -35,11 +37,12 @@ const vendorSlice = createSlice({
       const logged = localStorage.getItem("loggedvendor")
         ? JSON.parse(localStorage.getItem("loggedvendor"))
         : {
-            vendorName: "nouser",
+            usernameame: "nouser",
             email: "nouser@mail.com",
+            token: '',
             isLogged: false,
           };
-      state.vendorName = logged.vendorName;
+      state.vendorName = logged.username;
       state.email = logged.email;
       state.isLogged = logged.isLogged ? logged.isLogged : true;
     },

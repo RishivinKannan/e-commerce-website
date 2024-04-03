@@ -22,7 +22,7 @@ const VendorOrderPage = () => {
   ];
 
   return (
-    <div className="w-full space-y-6 p-4 bg-gray-100">
+    <div className="w-full space-y-6 p-4 ">
       <span className="text-xl md:text-2xl font-bold leading-9 shadow-gray-600">
         Orders
       </span>

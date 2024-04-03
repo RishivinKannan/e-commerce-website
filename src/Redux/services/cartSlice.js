@@ -95,7 +95,11 @@ const cartSlice = createSlice({
       state.subTotal = sum;
     },
     discount(state) {
-      state.discount = 50;
+      if (state.discount == 50) {
+        alert("Already applied");
+      } else {
+        state.discount = 50;
+      }
     },
   },
 });

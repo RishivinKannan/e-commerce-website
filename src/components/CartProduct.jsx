@@ -8,23 +8,28 @@ import {
   deleteitem,
   incrementqty,
 } from "../Redux/services/cartSlice.js";
+import { BACKEND_URL } from "../utils/constants.js";
+import { useGetProductQuery } from "../Redux/api/productsDjango.js";
 
 // eslint-disable-next-line react/prop-types
-export default function CartProduct({ id, qty,price }) {
-  const [product, setProduct] = useState([]);
+export default function CartProduct({ id, qty, price }) {
+  // const [product, setProduct] = useState([]);
   const [qtyState, setQtyState] = useState(qty);
   const { username } = useSelector((state) => state.user);
+  const {data:product,isLoading} = useGetProductQuery(id);
   const dispatch = useDispatch();
-  useEffect(() => {
-    axios.get("../fashionProducts.json").then((res) => {
-      setProduct(res.data.filter((data) => data.ProductId.toString() == id));
-    });
-  }, [id]);
+  // useEffect(() => {
+  //   axios.get("../fashionProducts.json").then((res) => {
+  //     setProduct(res.data.filter((data) => data.ProductId.toString() == id));
+  //   });
+  // }, [id]);
 
   function increment(e) {
     e.preventDefault();
-    setQtyState((prev) => prev + 1);
-    dispatch(incrementqty({ id, username }));
+    if (qty <= 10) {
+      setQtyState((prev) => prev + 1);
+      dispatch(incrementqty({ id, username }));
+    }
   }
   function decrement(e) {
     e.preventDefault();
@@ -38,17 +43,21 @@ export default function CartProduct({ id, qty,price }) {
     dispatch(deleteitem({ id, username }));
   }
 
-  return product == [] ? null : (
+  return isLoading ? null : (
     <div className="w-full  py-5 px-3 flex flex-col gap-4 md:flex-col lg:flex-row lg:justify-between rounded-lg shadow-xl bg-gray-50 ">
       <Link to={`/product/${id}`}>
         <div className="flex gap-2">
           <img
-            src={product[0]?.ImageURL}
+            src={
+              product?.ImageURL?.includes("http")
+                ? product?.ImageURL
+                : BACKEND_URL + product?.ImageURL
+            }
             className="min-w-20 min-h-20 max-20 max-h-20 rounded-lg shadow-lg lg:max-w-28 lg:max-h-28 lg:min-w-28 lg:min-h-28"
           />
           <div className=" flex flex-col flex-wrap justify-around  ">
             <h2 className="text-lg lg:text-xl leading-5 font-semibold sm:tracking-wider lg:tracking-widest pl-2 md:min-w-80">
-              {product[0]?.ProductTitle}
+              {product?.ProductTitle}
             </h2>
             <span className="text-xl pl-2 font-extrabold tracking-widest text-gray-900">
               ₹{price}

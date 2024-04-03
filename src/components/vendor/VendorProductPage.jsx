@@ -1,22 +1,45 @@
-import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-// import * as Yup from "yup";
+import { BACKEND_URL } from "../../utils/constants";
+import {
+  useGetVendorProductByIdQuery,
+  useUpdateProductMutation,
+} from "../../Redux/api/vendorApi";
+import * as Yup from "yup";
 
-// const LoginSchema = Yup.object().shape({
-//   email: Yup.string().email("Invalid email").required("Required"),
-//   password: Yup.string().required("Required"),
-// });
+const Schema = Yup.object().shape({
+  ProductTitle: Yup.string()
+    .min(10, "Minimum 10 Characters")
+    .required("Required"),
+  Brand: Yup.string().required("Required"),
+  SubCategory: Yup.string().required("Required"),
+  actual_price: Yup.number().positive("Only Positive").required("Required"),
+  discounted_price: Yup.number().positive("Only Positive").required("Required"),
+  countInStock: Yup.number()
+    .positive("Only Positive")
+    .integer("it should be integer")
+    .required("Required"),
+  about_product: Yup.string().min(30).required("Required"),
+});
 const VendorProductPage = () => {
-  const [product, setProduct] = useState([]);
+  // const [product, setProduct] = useState([]);
   const [edit, setEdit] = useState(false);
   const { id } = useParams();
+  const [updateProduct, data] = useUpdateProductMutation();
+
   useEffect(() => {
-    axios.get("../../fashionProducts.json").then((res) => {
-      setProduct(res.data.filter((data) => data.ProductId.toString() == id));
-    });
-  }, [id]);
+    if (data?.isSuccess) {
+      alert("Product added Successfully");
+    }
+    if (data?.isError) {
+      alert(" Unsuccessfull");
+      console.error(data?.error);
+    }
+  }, [data]);
+
+  const { data: product } = useGetVendorProductByIdQuery(id);
+
   return (
     <div className="p-4 space-y-10">
       <div className="flex justify-between items-center">
@@ -33,33 +56,36 @@ const VendorProductPage = () => {
 
       <div className="grid grid-cols-6 px-6">
         <div className="col-span-2 w-full">
-
-        <img src={product[0]?.ImageURL} className="w-80 h-72 shadow-lg p-2" />
+          <img
+            src={BACKEND_URL + product?.ImageURL}
+            className="w-80 h-72 shadow-lg p-2"
+          />
         </div>
         <div className="py-4 w-11/12 col-span-4">
           <Formik
             enableReinitialize
             initialValues={{
-              productName: product[0]?.ProductTitle,
-              brand: product[0]?.ProductType,
-              category: product[0]?.SubCategory,
-              mrp: 300,
-              price: 200,
-              description:
-                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus eos delectus, quaerat asperiores molestias sunt ipsum unde? Reprehenderit iusto eius perspiciatis, facere deserunt voluptatibus sapiente voluptatum fuga dolor explicabo minus!",
-              photo: "",
-              photos: "",
+              ProductTitle: product?.ProductTitle,
+              Brand: product?.Brand,
+              SubCategory: product?.SubCategory,
+              actual_price: product?.actual_price,
+              discounted_price: product?.discounted_price,
+              about_product: product?.about_product,
+              countInStock: product?.countInStock,
+              cover_image: "",
+              images: [],
             }}
-            // validationSchema={LoginSchema}
+            validationSchema={Schema}
             onSubmit={(values) => {
-              console.log(values);
+              updateProduct({values, id});
+              setEdit(false);
             }}
           >
             {(prop) => (
               <Form className="flex flex-col justify-center items-start space-y-8 translate-x-12">
                 <div className="w-11/12 md:w-9/12 space-x-2">
                   <Field
-                    name="productName"
+                    name="ProductTitle"
                     type="text"
                     placeholder="Product Title"
                     className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500 disabled:text-gray-500"
@@ -67,14 +93,14 @@ const VendorProductPage = () => {
                   />
 
                   <ErrorMessage
-                    name="productName"
+                    name="ProductTitle"
                     component="span"
                     className="text-red-600"
                   />
                 </div>
                 <div className="w-11/12 md:w-9/12 space-x-2">
                   <Field
-                    name="brand"
+                    name="Brand"
                     type="text"
                     placeholder="Brand Name"
                     className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500 disabled:text-gray-500"
@@ -82,14 +108,14 @@ const VendorProductPage = () => {
                   />
 
                   <ErrorMessage
-                    name="brand"
+                    name="Brand"
                     component="span"
                     className="text-red-600"
                   />
                 </div>
                 <div className="w-11/12 md:w-9/12 space-x-2">
                   <Field
-                    name="category"
+                    name="SubCategory"
                     type="text"
                     placeholder="Category"
                     className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500 disabled:text-gray-500"
@@ -97,14 +123,14 @@ const VendorProductPage = () => {
                   />
 
                   <ErrorMessage
-                    name="category"
+                    name="SubCategory"
                     component="span"
                     className="text-red-600"
                   />
                 </div>
                 <div className="w-11/12 md:w-9/12 space-x-2">
                   <Field
-                    name="mrp"
+                    name="actual_price"
                     type="number"
                     placeholder="MRP"
                     className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500 disabled:text-gray-500"
@@ -112,14 +138,14 @@ const VendorProductPage = () => {
                   />
 
                   <ErrorMessage
-                    name="mrp"
+                    name="actual_price"
                     component="span"
                     className="text-red-600"
                   />
                 </div>
                 <div className="w-11/12 md:w-9/12 space-x-2">
                   <Field
-                    name="price"
+                    name="discounted_price"
                     type="number"
                     placeholder="Price"
                     className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500 disabled:text-gray-500"
@@ -127,7 +153,22 @@ const VendorProductPage = () => {
                   />
 
                   <ErrorMessage
-                    name="price"
+                    name="discounted_price"
+                    component="span"
+                    className="text-red-600"
+                  />
+                </div>
+                <div className="w-11/12 md:w-9/12 space-x-2">
+                  <Field
+                    name="countInStock"
+                    type="number"
+                    placeholder="Count In Stock"
+                    className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500 disabled:text-gray-500"
+                    disabled={!edit}
+                  />
+
+                  <ErrorMessage
+                    name="countInStock"
                     component="span"
                     className="text-red-600"
                   />
@@ -138,16 +179,16 @@ const VendorProductPage = () => {
                     rows={6}
                     cols={20}
                     className="border-[3px] bg-gray-100 w-5/6 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500 disabled:text-gray-500"
-                    name="description"
+                    name="about_product"
                     onChange={prop.handleChange}
                     onBlur={prop.handleBlur}
-                    value={prop.values.description}
+                    value={prop.values.about_product}
                     disabled={!edit}
                     required
                   />
 
                   <ErrorMessage
-                    name="description"
+                    name="about_product"
                     component="span"
                     className="text-red-600"
                   />
@@ -158,11 +199,14 @@ const VendorProductPage = () => {
                   </label>
                   <input
                     type="file"
-                    name="photo"
+                    name="cover_image"
                     accept="image/*"
                     disabled={!edit}
                     onChange={(e) =>
-                      prop.setFieldValue("photo", e.currentTarget.files[0])
+                      prop.setFieldValue(
+                        "cover_image",
+                        e.currentTarget.files[0]
+                      )
                     }
                     className="w-9/12 text-sm text-stone-500
    file:mr-5 file:py-1 file:px-3 file:border-[1px]
@@ -178,13 +222,13 @@ const VendorProductPage = () => {
                   </label>
                   <input
                     type="file"
-                    name="photos"
+                    name="images"
                     accept="image/*"
                     multiple
                     disabled={!edit}
                     onChange={(event) => {
                       prop.setFieldValue(
-                        "photos",
+                        "images",
                         Array.from(event.target.files)
                       );
                     }}

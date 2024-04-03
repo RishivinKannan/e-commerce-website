@@ -1,17 +1,22 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const userApi = createApi({
-  reducerPath: "user",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/" }),
+  reducerPath: "userApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://localhost:8000/api/",
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().user.token;
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
-    getUserToken: builder.mutation({
-      query: (data) => ({
-        url: "/user/login",
-        method: "POST",
-        body: data,
-      }),
+    getUserProfile: builder.query({
+      query: () => "/user/profile",
     }),
   }),
 });
 
-export const {useGetUserTokenMutation} = userApi;
+export const { useGetUserProfileQuery } = userApi;

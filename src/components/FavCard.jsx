@@ -7,19 +7,12 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addtofav, getFavList, removefav } from "../Redux/services/FavSlice";
 import { BACKEND_URL } from "../utils/constants";
-export default function ProductCard({
-  id,
-  imageUrl,
-  title,
-  rating = 3,
-  mrp = "300",
-  price = "200",
-  showFav = false,
-  ...otherProps
-}) {
+import { useGetProductQuery } from "../Redux/api/productsDjango";
+export default function FavCard({ id, ...otherProps }) {
   const [isFav, setIsFav] = useState(false);
   const { username } = useSelector((state) => state.user);
   const { favList } = useSelector((state) => state.fav);
+  const { data: product, isLoading } = useGetProductQuery(id);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getFavList({ username }));
@@ -40,6 +33,10 @@ export default function ProductCard({
     }
   }
 
+  if (isLoading) {
+    return <></>;
+  }
+
   return (
     <div>
       <Link to={`/product/${id}`}>
@@ -50,35 +47,33 @@ export default function ProductCard({
           <div className="relative z-0 w-44 h-44">
             <img
               src={
-                imageUrl?.includes("http") ? imageUrl : BACKEND_URL + imageUrl
+                product?.Product?.ImageURL?.includes("http")
+                  ? product?.ImageURL
+                  : BACKEND_URL + product?.ImageURL
               }
               className="w-44 h-44 rounded-lg shadow-xl transition-all group-hover:scale-105 group-hover:shadow-2xl"
             />
-            {showFav ? (
-              <div
-                className=" absolute top-2 right-2 hidden group-hover:inline-block"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleClick();
-                }}
-              >
-                <HeartIcon isFill={isFav} className="w-5 h-5" />
-              </div>
-            ) : (
-              " "
-            )}
+            <div
+              className=" absolute top-2 right-2 hidden group-hover:inline-block"
+              onClick={(e) => {
+                e.preventDefault();
+                handleClick();
+              }}
+            >
+              <HeartIcon isFill={isFav} className="w-5 h-5" />
+            </div>
           </div>
 
           <div className="space-y-2">
             <h2 className="max-h-24 leading-6 font-bold tracking-widest pl-1 text-wrap truncate">
-              {title}
+              {product?.ProductTitle}
             </h2>
-            <Rating value={rating} readOnly className="max-w-28 z-0" />
+            <Rating value={product?.rating} readOnly className="max-w-28 z-0" />
             <span className="text-lg pl-1 font-bold tracking-wider">
-              ₹{price}
+              ₹{product.discounted_price ? product.discounted_price : 200}
             </span>
             <span className="text-lg pl-1 font-bold tracking-wider ml-2 line-through text-gray-500">
-              ₹{mrp}
+              ₹{product.actual_price ? product.actual_price : 200}
             </span>
           </div>
         </div>

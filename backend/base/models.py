@@ -61,6 +61,32 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 
+#Product model
+
+
+class Product(models.Model):
+    vendor = models.ForeignKey(CustomUser, on_delete=models.SET_NULL , null=True)
+    ImageURL = models.ImageField(null=True, blank=True)
+    ProductTitle = models.CharField(max_length=200,null=True,blank=True)
+    Brand = models.CharField(max_length=200,null=True,blank=True)
+    SubCategory = models.CharField(max_length=200,null=True,blank=True)
+    about_product = models.TextField(null=True, blank=True)
+    actual_price = models.DecimalField(max_digits=7, decimal_places=0) 
+    discounted_price = models.DecimalField(max_digits=7, decimal_places=0) 
+    countInStock = models.IntegerField(null=True, blank=True, default=0)
+    createdAt = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.ProductTitle
+
+
+class Images(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE , related_name='images')
+    ImageURL = models.ImageField(null=True, blank=True)
+
+
+
+
 
 
 

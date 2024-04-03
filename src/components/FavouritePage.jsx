@@ -1,20 +1,24 @@
-import ProductCard from "./ProductCard";
-import { useState, useEffect} from "react";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import FavCard from "./FavCard";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAll, getFavList } from "../Redux/services/FavSlice";
+// import axios from "axios";
 
 const FavouritePage = () => {
-  const [products, setProducts] = useState([]);
-  const [favList, setFavList] = useState([]);
+  // const [products, setProducts] = useState([]);
+  // const [favList, setFavList] = useState([]);
   const { username } = useSelector((state) => state.user);
-  
+  const { favList } = useSelector((state) => state.fav);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    axios.get("./fashionProducts.json").then((res) => setProducts(res.data));
-    const local = localStorage.getItem(`${username}-Favlist`)
-      ? JSON.parse(localStorage.getItem(`${username}-Favlist`))
-      : [];
-    setFavList(local);
-  }, [username]);
+    // axios.get("./fashionProducts.json").then((res) => setProducts(res.data));
+    // const local = localStorage.getItem(`${username}-Favlist`)
+    //   ? JSON.parse(localStorage.getItem(`${username}-Favlist`))
+    //   : [];
+    // setFavList(local);
+    dispatch(getFavList({ username }));
+  }, [username, dispatch]);
 
   return (
     <>
@@ -26,8 +30,7 @@ const FavouritePage = () => {
           <button
             className="p-2 text-lg bg-red-600 text-white rounded-md float-right"
             onClick={() => {
-              localStorage.setItem(`${username}-Favlist`, JSON.stringify([]));
-              setFavList([]);
+              dispatch(deleteAll({ username }));
             }}
           >
             Delete All
@@ -41,20 +44,9 @@ const FavouritePage = () => {
           </div>
         ) : (
           <div className="grid gap-y-10 grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
-            {products
-              .filter((product) => favList.includes(product.ProductId))
-              .map((product) => {
-                return (
-                  <ProductCard
-                    key={product.ProductId}
-                    id={product.ProductId}
-                    imageUrl={product.ImageURL}
-                    title={product.ProductTitle}
-                    rating={4}
-                    showFav
-                  />
-                );
-              })}
+            {favList.map((id) => {
+              return <FavCard key={id} id={id} />;
+            })}
           </div>
         )}
       </div>

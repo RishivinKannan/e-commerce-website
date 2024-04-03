@@ -1,6 +1,7 @@
 export function removeDuplicates(arr) {
   return [...new Set(arr.toReversed())].toReversed();
 }
+export const BACKEND_URL = "http://localhost:8000";
 
 export const categories = [
   {

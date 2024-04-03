@@ -9,14 +9,16 @@ import { addtocart, getcart } from "../Redux/services/cartSlice";
 import ProductTabs from "./ProductTabs";
 import Section from "./Section";
 import { useGetTopPicksQuery } from "../Redux/api/products";
-import {useGetProductQuery} from "../Redux/api/productsDjango";
+import { useGetProductQuery } from "../Redux/api/productsDjango";
 import { addtofav, getFavList, removefav } from "../Redux/services/FavSlice";
 import { addtohistory } from "../Redux/services/historySlice";
+import { BACKEND_URL } from "../utils/constants";
 
 const ProductPage = () => {
   const { id } = useParams();
   const topPicks = useGetTopPicksQuery();
-  const {data:product,isLoading} = useGetProductQuery(id);
+  const { data: product, isLoading } = useGetProductQuery(id);
+  console.log(product);
   // const [product, setProduct] = useState([]);
   const [isCartItem, setIsCartItem] = useState(false);
   const [isFav, setIsFav] = useState(false);
@@ -60,13 +62,23 @@ const ProductPage = () => {
     }
   }
 
+
+
   return isLoading ? (
     <div className="min-h-screen py-4 bg-gray-100 pt-28">Loading...</div>
   ) : (
     <div className="min-h-screen py-4 bg-gray-100 pt-28">
       <div className="grid grid-cols-5 p-6 rounded-lg md:max-lg:grid-cols-4">
         <div className="relative z-0 col-span-5 md:col-span-2 ">
-          <ProductImage images={[product.ImageURL]} />
+          <ProductImage
+            images={[
+              product?.ImageURL?.includes("http")
+                ? product?.ImageURL
+                : BACKEND_URL + product?.ImageURL,
+            ].concat(
+              product?.images?.map((image) => BACKEND_URL + image.ImageURL)
+            )}
+          />
           <div
             className="absolute top-0 z-40 inline-block p-2 rounded-full right-6"
             onClick={(e) => {
@@ -79,10 +91,10 @@ const ProductPage = () => {
         </div>
         <div className="col-span-5 p-2 space-y-2 md:col-span-2 lg:col-span-3">
           <h1 className="text-2xl font-extrabold tracking-wide">
-            {product.ProductTitle}
+            {product?.ProductTitle}
           </h1>
           <h1 className="text-lg font-semibold tracking-wide text-gray-600">
-            {product.SubCategory}
+            {product?.SubCategory}
           </h1>
           <Rating
             value={product.rating ? product.rating : 4}
@@ -90,16 +102,14 @@ const ProductPage = () => {
             className="z-0 pb-4 max-w-28"
           />
           <span className="inline-block pr-4 text-3xl font-extrabold tracking-wide">
-            {product.discounted_price
-              ? product.discounted_price
-              : "₹ 200"}
+            {product.discounted_price ? product.discounted_price : "₹ 200"}
           </span>
           <span className="inline-block text-3xl font-extrabold tracking-wide text-gray-600 line-through">
             {product.actual_price ? product.actual_price : "₹ 200"}
           </span>
           <p className="pt-2 text-sm font-semibold leading-6 tracking-wide text-justify text-gray-500 md:pr-6">
-            {product.about_product ? (
-              product.about_product
+            {product?.about_product ? (
+              product?.about_product
             ) : (
               <span>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui,
@@ -125,7 +135,9 @@ const ProductPage = () => {
                 </span>
                 <button
                   className="h-12 text-lg font-semibold bg-slate-300 w-14 rounded-r-3xl hover:text-xl"
-                  onClick={() => setQty((prev) => prev + 1)}
+                  onClick={() =>
+                    qty >= 10 ? null : setQty((prev) => prev + 1)
+                  }
                 >
                   +
                 </button>
@@ -134,8 +146,7 @@ const ProductPage = () => {
                 className="flex items-center justify-center gap-2 px-6 py-2 text-lg font-bold tracking-wider text-white w-96 rounded-3xl bg-darker hover:outline outline-gray-500"
                 onClick={() =>
                   addToCart(
-                      product.discounted_price ? product.discounted_price : 200
-
+                    product.discounted_price ? product.discounted_price : 200
                   )
                 }
               >

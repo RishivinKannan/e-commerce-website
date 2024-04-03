@@ -35,6 +35,7 @@ export default function Home() {
     },
   ];
 
+  console.log(NewArrivals);
   const scrollRef = useRef(null);
   const scroll = () => {
     const headerHeight = document.querySelector("header").offsetHeight;

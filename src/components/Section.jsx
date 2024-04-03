@@ -92,6 +92,8 @@ export default function Home({ Heading, products, loading }) {
                 imageUrl={product.ImageURL}
                 title={product.ProductTitle}
                 rating={4}
+                price={product?.discounted_price}
+                mrp={product?.actual_price}
                 showFav
               />
             ))}

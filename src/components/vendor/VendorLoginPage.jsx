@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { vendorlogin } from "../../Redux/vendorServices/vendorSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -14,7 +15,7 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required("Required"),
 });
 const RegisterSchema = Yup.object().shape({
-  vendorName: Yup.string()
+  username: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
     .required("Required"),
@@ -45,7 +46,7 @@ const VendorLoginPage = () => {
       redirect("/vendor/home");
     }
   }, [isLogged, redirect]);
-  
+
   if (isLogged) {
     return <></>;
   }
@@ -104,65 +105,84 @@ const LoginPanel = () => {
           password: "",
         }}
         validationSchema={LoginSchema}
-        onSubmit={(values) => {
+        onSubmit={(values, { setSubmitting }) => {
           const { email, password } = values;
-          const vendors = localStorage.getItem("vendor")
-            ? JSON.parse(localStorage.getItem("vendor"))
-            : [];
-          if (vendors.length != 0) {
-            const match = vendors.filter((vendor) => {
-              return vendor.email === email;
+
+          // setIsFetching((prev) => !prev);
+          axios
+            .post("http://localhost:8000/api/vendor/login", {
+              email: email,
+              password: password,
+            })
+            .then((res) => {
+              console.log(res);
+              dispatch(vendorlogin(res.data));
+              setSubmitting(false);
+            })
+            .catch((error) => {
+              alert(error.response.data.detail);
+              setSubmitting(false);
             });
-            if (match.length != 0) {
-              if (match[0].password === password) {
-                const { vendorName } = match[0];
-                dispatch(vendorlogin({ email, vendorName }));
-              } else {
-                alert("password does not match");
-              }
-            } else {
-              alert("Email is not registered ");
-            }
-          }
+          // const vendors = localStorage.getItem("vendor")
+          //   ? JSON.parse(localStorage.getItem("vendor"))
+          //   : [];
+          // if (vendors.length != 0) {
+          //   const match = vendors.filter((vendor) => {
+          //     return vendor.email === email;
+          //   });
+          //   if (match.length != 0) {
+          //     if (match[0].password === password) {
+          //       const { vendorName } = match[0];
+          //       dispatch(vendorlogin({ email, vendorName }));
+          //     } else {
+          //       alert("password does not match");
+          //     }
+          //   } else {
+          //     alert("Email is not registered ");
+          //   }
+          // }
         }}
       >
-        <Form className="flex flex-col justify-center items-center space-y-8 translate-x-12">
-          <div className="w-11/12 md:w-9/12 space-x-2">
-            <Field
-              name="email"
-              type="email"
-              placeholder="Email"
-              className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
-            />
+        {({ isSubmitting }) => (
+          <Form className="flex flex-col justify-center items-center space-y-8 translate-x-12">
+            <div className="w-11/12 md:w-9/12 space-x-2">
+              <Field
+                name="email"
+                type="email"
+                placeholder="Email"
+                className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
+              />
 
-            <ErrorMessage
-              name="email"
-              component="span"
-              className="text-red-600"
-            />
-          </div>
-          <div className="w-11/12 md:w-9/12 space-x-2">
-            <Field
-              name="password"
-              type="password"
-              placeholder="Password"
-              className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
-            />
+              <ErrorMessage
+                name="email"
+                component="span"
+                className="text-red-600"
+              />
+            </div>
+            <div className="w-11/12 md:w-9/12 space-x-2">
+              <Field
+                name="password"
+                type="password"
+                placeholder="Password"
+                className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
+              />
 
-            <ErrorMessage
-              name="password"
-              component="span"
-              className="text-red-600"
-            />
-          </div>
+              <ErrorMessage
+                name="password"
+                component="span"
+                className="text-red-600"
+              />
+            </div>
 
-          <button
-            type="submit"
-            className="inline-flex -translate-x-12 justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1  text-white hover:outline  outline-gray-500"
-          >
-            Submit
-          </button>
-        </Form>
+            <button
+              type="submit"
+              className="disabled:bg-gray-500  inline-flex -translate-x-12 justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1  text-white hover:outline  outline-gray-500"
+              disabled={isSubmitting}
+            >
+              Login{isSubmitting ? "..." : ""}
+            </button>
+          </Form>
+        )}
       </Formik>
     </>
   );
@@ -176,89 +196,109 @@ const RegisterPanel = () => {
       </h1>
       <Formik
         initialValues={{
-          VendorName: "",
+          username: "",
           email: "",
           password: "",
           repassword: "",
         }}
         validationSchema={RegisterSchema}
-        onSubmit={(values) => {
-          const { vendorName, email, password } = values;
-          const vendor = localStorage.getItem("vendor")
-            ? JSON.parse(localStorage.getItem("vendor")).concat({
-                vendorName,
-                email,
-                password,
-              })
-            : [{ vendorName, email, password }];
+        onSubmit={(values, { setSubmitting }) => {
+          const { username, email, password } = values;
+          console.log("logged");
+          axios
+            .post("http://localhost:8000/api/vendor/register", {
+              username: username,
+              email: email,
+              password: password,
+            })
+            .then((res) => {
+              console.log(res);
+              dispatch(vendorlogin(res.data));
+              setSubmitting(false);
+            })
+            .catch((error) => {
+              alert(error.response.data.detail);
+              setSubmitting(false);
+            });
 
-          localStorage.setItem("vendor", JSON.stringify(vendor));
-          dispatch(vendorlogin({ vendorName, email }));
+          // const vendor = localStorage.getItem("vendor")
+          //   ? JSON.parse(localStorage.getItem("vendor")).concat({
+          //       vendorName,
+          //       email,
+          //       password,
+          //     })
+          //   : [{ vendorName, email, password }];
+
+          // localStorage.setItem("vendor", JSON.stringify(vendor));
+          // dispatch(vendorlogin({ vendorName, email }));
         }}
       >
-        <Form className="flex flex-col justify-center items-center space-y-6 translate-x-12">
-          <div className="w-11/12 md:w-9/12 space-x-2">
-            <Field
-              name="vendorName"
-              placeholder="Vendor Name"
-              className="border-[3px] bg-gray-200 w-5/6 h-10 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
-            />
-            <ErrorMessage
-              name="vendorName"
-              component="span"
-              className="inline-block text-red-600"
-            />
-          </div>
-          <div className="w-11/12 md:w-9/12 space-x-2">
-            <Field
-              name="email"
-              type="email"
-              placeholder="Email"
-              className="border-[3px] bg-gray-200  w-5/6 h-10 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
-            />
+        {({ isSubmitting }) => (
+          <Form className="flex flex-col justify-center items-center space-y-6 translate-x-12">
+            <div className="w-11/12 md:w-9/12 space-x-2">
+              <Field
+                name="username"
+                placeholder="Vendor Name"
+                className="border-[3px] bg-gray-200 w-5/6 h-10 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
+              />
+              <ErrorMessage
+                name="username"
+                component="span"
+                className="inline-block text-red-600"
+              />
+            </div>
+            <div className="w-11/12 md:w-9/12 space-x-2">
+              <Field
+                name="email"
+                type="email"
+                placeholder="Email"
+                className="border-[3px] bg-gray-200  w-5/6 h-10 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
+              />
 
-            <ErrorMessage
-              name="email"
-              component="span"
-              className="text-red-600"
-            />
-          </div>
-          <div className="w-11/12 md:w-9/12 space-x-2">
-            <Field
-              name="password"
-              type="password"
-              placeholder="Enter a new password"
-              className="border-[3px] bg-gray-200  w-5/6 h-10 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
-            />
+              <ErrorMessage
+                name="email"
+                component="span"
+                className="text-red-600"
+              />
+            </div>
+            <div className="w-11/12 md:w-9/12 space-x-2">
+              <Field
+                name="password"
+                type="password"
+                placeholder="Enter a new password"
+                className="border-[3px] bg-gray-200  w-5/6 h-10 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
+              />
 
-            <ErrorMessage
-              name="password"
-              component="span"
-              className="text-red-600"
-            />
-          </div>
-          <div className="w-11/12 md:w-9/12 space-x-2">
-            <Field
-              name="repassword"
-              type="password"
-              placeholder="Retype password"
-              className="border-[3px] bg-gray-200  w-5/6 h-10 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
-            />
+              <ErrorMessage
+                name="password"
+                component="span"
+                className="text-red-600"
+              />
+            </div>
+            <div className="w-11/12 md:w-9/12 space-x-2">
+              <Field
+                name="repassword"
+                type="password"
+                placeholder="Retype password"
+                className="border-[3px] bg-gray-200  w-5/6 h-10 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
+              />
 
-            <ErrorMessage
-              name="repassword"
-              component="span"
-              className="text-red-600"
-            />
-          </div>
+              <ErrorMessage
+                name="repassword"
+                component="span"
+                className="text-red-600"
+              />
+            </div>
 
-          <button
-            type="submit"
-            className="inline-flex -translate-x-12 justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1  text-white hover:outline  outline-gray-500"
-          >
-            Submit
-          </button>
-        </Form>
+            <button
+              type="submit"
+              className="disabled:bg-gray-500 inline-flex -translate-x-12 justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1  text-white hover:outline  outline-gray-500"
+              disabled={isSubmitting}
+            >
+              Submit{isSubmitting ? "..." : ""}
+            </button>
+          </Form>
+        )}
       </Formik>
     </>
   );

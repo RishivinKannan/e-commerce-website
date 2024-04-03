@@ -13,8 +13,6 @@ from django.contrib.auth.hashers import make_password
 # Create your views here.
 
 
-
-
 @api_view(['GET'])
 def getRoutes(request):
     return Response('Hello')
@@ -59,11 +57,14 @@ def getNewArrivalsProducts(request):
 @api_view(['GET'])
 def getProduct(request,pk):
     product = None
-    for i in products:
-        if str(i['ProductId']) == pk:
-            product = i
-            break
-    return Response(product)
+    if len(pk) < 3:
+        return Response({'message':'No Product'})
+    else:
+        for i in products:
+            if str(i['ProductId']) == pk:
+                product = i
+                break
+        return Response(product)
 
 @api_view(['POST'])
 def postProduct(request):
