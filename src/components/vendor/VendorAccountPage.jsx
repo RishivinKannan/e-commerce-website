@@ -1,14 +1,16 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useState } from "react";
 import { UserSolidIcon } from "../../utils/Icons";
+import { useGetVendorProfileQuery } from "../../Redux/api/vendorApi";
 
 const VendorAccountPage = () => {
   const [edit, setEdit] = useState();
-  const accountDetails = {
-    vendorName: "Shopify",
-    storeName: "Shopify",
-    email: "shopify@shopify.com",
-  };
+  // const accountDetails = {
+  //   vendorName: "Shopify",
+  //   storeName: "Shopify",
+  //   email: "shopify@shopify.com",
+  // };
+  const { data: accountDetails } = useGetVendorProfileQuery();
   return (
     <div className="p-4 space-y-4">
       <div className="flex justify-between items-center">
@@ -39,7 +41,7 @@ const VendorAccountPage = () => {
               <Form className="flex flex-col justify-center items-center space-y-8 translate-x-12">
                 <div className="w-11/12 md:w-9/12 space-x-2">
                   <Field
-                    name="vendorName"
+                    name="username"
                     type="text"
                     placeholder="Vendor Name"
                     className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500 disabled:text-gray-500"
@@ -47,26 +49,12 @@ const VendorAccountPage = () => {
                   />
 
                   <ErrorMessage
-                    name="vendorName"
+                    name="username"
                     component="span"
                     className="text-red-600"
                   />
                 </div>
-                <div className="w-11/12 md:w-9/12 space-x-2">
-                  <Field
-                    name="storeName"
-                    type="text"
-                    placeholder="Store Name"
-                    className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500 disabled:text-gray-500"
-                    disabled={!edit}
-                  />
-
-                  <ErrorMessage
-                    name="storeName"
-                    component="span"
-                    className="text-red-600"
-                  />
-                </div>
+5
                 <div className="w-11/12 md:w-9/12 space-x-2">
                   <Field
                     name="email"

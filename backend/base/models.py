@@ -63,13 +63,18 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 #Product model
 
+class Category(models.Model):
+    name = models.CharField(max_length=100,unique=True)
+
+    def __str__(self):
+        return self.name
 
 class Product(models.Model):
     vendor = models.ForeignKey(CustomUser, on_delete=models.SET_NULL , null=True)
     ImageURL = models.ImageField(null=True, blank=True)
     ProductTitle = models.CharField(max_length=200,null=True,blank=True)
     Brand = models.CharField(max_length=200,null=True,blank=True)
-    SubCategory = models.CharField(max_length=200,null=True,blank=True)
+    SubCategoryID = models.ForeignKey(Category,null=True,on_delete=models.SET_NULL,blank=True, db_column='name')
     about_product = models.TextField(null=True, blank=True)
     actual_price = models.DecimalField(max_digits=7, decimal_places=0) 
     discounted_price = models.DecimalField(max_digits=7, decimal_places=0) 
@@ -77,13 +82,37 @@ class Product(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.ProductTitle
+        return str(self.id)+" | "+self.ProductTitle
 
 
 class Images(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE , related_name='images')
     ImageURL = models.ImageField(null=True, blank=True)
 
+    def __str__(self):
+        name = str(self.product.id)
+        return name
+
+class Spec(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE , related_name='specs')
+    specName = models.CharField(max_length=200,null=True, blank=True)
+    specDetail = models.CharField(max_length=200,null=True, blank=True)
+
+    def __str__(self):
+        name = str(self.product.id) + "  |  " + self.specName + "  |  " + self.product.ProductTitle
+        return name
+
+
+class Review(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE , related_name='review')
+    review = models.TextField(null=True, blank=True)
+    rating = models.IntegerField(default=0,null=True, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL ,null=True, related_name='review')
+    createdAt= models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        name = str(self.product.id)+ "  |  " + self.user.fullname
+        return name
 
 
 

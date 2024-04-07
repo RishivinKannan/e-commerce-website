@@ -14,6 +14,9 @@ export const vendorApi = createApi({
   }),
   tagTypes: ["Product"],
   endpoints: (builder) => ({
+    getVendorProfile: builder.query({
+      query: () => "/user/profile",
+    }),
     getVendorProducts: builder.query({
       query: () => "/vendor/products",
       providesTags: ["Product"],
@@ -28,9 +31,20 @@ export const vendorApi = createApi({
         const formData = new FormData();
         Object.entries(data).map(([k, v]) => {
           if (v != "") {
-            formData.append(k, v);
+            if (k == "specs") {
+              v.map((val) => {
+                formData.append("specs[]", JSON.stringify(val));
+              });
+            } else if (k == "images") {
+              v.map((val) => {
+                formData.append("images", val);
+              });
+            } else {
+              formData.append(k, v);
+            }
           }
         });
+        console.log(formData);
         return {
           url: `/vendor/addproduct/`,
           method: "POST",
@@ -44,7 +58,17 @@ export const vendorApi = createApi({
         const formData = new FormData();
         Object.entries(values).map(([k, v]) => {
           if (v != "") {
-            formData.append(k, v);
+            if (k == "specs") {
+              v.map((val) => {
+                formData.append("specs[]", JSON.stringify(val));
+              });
+            } else if (k == "images") {
+              v.map((val) => {
+                formData.append("images", val);
+              });
+            } else {
+              formData.append(k, v);
+            }
           }
         });
         return {
@@ -55,6 +79,9 @@ export const vendorApi = createApi({
       },
       invalidatesTags: ["Product"],
     }),
+    getCategories: builder.query({
+      query: () => "/categories",
+    }),
   }),
 });
 
@@ -63,4 +90,6 @@ export const {
   useGetVendorProductByIdQuery,
   useAddProductMutation,
   useUpdateProductMutation,
+  useGetCategoriesQuery,
+  useGetVendorProfileQuery,
 } = vendorApi;

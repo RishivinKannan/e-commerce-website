@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useState } from "react";
 import { UserSolidIcon } from "../utils/Icons";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useGetUserProfileQuery } from "../Redux/api/user";
 
 const AccountPage = () => {

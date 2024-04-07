@@ -167,7 +167,7 @@ const ProductPage = () => {
         </div>
       </div>
       <div className="px-4 lg:px-16">
-        <ProductTabs />
+        <ProductTabs specs={product?.specs}/>
       </div>
       <Section
         Heading={"Related Products"}

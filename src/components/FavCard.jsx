@@ -70,10 +70,10 @@ export default function FavCard({ id, ...otherProps }) {
             </h2>
             <Rating value={product?.rating} readOnly className="max-w-28 z-0" />
             <span className="text-lg pl-1 font-bold tracking-wider">
-              ₹{product.discounted_price ? product.discounted_price : 200}
+              ₹{product?.discounted_price ? product.discounted_price : 200}
             </span>
             <span className="text-lg pl-1 font-bold tracking-wider ml-2 line-through text-gray-500">
-              ₹{product.actual_price ? product.actual_price : 200}
+              ₹{product?.actual_price ? product.actual_price : 200}
             </span>
           </div>
         </div>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Rating } from "@smastrom/react-rating";
 import { useSelector } from "react-redux";
@@ -5,47 +6,60 @@ import WriteReviewDialog from "./WriteReviewDialog";
 import WriteQuestionDialog from "./WriteQuestionDialog";
 import Welcome from "../assets/welcome2.mp3";
 
-export const SpecsPanel = () => {
-  const specs = [
-    {
-      specName: "Specification Name",
-      specDetail: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-    },
-    {
-      specName: "Specification Name",
-      specDetail: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-    },
-    {
-      specName: "Specification Name",
-      specDetail: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-    },
-    {
-      specName: "Specification Name",
-      specDetail: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-    },
-    {
-      specName: "Specification Name",
-      specDetail: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-    },
-    {
-      specName: "Specification Name",
-      specDetail: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-    },
-  ];
+export const SpecsPanel = ({ spec=[] }) => {
+  const specs =
+    spec.length != 0
+      ? spec
+      : [
+          {
+            specName: "Specification Name",
+            specDetail:
+              "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
+          },
+          {
+            specName: "Specification Name",
+            specDetail:
+              "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
+          },
+          {
+            specName: "Specification Name",
+            specDetail:
+              "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
+          },
+          {
+            specName: "Specification Name",
+            specDetail:
+              "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
+          },
+          {
+            specName: "Specification Name",
+            specDetail:
+              "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
+          },
+          {
+            specName: "Specification Name",
+            specDetail:
+              "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
+          },
+        ];
 
   return (
     <div className="w-full space-y-6 p-4 px-6">
       <span className="text-xl md:text-2xl font-bold leading-9 shadow-gray-600">
-        Product Specification 
+        Product Specification
       </span>
       <div className="grid md:grid-cols-2 gap-x-4 gap-y-3">
         {specs.map(({ specName, specDetail }, index) => (
           <div
             key={index}
-            className="w-full grid grid-cols-3 border-black border p-2 rounded"
+            className="w-full grid grid-cols-3 border-black border p-2 py-4 rounded"
           >
-            <span className="flex justify-center items-center px-2 border-r-2 border-black font-semibold text-gray-500">{specName}</span>
-            <span className="px-2 col-span-2 font-semibold text-slate-700">{specDetail}</span>
+            <span className="flex justify-center items-center px-2 border-r-2 border-black font-semibold text-gray-500">
+              {specName}
+            </span>
+            <span className="flex items-center px-2 pl-4 col-span-2 font-semibold text-slate-700">
+              {specDetail}
+            </span>
           </div>
         ))}
       </div>

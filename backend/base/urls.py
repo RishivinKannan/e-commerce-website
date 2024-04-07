@@ -18,6 +18,7 @@ urlpatterns = [
 
 
     path('api/', productsview.getRoutes, name="routes"),
+    path('api/categories', productsview.getCategories, name="Categories"),
     path('api/products/', productsview.getProducts, name="products"),
     path('api/products/<str:pk>', productsview.getProduct, name="product"),
     path('api/newarrivals/', productsview.getNewArrivalsProducts, name="newarrivals"),

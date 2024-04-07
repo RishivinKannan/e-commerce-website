@@ -1,6 +1,9 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import * as Yup from "yup";
-import { useAddProductMutation } from "../../Redux/api/vendorApi";
+import {
+  useAddProductMutation,
+  useGetCategoriesQuery,
+} from "../../Redux/api/vendorApi";
 import { useEffect } from "react";
 
 const Schema = Yup.object().shape({
@@ -19,6 +22,7 @@ const Schema = Yup.object().shape({
 });
 const NewProductPage = () => {
   const [addProduct, data] = useAddProductMutation();
+  const { data: Categories } = useGetCategoriesQuery();
   useEffect(() => {
     if (data?.isSuccess) {
       alert("Product added Successfully");
@@ -27,7 +31,7 @@ const NewProductPage = () => {
       alert(" Unsuccessfull");
       console.error(data?.error);
     }
-  },[data]);
+  }, [data]);
   return (
     <div className="p-4 space-y-6">
       <h1 className="text-xl md:text-2xl font-bold leading-9">
@@ -46,9 +50,16 @@ const NewProductPage = () => {
               about_product: "",
               cover_image: "",
               images: [],
+              specs: [
+                {
+                  specName: "",
+                  specDetail: "",
+                },
+              ],
             }}
             validationSchema={Schema}
             onSubmit={(values) => {
+              console.log(values);
               addProduct(values);
             }}
           >
@@ -83,12 +94,31 @@ const NewProductPage = () => {
                   />
                 </div>
                 <div className="w-11/12 md:w-9/12 space-x-2">
-                  <Field
+                  <select
                     name="SubCategory"
-                    type="text"
-                    placeholder="Category"
-                    className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
-                  />
+                    value={prop.values.SubCategory}
+                    onChange={prop.handleChange}
+                    defaultValue={prop.values.SubCategory}
+                    className="border-[3px]  bg-gray-200 w-5/6 h-12 rounded  px-4 font-semibold focus:outline-none focus:border-gray-500 "
+                  >
+                    <option
+                      className="bg-white text-gray-600"
+                      value=""
+                      disabled
+                    >
+                      Select a Category
+                    </option>
+
+                    {Categories?.map((category) => (
+                      <option
+                        key={category.id}
+                        className="bg-white text-black"
+                        value={category.id}
+                      >
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
 
                   <ErrorMessage
                     name="SubCategory"
@@ -153,6 +183,75 @@ const NewProductPage = () => {
 
                   <ErrorMessage
                     name="about_product"
+                    component="span"
+                    className="text-red-600"
+                  />
+                </div>
+                <div className="w-11/12 md:w-9/12 space-x-2">
+                  <FieldArray
+                    name="specs"
+                    render={(arrayHelpers) => (
+                      <div className="w-5/6 space-y-4">
+                        {prop.values.specs.map((spec, index) => (
+                          <>
+                            <div key={index} className="flex justify-between ">
+                              <Field
+                                name={`specs[${index}].specName`}
+                                placeholder="Spec Name"
+                                className="border-[3px] col-span-3 bg-gray-200  h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
+                              />
+                              <Field
+                                name={`specs.${index}.specDetail`}
+                                placeholder="Spec detail"
+                                className="border-[3px] col-span-3 bg-gray-200  h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
+                              />
+
+                              <button
+                                type="button"
+                                className="flex justify-center items-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4  text-white hover:outline  outline-gray-500"
+                                onClick={() =>
+                                  index > 0 && arrayHelpers.remove(index)
+                                }
+                              >
+                                -
+                              </button>
+                            </div>
+                            <ErrorMessage
+                              name={`specs[${index}].specName`}
+                              component="span"
+                              className="text-red-600"
+                            />
+                            <ErrorMessage
+                              name={`specs[${index}].specDetail`}
+                              component="span"
+                              className="text-red-600"
+                            />
+                          </>
+                        ))}
+                        <button
+                          type="button"
+                          className="float-right flex justify-center items-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1 text-white hover:outline  outline-gray-500 "
+                          onClick={() =>
+                            arrayHelpers.push({
+                              specName: "",
+                              specDetail: "",
+                            })
+                          }
+                        >
+                          Add Spec
+                        </button>
+                      </div>
+                    )}
+                  />
+                  {/* <Field
+                    name="countInStock"
+                    type="number"
+                    placeholder="Count In Stock"
+                    className="border-[3px] bg-gray-200  w-5/6 h-12 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500"
+                  /> */}
+
+                  <ErrorMessage
+                    name="specs"
                     component="span"
                     className="text-red-600"
                   />

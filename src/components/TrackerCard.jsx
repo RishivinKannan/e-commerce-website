@@ -26,6 +26,14 @@ const TrackerCard = () => {
         date: "17Jan2023",
         price: 200,
       },
+      {
+        date: "19Jan2023",
+        price: 250,
+      },
+      {
+        date: "21Jan2023",
+        price: 190,
+      },
     ],
   };
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { SpecsPanel, ReviewPanel, QandAPanel } from "./Panels";
 import { Tab } from "@headlessui/react";
 
@@ -5,11 +6,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductTabs() {
+export default function ProductTabs({ specs }) {
   const tabName = ["Specification", "Reviews", "Q/A"];
   const panels = [
     {
-      panelComponent: <SpecsPanel />,
+      panelComponent: <SpecsPanel spec={specs} />,
       name: "Specs",
     },
     {

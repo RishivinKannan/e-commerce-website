@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser,Product,Images
+from .models import CustomUser,Product,Images,Category,Spec
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -57,10 +57,22 @@ class ImagesSerializer(serializers.ModelSerializer):
         model = Images
         fields = '__all__'
 
+class SpecsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Spec
+        fields = '__all__'
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
 
 class ProductSerializer(serializers.ModelSerializer):
     ProductId = serializers.SerializerMethodField(read_only=True)
+    SubCategory = serializers.CharField(source='SubCategoryID.name',read_only=True)
     images = ImagesSerializer(many=True)
+    specs = SpecsSerializer(many=True)
     class Meta:
         model = Product
         fields = '__all__'

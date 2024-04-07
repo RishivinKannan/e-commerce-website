@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth.hashers import make_password
-
+import json
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -9,9 +9,9 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from ..models import CustomUser,Product,Images
+from ..models import CustomUser,Product,Images,Category,Spec
 from ..products import products
-from ..serializers import UserSerializer,ProductSerializer,ImagesSerializer,ImageSerializer,ProductDetailsSerializer
+from ..serializers import UserSerializer,ProductSerializer,ImagesSerializer,ImageSerializer,ProductDetailsSerializer,CategorySerializer
 # Create your views here.
 
 
@@ -28,10 +28,8 @@ def getProducts(request):
 def getNewArrivalsProducts(request):
     dataProducts = Product.objects.all()
     serializer = ProductSerializer(dataProducts,many=True).data
-    Products_List = serializer
-    products_reversed = products[::-1]
-    for i in range(0,12):
-        Products_List.append(products_reversed[i])
+    Products_List = serializer[::-1]
+    
     return Response(Products_List)
 
 @api_view(['GET'])
@@ -61,7 +59,6 @@ def getVendorProducts(request):
 @permission_classes([IsAuthenticated])
 def getVendorProduct(request,pk):
     if request.method == 'GET':
-
         try:
             user = request.user
             product = Product.objects.get(vendor=user,id=pk)
@@ -74,15 +71,22 @@ def getVendorProduct(request,pk):
     elif request.method == 'PUT':
         try:
             user = request.user
-            data =request.data
+            data = request.data
             cover_image =request.FILES.get('cover_image')
             images = request.FILES.getlist('images')
+            specs = request.data.getlist('specs[]')
+            print(images)
             if user.is_vendor:
                 product = Product.objects.get(id=pk)
 
                 for k,v in data.items():
                     if k == 'images':
                         continue
+                    elif k == 'specs[]':
+                        continue
+                    elif k == 'SubCategory':
+                        category = Category.objects.get(id=int(v))
+                        setattr(product,'SubCategoryID',category)
                     else:
                         setattr(product,k,v)
                         product.save()
@@ -97,6 +101,19 @@ def getVendorProduct(request,pk):
                         image = Images.objects.create(
                             product = product,
                             ImageURL = image
+                        )
+                if specs:
+                    product = Product.objects.get(id=pk,vendor=user)
+                    spec_list = Spec.objects.filter(product=product)
+                    for spec in spec_list:
+                        spec.delete()
+                    
+                    for val in specs:
+                        spec = json.loads(val)
+                        spec = Spec.objects.create(
+                            product = product,
+                            specName = spec["specName"],
+                            specDetail = spec["specDetail"]
                         )
                     
 
@@ -156,12 +173,15 @@ def postProduct(request):
         data =request.data
         cover_image =request.FILES.get('cover_image')
         images = request.FILES.getlist('images')
+        SubCategoryID = data["SubCategory"]
+        specs = data.getlist("specs[]")
         if user.is_vendor:
+            category = Category.objects.get(id=int(SubCategoryID))
             product = Product.objects.create(
                 vendor=user,
                 ProductTitle=data["ProductTitle"],
                 Brand=data["Brand"],
-                SubCategory = data["SubCategory"],
+                SubCategoryID = category,
                 about_product = data["about_product"],
                 actual_price = data["actual_price"] ,
                 discounted_price = data["discounted_price"] ,
@@ -173,6 +193,15 @@ def postProduct(request):
                     image = Images.objects.create(
                         product = product,
                         ImageURL = image
+                    )
+            if specs:
+                for val in specs:
+                    print(val)
+                    spec = json.loads(val)
+                    spec = Spec.objects.create(
+                        product = product,
+                        specName = spec["specName"],
+                        specDetail = spec["specDetail"]
                     )
 
             product_serializer = ProductSerializer(product, many=False).data
@@ -206,4 +235,17 @@ def getCategoryProducts(request,pk):
             if pk.replace('-', "").lower() in i['SubCategory'].lower():
                 product.append(i) 
     return Response(product)
+
+
+@api_view(['GET'])
+def getCategories(request):
+
+    categories = Category.objects.all()
+
+    serializer = CategorySerializer(categories,many=True)
+
+    return Response(serializer.data)
+    
+
+
 
