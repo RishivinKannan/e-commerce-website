@@ -13,6 +13,10 @@ import { useGetProductQuery } from "../Redux/api/productsDjango";
 import { addtofav, getFavList, removefav } from "../Redux/services/FavSlice";
 import { addtohistory } from "../Redux/services/historySlice";
 import { BACKEND_URL } from "../utils/constants";
+import {
+  useGetCartItemQuery,
+  usePostCartItemMutation,
+} from "../Redux/api/cartApi";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -23,21 +27,32 @@ const ProductPage = () => {
   const [isCartItem, setIsCartItem] = useState(false);
   const [isFav, setIsFav] = useState(false);
   const [qty, setQty] = useState(1);
-  const { username } = useSelector((state) => state.user);
+  const { username, isLogged } = useSelector((state) => state.user);
   const { cartList } = useSelector((state) => state.cart);
   const { favList } = useSelector((state) => state.fav);
   const dispatch = useDispatch();
+
+  const { data: cart } = useGetCartItemQuery(id);
+  const [addCartItem] = usePostCartItemMutation();
+
   useEffect(() => {
     // axios.get("../fashionProducts.json").then((res) => {
     //   setProduct(res.data.filter((data) => data.ProductId.toString() == id));
     // });
-    if (cartList.length != 0) {
-      const t = cartList.find((item) => item.id == id)?.id == id;
+    if (isLogged) {
+      const t = cart?.is_cartItem;
+      console.log(t);
       setIsCartItem(t);
+    } else {
+      if (cartList.length != 0) {
+        const t = cartList.find((item) => item.productId == id)?.productId == id;
+        console.log(t);
+        setIsCartItem(t);
+      }
     }
     const temp = favList.find((fav) => fav == id) == id;
     setIsFav(temp);
-  }, [id, username, cartList, favList]);
+  }, [id, username, cartList, favList, cart, isLogged]);
 
   useEffect(() => {
     dispatch(getcart({ username }));
@@ -49,7 +64,11 @@ const ProductPage = () => {
   }, [dispatch, id, username]);
 
   const addToCart = (price) => {
-    dispatch(addtocart({ id, qty, username, price }));
+    if (isLogged) {
+      addCartItem({ id, qty });
+    } else {
+      dispatch(addtocart({ id, qty, username, price }));
+    }
     setIsCartItem(true);
   };
   function favClick(id) {
@@ -61,8 +80,6 @@ const ProductPage = () => {
       setIsFav(true);
     }
   }
-
-
 
   return isLoading ? (
     <div className="min-h-screen py-4 bg-gray-100 pt-28">Loading...</div>
@@ -167,7 +184,7 @@ const ProductPage = () => {
         </div>
       </div>
       <div className="px-4 lg:px-16">
-        <ProductTabs specs={product?.specs}/>
+        <ProductTabs specs={product?.specs} />
       </div>
       <Section
         Heading={"Related Products"}

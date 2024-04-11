@@ -14,7 +14,7 @@ export default function ProductTabs({ specs }) {
       name: "Specs",
     },
     {
-      panelComponent: <ReviewPanel />,
+      panelComponent: <ReviewPanel  />,
       name: "Review",
     },
     {

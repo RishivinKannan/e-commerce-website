@@ -1,44 +1,51 @@
 import { Disclosure, Transition } from "@headlessui/react";
 import { DownChevIcon } from "../../utils/Icons";
+import {
+  useGetVendorQuestionsQuery,
+  useGetVendorUnansweredQuery,
+} from "../../Redux/api/vendorQuestionsApi";
+import QuestionList from "./QuestionList";
 
 const VendorQuestionPage = () => {
-  const questions = [
-    {
-      Qid: 1,
-      ProductId: 123,
-      question:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aliquid nisi laborum est fugiat qui magni suscipit porro mollitia ab ut consequuntur alias amet ipsum, deleniti asperiores possimus eos pariatur.",
-      customerId: 123,
-    },
-    {
-      Qid: 2,
-      ProductId: 123,
-      question:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aliquid nisi laborum est fugiat qui magni suscipit porro mollitia ab ut consequuntur alias amet ipsum, deleniti asperiores possimus eos pariatur.",
-      customerId: 123,
-    },
-    {
-      Qid: 3,
-      ProductId: 123,
-      question:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aliquid nisi laborum est fugiat qui magni suscipit porro mollitia ab ut consequuntur alias amet ipsum, deleniti asperiores possimus eos pariatur.",
-      customerId: 123,
-    },
-    {
-      Qid: 4,
-      ProductId: 123,
-      question:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aliquid nisi laborum est fugiat qui magni suscipit porro mollitia ab ut consequuntur alias amet ipsum, deleniti asperiores possimus eos pariatur.",
-      customerId: 123,
-    },
-    {
-      Qid: 5,
-      ProductId: 123,
-      question:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aliquid nisi laborum est fugiat qui magni suscipit porro mollitia ab ut consequuntur alias amet ipsum, deleniti asperiores possimus eos pariatur.",
-      customerId: 123,
-    },
-  ];
+  const { data: questions } = useGetVendorQuestionsQuery();
+  const { data: unanswered } = useGetVendorUnansweredQuery();
+  // const questions = [
+  //   {
+  //     Qid: 1,
+  //     ProductId: 123,
+  //     question:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aliquid nisi laborum est fugiat qui magni suscipit porro mollitia ab ut consequuntur alias amet ipsum, deleniti asperiores possimus eos pariatur.",
+  //     customerId: 123,
+  //   },
+  //   {
+  //     Qid: 2,
+  //     ProductId: 123,
+  //     question:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aliquid nisi laborum est fugiat qui magni suscipit porro mollitia ab ut consequuntur alias amet ipsum, deleniti asperiores possimus eos pariatur.",
+  //     customerId: 123,
+  //   },
+  //   {
+  //     Qid: 3,
+  //     ProductId: 123,
+  //     question:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aliquid nisi laborum est fugiat qui magni suscipit porro mollitia ab ut consequuntur alias amet ipsum, deleniti asperiores possimus eos pariatur.",
+  //     customerId: 123,
+  //   },
+  //   {
+  //     Qid: 4,
+  //     ProductId: 123,
+  //     question:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aliquid nisi laborum est fugiat qui magni suscipit porro mollitia ab ut consequuntur alias amet ipsum, deleniti asperiores possimus eos pariatur.",
+  //     customerId: 123,
+  //   },
+  //   {
+  //     Qid: 5,
+  //     ProductId: 123,
+  //     question:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aliquid nisi laborum est fugiat qui magni suscipit porro mollitia ab ut consequuntur alias amet ipsum, deleniti asperiores possimus eos pariatur.",
+  //     customerId: 123,
+  //   },
+  // ];
   return (
     <div className="p-4">
       <h1 className="text-xl md:text-2xl font-bold leading-9 pb-2">
@@ -68,39 +75,13 @@ const VendorQuestionPage = () => {
               leaveTo="transform -translate-y-6 opacity-0"
             >
               <Disclosure.Panel className="lg:pl-8 w-full">
-                <ul>
-                  <li className="p-4 border-b-2 grid grid-cols-12">
-                    <span className="text-gray-600">S.No.</span>
-                    <span className="col-span-2 text-gray-700 font-semibold ">
-                      ProductId
-                    </span>
-                    <span className="col-span-7 text-gray-600 font-semibold text-balance italic">
-                      Question
-                    </span>
-                    <span className="col-span-2 text-gray-700 font-semibold">
-                      CustomerId
-                    </span>
-                  </li>
-                  {questions.map(
-                    ({ Qid, ProductId, question, customerId }, index) => (
-                      <li
-                        className="p-4 border-b-2 grid grid-cols-12"
-                        key={Qid}
-                      >
-                        <span className="text-gray-600">{index + 1}</span>
-                        <span className="col-span-2 text-gray-700 font-semibold trans">
-                          {ProductId}
-                        </span>
-                        <span className="col-span-7 text-gray-600 font-semibold text-balance italic">
-                          {question}
-                        </span>
-                        <span className="col-span-2 text-gray-700 font-semibold">
-                          By {customerId}
-                        </span>
-                      </li>
-                    )
-                  )}
-                </ul>
+                {unanswered?.length == 0 ? (
+                  <div className="py-8 flex justify-center items-center text-xl font-semibold">
+                    No unanswered questions
+                  </div>
+                ) : (
+                  <QuestionList questions={unanswered} />
+                )}
               </Disclosure.Panel>
             </Transition>
           </>
@@ -130,39 +111,13 @@ const VendorQuestionPage = () => {
               leaveTo="transform -translate-y-6 opacity-0"
             >
               <Disclosure.Panel className="lg:pl-8 w-full">
-                <ul>
-                  <li className="p-4 border-b-2 grid grid-cols-12">
-                    <span className="text-gray-600">S.No.</span>
-                    <span className="col-span-2 text-gray-700 font-semibold ">
-                      ProductId
-                    </span>
-                    <span className="col-span-7 text-gray-600 font-semibold text-balance italic">
-                      Question
-                    </span>
-                    <span className="col-span-2 text-gray-700 font-semibold">
-                      CustomerId
-                    </span>
-                  </li>
-                  {questions.map(
-                    ({ Qid, ProductId, question, customerId }, index) => (
-                      <li
-                        className="p-4 border-b-2 grid grid-cols-12"
-                        key={Qid}
-                      >
-                        <span className="text-gray-600">{index + 1}</span>
-                        <span className="col-span-2 text-gray-700 font-semibold trans">
-                          {ProductId}
-                        </span>
-                        <span className="col-span-7 text-gray-600 font-semibold text-balance italic">
-                          {question}
-                        </span>
-                        <span className="col-span-2 text-gray-700 font-semibold">
-                          By {customerId}
-                        </span>
-                      </li>
-                    )
-                  )}
-                </ul>
+                {questions?.length == 0 ? (
+                  <div className="py-8 flex justify-center items-center text-xl font-semibold">
+                    No unanswered questions
+                  </div>
+                ) : (
+                  <QuestionList questions={questions} />
+                )}
               </Disclosure.Panel>
             </Transition>
           </>

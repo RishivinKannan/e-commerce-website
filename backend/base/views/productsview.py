@@ -11,7 +11,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from ..models import CustomUser,Product,Images,Category,Spec
 from ..products import products
-from ..serializers import UserSerializer,ProductSerializer,ImagesSerializer,ImageSerializer,ProductDetailsSerializer,CategorySerializer
+from ..serializers import UserSerializer,ProductSerializer,ImagesSerializer,CategorySerializer
 # Create your views here.
 
 
@@ -35,7 +35,7 @@ def getNewArrivalsProducts(request):
 @api_view(['GET'])
 def getProduct(request,pk):
     product = None
-    if len(pk) < 3:
+    if len(pk) < 4:
         product = Product.objects.get(id=pk)
         serializer = ProductSerializer(product, many=False)
         return Response(serializer.data)

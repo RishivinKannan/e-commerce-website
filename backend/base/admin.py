@@ -1,8 +1,14 @@
 from django.contrib import admin
-from .models import CustomUser,Product,Images,Category,Spec
+from . import models
 # Register your models here.
-admin.site.register(CustomUser)
-admin.site.register(Product)
-admin.site.register(Images)
-admin.site.register(Category)
-admin.site.register(Spec)
+admin.site.register(models.CustomUser)
+admin.site.register(models.Product)
+admin.site.register(models.Images)
+admin.site.register(models.Category)
+admin.site.register(models.Spec)
+admin.site.register(models.Review)
+admin.site.register(models.Question)
+admin.site.register(models.Answer) 
+admin.site.register(models.CartItem)
+admin.site.register(models.Coupon)
+admin.site.register(models.Address)

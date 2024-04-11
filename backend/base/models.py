@@ -115,6 +115,60 @@ class Review(models.Model):
         return name
 
 
+class Question(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE , related_name='question')
+    question = models.TextField(null=True, blank=True)
+    is_answered = models.BooleanField(default=False)
+    vendor = models.ForeignKey(CustomUser, on_delete=models.SET_NULL ,null=True, related_name='vendor')
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL ,null=True, related_name='question')
+    createdAt= models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        name = str(self.product.id)+ "  |  " + self.user.fullname
+        return name
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE , related_name='answers')
+    answer = models.TextField(null=True, blank=True)
+    createdAt= models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        name = str(self.question.id)+ "  |  " + str(self.id)
+        return name
+
+class CartItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE ,null=True, related_name='cartItem')
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL ,null=True, related_name='cart')
+    pid = models.CharField(max_length=100,null=True, blank=True)
+    qty = models.IntegerField(default=1,null=True, blank=True)
+    createdAt= models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        name = str(self.user.id)+ "  |  " + str(self.id)
+        return name
+
+class Coupon(models.Model):
+    code = models.CharField(max_length=100,null=True, blank=True,unique=True)
+    discount = models.IntegerField(default=0,null=True, blank=True)
+    createdAt= models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        name = self.code
+        return name
+
+class Address(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL ,null=True, related_name='user')
+    title = models.CharField(max_length=100,null=True, blank=True)
+    line_1 = models.CharField(max_length=100,null=True, blank=True)
+    line_2 = models.CharField(max_length=100,null=True, blank=True)
+    city = models.CharField(max_length=100,null=True, blank=True)
+    state = models.CharField(max_length=100,null=True, blank=True)
+    pincode = models.CharField(max_length=100,null=True, blank=True)
+
+
+    def __str__(self):
+        name = self.title+" "+self.user.email
+        return name
 
 
 

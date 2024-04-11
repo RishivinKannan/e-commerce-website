@@ -2,11 +2,15 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useState } from "react";
 import { UserSolidIcon } from "../utils/Icons";
 // import { useSelector } from "react-redux";
-import { useGetUserProfileQuery } from "../Redux/api/user";
+import {
+  useGetUserProfileQuery,
+  useUpdateProfileMutation,
+} from "../Redux/api/user";
 
 const AccountPage = () => {
   const [edit, setEdit] = useState();
   const { data } = useGetUserProfileQuery();
+  const [updateProfile] = useUpdateProfileMutation();
   return (
     <div className="p-4 space-y-4 pt-24 min-h-screen">
       <div className="flex justify-between items-center">
@@ -34,7 +38,8 @@ const AccountPage = () => {
             }}
             // validationSchema={LoginSchema}
             onSubmit={(values) => {
-              console.log(values);
+              updateProfile({ fullname: values.username, ...values });
+              setEdit(false);
             }}
           >
             {(prop) => (

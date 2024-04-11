@@ -1,7 +1,6 @@
 import { DeleteIcon } from "../utils/Icons.jsx";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import {
   decrementqty,
@@ -10,14 +9,23 @@ import {
 } from "../Redux/services/cartSlice.js";
 import { BACKEND_URL } from "../utils/constants.js";
 import { useGetProductQuery } from "../Redux/api/productsDjango.js";
+import {
+  useDecrementQtyMutation,
+  useDeleteItemMutation,
+  useIncrementQtyMutation,
+} from "../Redux/api/cartApi.js";
 
 // eslint-disable-next-line react/prop-types
-export default function CartProduct({ id, qty, price }) {
+export default function CartProduct({ productId, qty, price }) {
   // const [product, setProduct] = useState([]);
   const [qtyState, setQtyState] = useState(qty);
-  const { username } = useSelector((state) => state.user);
-  const {data:product,isLoading} = useGetProductQuery(id);
+  const { username, isLogged } = useSelector((state) => state.user);
+  const { data: product, isLoading } = useGetProductQuery(productId);
   const dispatch = useDispatch();
+
+  const [decrementQtyApi] = useDecrementQtyMutation();
+  const [incrementQtyApi] = useIncrementQtyMutation();
+  const [deleteItemApi] = useDeleteItemMutation();
   // useEffect(() => {
   //   axios.get("../fashionProducts.json").then((res) => {
   //     setProduct(res.data.filter((data) => data.ProductId.toString() == id));
@@ -28,24 +36,36 @@ export default function CartProduct({ id, qty, price }) {
     e.preventDefault();
     if (qty <= 10) {
       setQtyState((prev) => prev + 1);
-      dispatch(incrementqty({ id, username }));
+      if (isLogged) {
+        incrementQtyApi(productId);
+      } else {
+        dispatch(incrementqty({ id: productId, username }));
+      }
     }
   }
   function decrement(e) {
     e.preventDefault();
     if (qty > 1) {
       setQtyState((prev) => prev - 1);
-      dispatch(decrementqty({ id, username }));
+      if (isLogged) {
+        decrementQtyApi(productId);
+      } else {
+        dispatch(decrementqty({ id: productId, username }));
+      }
     }
   }
   function Cartdelete(e) {
     e.preventDefault();
-    dispatch(deleteitem({ id, username }));
+    if (isLogged) {
+      deleteItemApi(productId);
+    } else {
+      dispatch(deleteitem({ id: productId, username }));
+    }
   }
 
   return isLoading ? null : (
     <div className="w-full  py-5 px-3 flex flex-col gap-4 md:flex-col lg:flex-row lg:justify-between rounded-lg shadow-xl bg-gray-50 ">
-      <Link to={`/product/${id}`}>
+      <Link to={`/product/${productId}`}>
         <div className="flex gap-2">
           <img
             src={

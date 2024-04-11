@@ -20,6 +20,17 @@ def getCustomerProfile(request):
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateProfile(request):
+    user = request.user
+    data = request.data
+    setattr(user,"fullname",data['fullname'])
+    setattr(user,"dob",data['dob'])
+    user.save()
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data)
+
 
 
 

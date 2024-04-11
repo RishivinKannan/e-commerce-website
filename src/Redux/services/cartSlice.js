@@ -4,6 +4,7 @@ const initialState = {
   cartList: [],
   subTotal: 0,
   discount: 0,
+  discountCode: "",
 };
 
 const cartSlice = createSlice({
@@ -76,13 +77,13 @@ const cartSlice = createSlice({
       const { id, qty, username, price } = action.payload;
       const cartList = localStorage.getItem(`${username}-Cart`)
         ? JSON.parse(localStorage.getItem(`${username}-Cart`)).concat({
-            id,
+            productId: id,
             qty,
             price,
           })
         : [
             {
-              id,
+              productId: id,
               qty,
               price,
             },
@@ -94,12 +95,14 @@ const cartSlice = createSlice({
       total.length === 0 ? null : total?.map((item) => (sum = sum + item));
       state.subTotal = sum;
     },
-    discount(state) {
-      if (state.discount == 50) {
-        alert("Already applied");
-      } else {
-        state.discount = 50;
-      }
+    addDiscount(state, action) {
+      const { discount, code } = action.payload;
+      state.discount = discount;
+      state.discountCode = code;
+    },
+    setTotal(state, action) {
+      const { total } = action.payload;
+      state.total = total;
     },
   },
 });
@@ -110,6 +113,7 @@ export const {
   decrementqty,
   deleteitem,
   addtocart,
-  discount,
+  addDiscount,
+  setTotal,
 } = cartSlice.actions;
 export default cartSlice.reducer;

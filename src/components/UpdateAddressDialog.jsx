@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useSelector } from "react-redux";
 import { Field, Form, Formik } from "formik";
 // eslint-disable-next-line react/prop-types
-export default function AddAddressDialog({ open, close, submit }) {
+export default function AddAddressDialog({ open, close, submit, address }) {
   const { isLogged } = useSelector((state) => state.user);
 
   if (!isLogged) {
@@ -12,7 +13,7 @@ export default function AddAddressDialog({ open, close, submit }) {
 
   return (
     <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => close(false)}>
+      <Dialog as="div" className="relative z-10" onClose={() => close()}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -45,15 +46,15 @@ export default function AddAddressDialog({ open, close, submit }) {
                 </Dialog.Title>
                 <Formik
                   initialValues={{
-                    title: "",
-                    line1: "",
-                    line2: "",
-                    city: "",
-                    state: "",
-                    pincode: "",
+                    title: address.title,
+                    line_1: address.line_1,
+                    line_2: address.line_2,
+                    city: address.city,
+                    state: address.state,
+                    pincode: address.pincode,
                   }}
                   onSubmit={(values) => {
-                    submit(values);
+                    submit({ id: address.id, ...values });
                   }}
                 >
                   <Form className="space-y-3 w-full flex flex-col items-center">
@@ -65,13 +66,13 @@ export default function AddAddressDialog({ open, close, submit }) {
                     />
                     <Field
                       type="text"
-                      name="line1"
+                      name="line_1"
                       placeholder="Address Line 1"
                       className="border-[3px] bg-gray-200  w-5/6 h-10 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500 disabled:text-gray-500"
                     />
                     <Field
                       type="text"
-                      name="line2"
+                      name="line_2"
                       placeholder="Address Line 2"
                       className="border-[3px] bg-gray-200  w-5/6 h-10 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500 disabled:text-gray-500"
                     />
@@ -93,12 +94,21 @@ export default function AddAddressDialog({ open, close, submit }) {
                       placeholder="Pincode"
                       className="border-[3px] bg-gray-200  w-5/6 h-10 rounded p-5 font-semibold focus:outline-none focus:border-gray-500 placeholder:text-gray-500 disabled:text-gray-500"
                     />
-
-                    <Field
-                      type="submit"
-                      value="Add"
-                      className="inline-flex justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1  text-white hover:outline  outline-gray-500"
-                    />
+                    <div className="flex gap-8">
+                      <Field
+                        type="submit"
+                        value="Update"
+                        className="inline-flex justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-black px-4 py-1  text-white hover:outline  outline-gray-500"
+                      />
+                      <Field
+                        type="button"
+                        value="Cancel"
+                        onClick={() => {
+                          close();
+                        }}
+                        className="inline-flex justify-center font-semibold text-lg tracking-wide rounded-md border border-transparent bg-red-600 px-4 py-1  text-white hover:outline  outline-gray-500"
+                      />
+                    </div>
                   </Form>
                 </Formik>
               </Dialog.Panel>

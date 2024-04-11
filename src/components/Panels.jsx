@@ -5,8 +5,15 @@ import { useSelector } from "react-redux";
 import WriteReviewDialog from "./WriteReviewDialog";
 import WriteQuestionDialog from "./WriteQuestionDialog";
 import Welcome from "../assets/welcome2.mp3";
+import {
+  useGetReviewsQuery,
+  usePostReviewMutation,
+  useGetQuestionsQuery,
+  usePostQuestionMutation,
+} from "../Redux/api/productApi";
+import { useParams } from "react-router-dom";
 
-export const SpecsPanel = ({ spec=[] }) => {
+export const SpecsPanel = ({ spec = [] }) => {
   const specs =
     spec.length != 0
       ? spec
@@ -70,36 +77,44 @@ export const SpecsPanel = ({ spec=[] }) => {
 export const ReviewPanel = () => {
   const [dialog, setDialog] = useState(false);
   const [audio, setAudio] = useState(false);
-  const addReview = (value, rating) => {
-    console.log(value, rating);
+  const { id } = useParams();
+  const [postReview, data] = usePostReviewMutation();
+  const { data: review, isLoading } = useGetReviewsQuery(id);
+  console.log(JSON.stringify(data));
+  const addReview = (review, rating) => {
+    console.log(review, rating);
+    postReview({ id, data: { review, rating } });
     setDialog(false);
     setAudio(true);
   };
   const { isLogged } = useSelector((state) => state.user);
 
-  const reviews = [
-    {
-      id: 1,
-      username: "Emily Selman",
-      rating: 4,
-      review:
-        "This is the bag of my dreams. I took it on my last vacation and was able to fit an absurd amount of snacks for the many long and hungry flights.",
-    },
-    {
-      id: 2,
-      username: "Emily Selman",
-      rating: 1,
-      review:
-        "This is the bag of my dreams. I took it on my last vacation and was able to fit an absurd amount of snacks for the many long and hungry flights.",
-    },
-    {
-      id: 3,
-      username: "Emily Selman",
-      rating: 2,
-      review:
-        "This is the bag of my dreams. I took it on my last vacation and was able to fit an absurd amount of snacks for the many long and hungry flights.",
-    },
-  ];
+  const reviews =
+    !isLoading && review?.length != 0
+      ? review?.toReversed()
+      : [
+          {
+            id: 1,
+            username: "Emily Selman",
+            rating: 4,
+            review:
+              "This is the bag of my dreams. I took it on my last vacation and was able to fit an absurd amount of snacks for the many long and hungry flights.",
+          },
+          {
+            id: 2,
+            username: "Emily Selman",
+            rating: 1,
+            review:
+              "This is the bag of my dreams. I took it on my last vacation and was able to fit an absurd amount of snacks for the many long and hungry flights.",
+          },
+          {
+            id: 3,
+            username: "Emily Selman",
+            rating: 2,
+            review:
+              "This is the bag of my dreams. I took it on my last vacation and was able to fit an absurd amount of snacks for the many long and hungry flights.",
+          },
+        ];
   return (
     <>
       {audio ? <audio src={Welcome} autoPlay /> : ""}
@@ -119,11 +134,11 @@ export const ReviewPanel = () => {
           </button>
         </div>
         <div className="space-y-2 w-full md:w-10/12">
-          {reviews.map(({ id, username, review, rating }) => (
+          {reviews?.map(({ id, username, review, rating }) => (
             <div key={id} className="p-1 space-y-2 ">
-              <h1 className="font-semibold tracking-wide">{username}</h1>
+              <h1 className="pl-1 font-semibold tracking-wide">{username}</h1>
               <Rating value={rating} readOnly className="max-w-28 z-0" />
-              <p>{review}</p>
+              <p className="pl-1 text-lg tracking-wide">{review}</p>
               <div>
                 <hr className="bg-gray-200 h-[2px] w-full mt-8" />
               </div>
@@ -139,53 +154,34 @@ export const ReviewPanel = () => {
 export const QandAPanel = () => {
   const [dialog, setDialog] = useState(false);
   const [audio, setAudio] = useState(false);
-  const addReview = (value, rating) => {
-    console.log(value, rating);
+  const { id } = useParams();
+  const [postQuestion] = usePostQuestionMutation();
+  const { data: question, isLoading } = useGetQuestionsQuery(id);
+  const addQuestion = (question) => {
+    postQuestion({ id, data: { question } });
     setDialog(false);
     setAudio(true);
   };
   const { isLogged } = useSelector((state) => state.user);
 
-  const reviews = [
-    {
-      id: 1,
-      username: "Emily Selman",
-      question:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit omnis mollitia delectus in, ducimus eveniet exercitationem. Quaerat reprehenderit iure omnis laudantium, earum natus deserunt, eos debitis quae quis sit ex!",
-      answer:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit omnis mollitia delectus in, ducimus eveniet exercitationem. Quaerat reprehenderit iure omnis laudantium, earum natus deserunt, eos debitis quae quis sit ex!",
-    },
-    {
-      id: 2,
-      username: "Emily Selman",
-      question:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit omnis mollitia delectus in, ducimus eveniet exercitationem. Quaerat reprehenderit iure omnis laudantium, earum natus deserunt, eos debitis quae quis sit ex!",
-      answer:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit omnis mollitia delectus in, ducimus eveniet exercitationem. Quaerat reprehenderit iure omnis laudantium, earum natus deserunt, eos debitis quae quis sit ex!",
-    },
-    {
-      id: 3,
-      username: "Emily Selman",
-      question:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit omnis mollitia delectus in, ducimus eveniet exercitationem. Quaerat reprehenderit iure omnis laudantium, earum natus deserunt, eos debitis quae quis sit ex!",
-      answer:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit omnis mollitia delectus in, ducimus eveniet exercitationem. Quaerat reprehenderit iure omnis laudantium, earum natus deserunt, eos debitis quae quis sit ex!",
-    },
-    {
-      id: 4,
-      username: "Emily Selman",
-      question:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit omnis mollitia delectus in, ducimus eveniet exercitationem. Quaerat reprehenderit iure omnis laudantium, earum natus deserunt, eos debitis quae quis sit ex!",
-      answer:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit omnis mollitia delectus in, ducimus eveniet exercitationem. Quaerat reprehenderit iure omnis laudantium, earum natus deserunt, eos debitis quae quis sit ex!",
-    },
-    {
-      id: 5,
-      username: "Emily Selman",
-      question:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit omnis mollitia delectus in, ducimus eveniet exercitationem. Quaerat reprehenderit iure omnis laudantium, earum natus deserunt, eos debitis quae quis sit ex!",
-    },
-  ];
+  const questions =
+    !isLoading && question?.length != 0
+      ? question.toReversed()
+      : [
+          {
+            id: 1,
+            username: "Emily Selman",
+            question:
+              "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit omnis mollitia delectus in, ducimus eveniet exercitationem. Quaerat reprehenderit iure omnis laudantium, earum natus deserunt, eos debitis quae quis sit ex!",
+            answers: [
+              {
+                id: 1,
+                answer:
+                  "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit omnis mollitia delectus in, ducimus eveniet exercitationem. Quaerat reprehenderit iure omnis laudantium, earum natus deserunt, eos debitis quae quis sit ex!",
+              },
+            ],
+          },
+        ];
   return (
     <>
       {audio ? <audio src={Welcome} autoPlay /> : ""}
@@ -205,7 +201,7 @@ export const QandAPanel = () => {
           </button>
         </div>
         <div className="space-y-2 w-full md:w-10/12">
-          {reviews.map(({ id, username, question, answer }) => (
+          {questions.map(({ id, username, question, answers }) => (
             <div key={id} className="p-1 space-y-2 ">
               <p className="font-semibold tracking-wide text-gray-500">
                 Q: {question}
@@ -213,7 +209,15 @@ export const QandAPanel = () => {
               <h1 className=" tracking-wide text-gray-500 text-sm">
                 By {username}
               </h1>
-              <p>{answer ? answer : "Yet to answer"}</p>
+              {answers.length != 0 ? (
+                answers.map((ans, index) => (
+                  <p key={ans.id}>
+                    {index + 1} | {ans.answer}
+                  </p>
+                ))
+              ) : (
+                <p>Yet to answer</p>
+              )}
               <div>
                 <hr className="bg-gray-200 h-[2px] w-full mt-8" />
               </div>
@@ -221,7 +225,11 @@ export const QandAPanel = () => {
           ))}
         </div>
       </div>
-      <WriteQuestionDialog open={dialog} close={setDialog} submit={addReview} />
+      <WriteQuestionDialog
+        open={dialog}
+        close={setDialog}
+        submit={addQuestion}
+      />
     </>
   );
 };

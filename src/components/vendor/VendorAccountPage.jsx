@@ -54,7 +54,6 @@ const VendorAccountPage = () => {
                     className="text-red-600"
                   />
                 </div>
-5
                 <div className="w-11/12 md:w-9/12 space-x-2">
                   <Field
                     name="email"
