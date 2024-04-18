@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import CustomUser,Product,Images,Category,Spec,Review,Question,Answer,CartItem,Coupon,Address
+from .models import CustomUser,Product,Images,Category,Spec,Review,Question,Answer
+from .models import CartItem,Coupon,Address,Order,OrderItem,Price,PriceTracker
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -113,13 +114,6 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 
-# class ImageSerializer(serializers.Serializer):
-#     images = serializers.ListField(child=serializers.ImageField())
-
-
-# class ProductDetailsSerializer(serializers.Serializer):
-#     product = ProductSerializer(many=True)
-#     images = ImagesSerializer(many=True)
 
 class CartItemsSerializer(serializers.Serializer):
     productId = serializers.SerializerMethodField(read_only=True)
@@ -164,3 +158,51 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = '__all__'
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    productId = serializers.SerializerMethodField(read_only=True)
+    
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
+
+    def get_productId(self,obj):
+        if obj.product == None:
+            productId = obj.pid
+        else:
+            productId = obj.product.id
+        
+        return productId
+
+class OrderSerializer(serializers.ModelSerializer):
+    orderItems = OrderItemSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+
+class PriceSerializer(serializers.ModelSerializer):
+    date = serializers.SerializerMethodField(read_only=True)
+    
+    class Meta:
+        model = Price
+        fields = '__all__'
+
+    def get_date(self,obj):
+        date = obj.timestamp.strftime('%d-%m-%Y %H:%M')
+        return date
+
+
+class PriceTrackerSerializer(serializers.ModelSerializer):
+    lastprice = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = PriceTracker
+        fields = '__all__'
+
+    def get_lastprice(self,obj):
+        price = Price.objects.filter(product=obj.product).order_by('-timestamp').first()
+        lastprice = PriceSerializer(price,many=False).data
+
+        return lastprice

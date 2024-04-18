@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Rating } from "@smastrom/react-rating";
 import { useSelector } from "react-redux";
 import WriteReviewDialog from "./WriteReviewDialog";
 import WriteQuestionDialog from "./WriteQuestionDialog";
-import Welcome from "../assets/welcome2.mp3";
+import ThankYou from "../assets/Thank_you.mp3";
 import {
   useGetReviewsQuery,
   usePostReviewMutation,
@@ -89,6 +89,16 @@ export const ReviewPanel = () => {
   };
   const { isLogged } = useSelector((state) => state.user);
 
+  useEffect(() => {
+    let timeout = null;
+    if (audio) {
+      timeout = setTimeout(() => {
+        setAudio(false);
+      }, 5000);
+    }
+    return () => clearTimeout(timeout);
+  }, [audio]);
+
   const reviews =
     !isLoading && review?.length != 0
       ? review?.toReversed()
@@ -117,7 +127,7 @@ export const ReviewPanel = () => {
         ];
   return (
     <>
-      {audio ? <audio src={Welcome} autoPlay /> : ""}
+      {audio ? <audio src={ThankYou} autoPlay /> : ""}
       <div className="w-full p-2 md:px-6">
         <div className="flex justify-between items-center mb-4 ">
           <span className="text-xl md:text-2xl font-bold leading-9 shadow-gray-600">
@@ -136,9 +146,9 @@ export const ReviewPanel = () => {
         <div className="space-y-2 w-full md:w-10/12">
           {reviews?.map(({ id, username, review, rating }) => (
             <div key={id} className="p-1 space-y-2 ">
-              <h1 className="pl-1 font-semibold tracking-wide">{username}</h1>
+              <h1 className="pl-1 font-semibold tracking-wide text-gray-500">{username}</h1>
               <Rating value={rating} readOnly className="max-w-28 z-0" />
-              <p className="pl-1 text-lg tracking-wide">{review}</p>
+              <p className="pl-1 text-lg text-gray-700 font-semibold tracking-wide">{review}</p>
               <div>
                 <hr className="bg-gray-200 h-[2px] w-full mt-8" />
               </div>
@@ -164,6 +174,16 @@ export const QandAPanel = () => {
   };
   const { isLogged } = useSelector((state) => state.user);
 
+  useEffect(() => {
+    let timeout = null;
+    if (audio) {
+      timeout = setTimeout(() => {
+        setAudio(false);
+      }, 5000);
+    }
+    return () => clearTimeout(timeout);
+  }, [audio]);
+
   const questions =
     !isLoading && question?.length != 0
       ? question.toReversed()
@@ -182,9 +202,10 @@ export const QandAPanel = () => {
             ],
           },
         ];
+
   return (
     <>
-      {audio ? <audio src={Welcome} autoPlay /> : ""}
+      {audio ? <audio src={ThankYou} autoPlay /> : ""}
       <div className="w-full p-2 md:px-6">
         <div className="flex justify-between items-center mb-4 ">
           <span className="text-xl md:text-2xl font-bold leading-9 shadow-gray-600">

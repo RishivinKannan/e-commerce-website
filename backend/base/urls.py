@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import productsview,userview,reviewsview,cartview
+from .views import productsview,userview,reviewsview,cartview,orderview,pricetrackerview
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
 )
@@ -20,6 +20,8 @@ urlpatterns = [
     path('api/vendor/questions/', reviewsview.getVendorQuestions, name="VendorQuestions"),
     path('api/vendor/questions/unanswered', reviewsview.getVendorUnansweredQuestions , name="VendorUnansweredQuestions"),
     path('api/vendor/answer/<str:pk>', reviewsview.postAnswer, name="postAnswer"),
+    path('api/vendor/orders', orderview.getVendorOrders, name="getVendorOrders"),
+    path('api/vendor/order/<str:pk>', orderview.postOrderDispatch, name="Post Order Dispatch"),
 
 
 
@@ -47,4 +49,18 @@ urlpatterns = [
     path('api/coupon/<str:pk>', cartview.applyCoupon, name="Apply coupon"),
     path('api/address', cartview.getAddress, name="get Addresses"),
     path('api/address/<str:pk>', cartview.updateAddress, name="Update Addresses"),
+
+
+
+    path('api/orders', orderview.getOrders, name="getOrders"),
+    path('api/checkout', orderview.postOrder, name="postOrders"),
+    path('api/paymentupdate', orderview.postPaymentStatus, name="postPaymentStatus"),
+
+
+
+    path('api/prices/<str:pk>', pricetrackerview.getPrices, name="get Prices"),
+    path('api/trackers/', pricetrackerview.getTrackers, name="get Price Trackers"),
+    path('api/tracker/<str:pk>', pricetrackerview.getTracker, name="get Price Tracker"),
+    path('api/trackers/add', pricetrackerview.postTracker, name="post Price Trackers"),
+    path('api/trackers/delete/<str:pk>', pricetrackerview.deleteTracker, name="delete Price Trackers"),
 ]

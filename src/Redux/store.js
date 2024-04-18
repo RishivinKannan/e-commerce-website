@@ -9,6 +9,8 @@ import cartReducer from "./services/cartSlice";
 import favReducer from "./services/FavSlice";
 import historyReducer from "./services/historySlice";
 import { cartApi } from "./api/cartApi";
+import { orderApi } from "./api/orderApi";
+import { trackerApi } from "./api/trackerApi";
 
 const store = configureStore({
   reducer: {
@@ -17,6 +19,8 @@ const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
     [cartApi.reducerPath]: cartApi.reducer,
+    [orderApi.reducerPath]: orderApi.reducer,
+    [trackerApi.reducerPath]: trackerApi.reducer,
     user: userReducer,
     cart: cartReducer,
     fav: favReducer,
@@ -30,6 +34,8 @@ const store = configureStore({
       userApi.middleware,
       productApi.middleware,
       cartApi.middleware,
+      orderApi.middleware,
+      trackerApi.middleware,
     ]),
 });
 setupListeners(store.dispatch);

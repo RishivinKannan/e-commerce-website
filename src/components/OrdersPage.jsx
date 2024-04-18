@@ -1,66 +1,52 @@
-import { Link } from "react-router-dom";
+import { useGetOrdersQuery } from "../Redux/api/orderApi";
+import OrderItemCard from "./OrderItemCard";
 
 const OrdersPage = () => {
-  const orders = [
-    {
-      ProductId: 42419,
-      ProductTitle: "Gini and Jony Girls Knit White Top",
-      ImageURL:
-        "http://assets.myntassets.com/v1/images/style/properties/f3964f76c78edd85f4512d98b26d52e9_images.jpg",
-    },
-    {
-      ProductId: 34009,
-      ProductTitle: "Gini and Jony Girls Black Top",
-      ImageURL:
-        "http://assets.myntassets.com/v1/images/style/properties/dce310e4c15223a6c964631190263284_images.jpg",
-    },
-    {
-      ProductId: 40143,
-      ProductTitle: "Gini and Jony Girls Pretty Blossom Blue Top",
-      ImageURL:
-        "http://assets.myntassets.com/v1/images/style/properties/fc3c1b46906d5c148c45f532d0b3ffb5_images.jpg",
-    },
-  ];
+  const { data } = useGetOrdersQuery();
 
   return (
-    <div className="w-full pt-24 space-y-6 px-3 md:px-10 bg-gray-100 min-h-screen">
-      <span className="text-xl md:text-2xl font-bold leading-9 shadow-gray-600">
+    <div className="w-full pt-24 space-y-6 px-3 md:px-10 pb-12 bg-gray-100 min-h-screen">
+      <span className="text-xl md:text-3xl font-bold leading-9 shadow-gray-600">
         Orders
       </span>
-      <div className="grid md:grid-cols-2 gap-x-4 gap-y-3">
-        {orders.map(({ ProductId, ProductTitle, ImageURL }) => (
-          <div
-            key={ProductId}
-            className="w-full grid grid-cols-2 shadow-xl p-4 rounded"
-          >
-            <Link to={`/product/${ProductId}`}>
-              <div className="flex gap-2">
-                <img
-                  src={ImageURL}
-                  className="min-w-16 min-h-16 max-16 max-h-16 lg:min-w-20 lg:min-h-20  lg:max-20 lg:max-h-20 rounded-lg shadow-lg "
-                />
-                <div className=" flex flex-col flex-wrap justify-around  ">
-                  <h2 className="text-base md:text-lg leading-5 font-semibold pl-2 min-w-56 md:min-w-80">
-                    {ProductTitle}
-                  </h2>
-                  <span className="text-base md:text-lg pl-2 font-extrabold tracking-widest text-gray-900">
-                    ₹200
-                  </span>
+      {data?.toReversed()?.map(({ id, orderItems, is_paid, is_failed, paymentId }) => (
+        <div
+          key={id}
+          className="w-full pt-6 p-8 bg-slate-200/70 rounded-lg space-y-4"
+        >
+          <div className="flex justify-between">
+            <span className="text-slate-700 text-xl font-bold leading-9">
+              #OrderID: <span className="text-black">{id}</span>
+            </span>
+            {is_paid && (
+              <div className="flex items-center gap-8 md:gap-16 ">
+                <div className=" text-xs lg:text-lg font-semibold text-slate-700 bg-white px-3 lg:px-8 py-1 rounded-3xl ">
+                  Payment ID:{" "}
+                  <span className="text-slate-900">{paymentId}</span>
+                </div>
+                <div className="bg-green-500/60 px-8 py-1 rounded-3xl text-white">
+                  Paid
                 </div>
               </div>
-            </Link>
-            <div className="flex flex-col items-end justify-between">
-              <ul className="text-xs font-semibold text-blue-400">
-                <li>OPTION 1</li>
-                <li>OPTION 2</li>
-              </ul>
-              <span className="text-gray-700 text-sm lg:text-base font-semibold">
-                Tracking Status
-              </span>
-            </div>
+            )}
+            {is_failed && (
+              <div className="bg-red-500/60 px-8 py-1 rounded-3xl text-white">
+                Failed
+              </div>
+            )}
+            {!is_failed && !is_paid && (
+              <div className="bg-slate-500/60 px-8 py-1 rounded-3xl text-white">
+                Not paid
+              </div>
+            )}
           </div>
-        ))}
-      </div>
+          <div className="grid md:grid-cols-2 gap-x-4 gap-y-3">
+            {orderItems.map((item) => (
+              <OrderItemCard key={item.id} {...item} />
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

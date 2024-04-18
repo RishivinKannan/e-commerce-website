@@ -1,61 +1,98 @@
-import { Link } from "react-router-dom";
-const VendorOrderPage = () => {
-  const orders = [
-    {
-      ProductId: 42419,
-      ProductTitle: "Gini and Jony Girls Knit White Top",
-      ImageURL:
-        "http://assets.myntassets.com/v1/images/style/properties/f3964f76c78edd85f4512d98b26d52e9_images.jpg",
-    },
-    {
-      ProductId: 34009,
-      ProductTitle: "Gini and Jony Girls Black Top",
-      ImageURL:
-        "http://assets.myntassets.com/v1/images/style/properties/dce310e4c15223a6c964631190263284_images.jpg",
-    },
-    {
-      ProductId: 40143,
-      ProductTitle: "Gini and Jony Girls Pretty Blossom Blue Top",
-      ImageURL:
-        "http://assets.myntassets.com/v1/images/style/properties/fc3c1b46906d5c148c45f532d0b3ffb5_images.jpg",
-    },
-  ];
+import { Disclosure, Transition } from "@headlessui/react";
+import { useGetVendorOrdersQuery } from "../../Redux/api/vendorOrderApi";
+import OrderItem from "./OrderItem";
+import { DownChevIcon } from "../../utils/Icons";
 
+const VendorOrderPage = () => {
+  const { data, isLoading } = useGetVendorOrdersQuery();
+  if (isLoading) {
+    return <></>;
+  }
   return (
     <div className="w-full space-y-6 p-4 ">
       <span className="text-xl md:text-2xl font-bold leading-9 shadow-gray-600">
         Orders
       </span>
-      <div className="grid xl:grid-cols-2 gap-x-4 gap-y-3">
-        {orders.map(({ ProductId, ProductTitle, ImageURL }) => (
-          <div
-            key={ProductId}
-            className="w-full grid grid-cols-2 shadow-xl p-4 rounded"
-          >
-            <Link to={`/product/${ProductId}`}>
-              <div className="flex gap-2">
-                <img
-                  src={ImageURL}
-                  className="min-w-16 min-h-16 max-16 max-h-16 lg:min-w-20 lg:min-h-20  lg:max-20 lg:max-h-20 rounded-lg shadow-lg "
-                />
-                <div className=" flex flex-col flex-wrap justify-around  ">
-                  <h2 className="text-base md:text-lg leading-5 font-semibold pl-2 min-w-56 md:min-w-80">
-                    {ProductTitle}
-                  </h2>
-                  <span className="text-base md:text-lg pl-2 font-extrabold tracking-widest text-gray-900">
-                    ₹200
-                  </span>
-                </div>
-              </div>
-            </Link>
-            <div className="flex flex-col items-end justify-center">
-              <button className="w-28 flex justify-center items-center gap-2 rounded py-2 px-2 md:px-6 text-white bg-darker text-sm font-bold tracking-wider hover:outline outline-gray-500">
+      <Disclosure defaultOpen>
+        {({ open }) => (
+          <>
+            <Disclosure.Button
+              className={`${
+                open ? "" : "border-b-2"
+              } w-full py-4 border-gray-200/50`}
+            >
+              <span className="text-lg font-semibold flex items-center gap-2 ">
+                <span className={`${!open ? "" : "rotate-180 transform"}`}>
+                  <DownChevIcon />
+                </span>
+                Yet to Dispatch
+              </span>
+            </Disclosure.Button>
+            <Transition
+              enter="transition duration-100 ease-out"
+              enterFrom="transform -translate-y-6 opacity-0"
+              enterTo="transform translate-y-0 opacity-100"
+              leave="transition duration-75 ease-out"
+              leaveFrom="transform translate-y-0 opacity-100"
+              leaveTo="transform -translate-y-6 opacity-0"
+            >
+              <Disclosure.Panel className="lg:pl-8 w-full">
+                {data?.orders?.length == 0 ? (
+                  <div className="py-8 flex justify-center items-center text-xl font-semibold">
+                   Currently you have no orders
+                  </div>
+                ) : (
+                  <div className="grid xl:grid-cols-2 gap-x-4 gap-y-3">
+                    {data?.orders?.map((order) => (
+                      <OrderItem key={order?.id} {...order} />
+                    ))}
+                  </div>
+                )}
+              </Disclosure.Panel>
+            </Transition>
+          </>
+        )}
+      </Disclosure>
+      <Disclosure >
+        {({ open }) => (
+          <>
+            <Disclosure.Button
+              className={`${
+                open ? "" : "border-b-2"
+              } w-full py-4 border-gray-200/50`}
+            >
+              <span className="text-lg font-semibold flex items-center gap-2 ">
+                <span className={`${!open ? "" : "rotate-180 transform"}`}>
+                  <DownChevIcon />
+                </span>
                 Dispatched
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+              </span>
+            </Disclosure.Button>
+            <Transition
+              enter="transition duration-100 ease-out"
+              enterFrom="transform -translate-y-6 opacity-0"
+              enterTo="transform translate-y-0 opacity-100"
+              leave="transition duration-75 ease-out"
+              leaveFrom="transform translate-y-0 opacity-100"
+              leaveTo="transform -translate-y-6 opacity-0"
+            >
+              <Disclosure.Panel className="lg:pl-8 w-full">
+                {data?.dispatched?.length == 0 ? (
+                  <div className="py-8 flex justify-center items-center text-xl font-semibold">
+                    No order item
+                  </div>
+                ) : (
+                  <div className="grid xl:grid-cols-2 gap-x-4 gap-y-3">
+                    {data?.dispatched?.map((order) => (
+                      <OrderItem key={order?.id} {...order} />
+                    ))}
+                  </div>
+                )}
+              </Disclosure.Panel>
+            </Transition>
+          </>
+        )}
+      </Disclosure>
     </div>
   );
 };

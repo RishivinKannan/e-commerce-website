@@ -5,6 +5,7 @@ const initialState = {
   subTotal: 0,
   discount: 0,
   discountCode: "",
+  total: 0,
 };
 
 const cartSlice = createSlice({

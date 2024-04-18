@@ -170,7 +170,54 @@ class Address(models.Model):
         name = self.title+" "+self.user.email
         return name
 
+class Order(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL ,null=True, related_name='order')
+    total = models.IntegerField(default=0,null=True, blank=True)
+    address = models.ForeignKey(Address, on_delete=models.SET_NULL ,null=True, related_name='order')
+    is_paid = models.BooleanField(default=False)
+    is_failed = models.BooleanField(default=False)
+    paymentId = models.CharField(max_length=100,null=True, blank=True)
+    createdAt= models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        name = str(self.user.id)+ "  | orderId: " + str(self.id)
+        return name
+
+class OrderItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE ,null=True, related_name='orderItems')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE  ,null=True, related_name='orderItems')
+    pid = models.CharField(max_length=100,null=True, blank=True)
+    qty = models.IntegerField(default=1,null=True, blank=True)
+    price = models.IntegerField(default=0,null=True, blank=True)
+    is_dispatch = models.BooleanField(default=False)
+    is_delivered = models.BooleanField(default=False)
+    createdAt= models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        name = str(self.order.id)+ "  | item id: " + str(self.id)
+        return name
+
+
+class Price(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    price = models.IntegerField(null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        name = str(self.product.id)+ "  | price id: " + str(self.id)
+        return name
+
+
+class PriceTracker(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL ,null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    price = models.IntegerField(null=True, blank=True)
+    expected_price = models.IntegerField(null=True, blank=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        name = str(self.product.id)+ "  | PriceTracker id: " + str(self.id)
+        return name
 
 
 

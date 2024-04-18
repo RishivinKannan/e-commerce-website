@@ -27,6 +27,7 @@ import HistoryPage from "./components/HistoryPage.jsx";
 import OrdersPage from "./components/OrdersPage.jsx";
 import AddressPage from "./components/AddressPage.jsx";
 import PriceTracker from "./components/PriceTracker.jsx";
+import CheckoutPage from "./components/CheckoutPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/checkout",
-            element: <CartPage />,
+            element: <CheckoutPage />,
           },
           {
             path: "/product/:id",

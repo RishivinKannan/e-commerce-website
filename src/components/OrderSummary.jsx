@@ -8,6 +8,7 @@ import {
   useGetOrderSummaryQuery,
 } from "../Redux/api/cartApi";
 import CouponList from "./CouponList";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 function OrderSummary({ iscart = false }) {
@@ -15,6 +16,7 @@ function OrderSummary({ iscart = false }) {
   const [subT, setSubT] = useState(0);
   const [focus, setFocus] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { subTotal, discount, discountCode } = useSelector(
     (state) => state.cart
   );
@@ -54,10 +56,15 @@ function OrderSummary({ iscart = false }) {
   };
 
   const checkoutHandler = () => {
-    dispatch(setTotal({ total }));
+    if (total > 0 && isLogged) {
+      dispatch(setTotal({ total }));
+      navigate("/checkout");
+    } else if (!isLogged) {
+      alert("Please Login First");
+    }
   };
   return (
-    <div className=" relative bg-gray-50 w-[30rem] xl:w-[32rem] p-4 rounded-xl h-min space-y-4">
+    <div className=" relative shadow-lg w-full bg-gray-50  p-4 rounded-xl h-min space-y-4">
       <h2 className="text-2xl font-bold tracking-wide pb-2">Order Summary</h2>
       <div>
         <span className="text-gray-600 text-lg font-semibold tracking-wide">
@@ -139,7 +146,7 @@ function OrderSummary({ iscart = false }) {
             </div>
           )}
           <button
-            onClick={checkoutHandler()}
+            onClick={() => checkoutHandler()}
             className="w-full flex justify-center items-center gap-2 rounded-3xl py-3 px-6 text-white bg-darker text-lg font-bold tracking-wider hover:outline outline-gray-500"
           >
             Go to Checkout

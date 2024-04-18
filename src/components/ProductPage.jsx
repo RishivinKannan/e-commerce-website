@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { useParams, NavLink } from "react-router-dom";
 // import axios from "axios";
 import { Rating } from "@smastrom/react-rating";
-import { HeartIcon, LongRightArrowIcon } from "../utils/Icons";
+import {
+  HeartIcon,
+  LongRightArrowIcon,
+  PriceTrackerIcon,
+} from "../utils/Icons";
 import ProductImage from "./ProductImage";
 import { useDispatch, useSelector } from "react-redux";
 import { addtocart, getcart } from "../Redux/services/cartSlice";
@@ -17,13 +21,17 @@ import {
   useGetCartItemQuery,
   usePostCartItemMutation,
 } from "../Redux/api/cartApi";
+import {
+  useGetTrackerQuery,
+  usePostTrackerMutation,
+} from "../Redux/api/trackerApi";
 
 const ProductPage = () => {
   const { id } = useParams();
   const topPicks = useGetTopPicksQuery();
   const { data: product, isLoading } = useGetProductQuery(id);
   console.log(product);
-  // const [product, setProduct] = useState([]);
+  const [istracker, setIsTracker] = useState(false);
   const [isCartItem, setIsCartItem] = useState(false);
   const [isFav, setIsFav] = useState(false);
   const [qty, setQty] = useState(1);
@@ -33,19 +41,19 @@ const ProductPage = () => {
   const dispatch = useDispatch();
 
   const { data: cart } = useGetCartItemQuery(id);
+  const { data: tracker, isSuccess: isTrackerSuccess } = useGetTrackerQuery(id);
   const [addCartItem] = usePostCartItemMutation();
+  const [addTracker] = usePostTrackerMutation();
 
   useEffect(() => {
-    // axios.get("../fashionProducts.json").then((res) => {
-    //   setProduct(res.data.filter((data) => data.ProductId.toString() == id));
-    // });
     if (isLogged) {
       const t = cart?.is_cartItem;
       console.log(t);
       setIsCartItem(t);
     } else {
       if (cartList.length != 0) {
-        const t = cartList.find((item) => item.productId == id)?.productId == id;
+        const t =
+          cartList.find((item) => item.productId == id)?.productId == id;
         console.log(t);
         setIsCartItem(t);
       }
@@ -62,6 +70,12 @@ const ProductPage = () => {
   useEffect(() => {
     dispatch(addtohistory({ id, username }));
   }, [dispatch, id, username]);
+
+  useEffect(() => {
+    if (isTrackerSuccess) {
+      setIsTracker(tracker.is_tracker);
+    }
+  }, [tracker, isTrackerSuccess]);
 
   const addToCart = (price) => {
     if (isLogged) {
@@ -103,7 +117,26 @@ const ProductPage = () => {
               favClick(id);
             }}
           >
-            <HeartIcon isFill={isFav} className="w-5 h-5" />
+            <div className="p-2">
+              <HeartIcon isFill={isFav} className="w-5 h-5" />
+            </div>
+          </div>
+          <div
+            className="absolute top-10 z-40 inline-block p-2 rounded-full right-6"
+            onClick={(e) => {
+              e.preventDefault();
+              if (!istracker) {
+                addTracker({ product: id });
+              }
+            }}
+          >
+            <div
+              className={`p-2 hover:text-gray-500 ${
+                istracker ? "text-blue-700" : " "
+              } `}
+            >
+              <PriceTrackerIcon />
+            </div>
           </div>
         </div>
         <div className="col-span-5 p-2 space-y-2 md:col-span-2 lg:col-span-3">
@@ -114,15 +147,15 @@ const ProductPage = () => {
             {product?.SubCategory}
           </h1>
           <Rating
-            value={product.rating ? product.rating : 4}
+            value={product?.rating ? product.rating : 4}
             readOnly
             className="z-0 pb-4 max-w-28"
           />
           <span className="inline-block pr-4 text-3xl font-extrabold tracking-wide">
-            {product.discounted_price ? product.discounted_price : "₹ 200"}
+            {product?.discounted_price ? product.discounted_price : "₹ 200"}
           </span>
           <span className="inline-block text-3xl font-extrabold tracking-wide text-gray-600 line-through">
-            {product.actual_price ? product.actual_price : "₹ 200"}
+            {product?.actual_price ? product.actual_price : "₹ 200"}
           </span>
           <p className="pt-2 text-sm font-semibold leading-6 tracking-wide text-justify text-gray-500 md:pr-6">
             {product?.about_product ? (

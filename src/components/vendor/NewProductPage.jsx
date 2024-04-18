@@ -4,7 +4,11 @@ import {
   useAddProductMutation,
   useGetCategoriesQuery,
 } from "../../Redux/api/vendorApi";
-import { useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
+import success from "../../assets/successfull.gif";
+import ThankYou from "../../assets/Thank_you.mp3";
 
 const Schema = Yup.object().shape({
   ProductTitle: Yup.string()
@@ -21,11 +25,13 @@ const Schema = Yup.object().shape({
   about_product: Yup.string().min(30).required("Required"),
 });
 const NewProductPage = () => {
+  const [dialog, setDialog] = useState(false);
+  const navigate = useNavigate();
   const [addProduct, data] = useAddProductMutation();
   const { data: Categories } = useGetCategoriesQuery();
   useEffect(() => {
     if (data?.isSuccess) {
-      alert("Product added Successfully");
+      setDialog(true);
     }
     if (data?.isError) {
       alert(" Unsuccessfull");
@@ -314,6 +320,51 @@ const NewProductPage = () => {
           </Formik>
         </div>
       </div>
+      <Transition appear show={dialog} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => {
+            setDialog(false);
+            navigate("/vendor/products");
+          }}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="translate-x-28 w-4/6 h-96 transform overflow-hidden rounded-2xl bg-white p-12 text-left align-middle shadow-xl transition-all flex justify-center items-center flex-col space-y-4">
+                  <img src={success} className="w-56" />
+                  <audio src={ThankYou} autoPlay />
+                  <h1 className="font-bold text-4xl p-1 text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500 tracking-wide">
+                    Product Successfully Added
+                  </h1>
+                  
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </div>
   );
 };
